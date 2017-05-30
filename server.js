@@ -5,11 +5,8 @@ const bodyParser = require('body-parser');
 const mongojs = require('mongojs');
 const mongoose = require('mongoose');
 const config = require('./config');
-const user   = require('./models/User');
+const user   = require('./src/models/User');
 console.log(user);
-
-// Get our API routes
-const api = require('./server/routes/api');
 
 const app = express();
 
@@ -59,7 +56,7 @@ routes.post('/register',function(req,res){
 
 
 // Set our api routes
-app.use('/api', api);
+app.use('/api/v1.0', routes);
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {
@@ -69,7 +66,7 @@ app.get('*', (req, res) => {
 /**
  * Get port from environment and store in Express.
  */
-const port = process.env.PORT || '3002';
+const port = process.env.PORT || '5000';
 app.set('port', port);
 
 /**
