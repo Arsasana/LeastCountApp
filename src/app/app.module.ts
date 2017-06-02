@@ -6,6 +6,10 @@ import {RouterModule,Routes} from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
+import { FooterComponent } from './footer/footer.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterFormComponent } from './register-form/register-form.component';
+import { HomeComponent } from './home/home.component';
 
 const ROUTES = [
   {
@@ -13,10 +17,18 @@ const ROUTES = [
     redirectTo: 'app',
     pathMatch: 'full'
   },
-  
+  {
+    path:'login',
+    component: LoginComponent
+  },
+  {
+    path:'register',
+    component: RegisterFormComponent
+  }
+  ,
   {
     path:'home',
-    component: AppComponent
+    component: HomeComponent
   }
 
 ];
@@ -24,7 +36,11 @@ const ROUTES = [
 @NgModule({
   declarations: [
     AppComponent,
-    NavComponent
+    NavComponent,
+    FooterComponent,
+	LoginComponent,
+	RegisterFormComponent,
+	HomeComponent
   ],
   imports: [
     BrowserModule,

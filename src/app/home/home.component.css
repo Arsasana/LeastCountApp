@@ -1,0 +1,11 @@
+.wrapper-container { 
+	display: table;
+	min-height:500px;
+}
+
+.wrapper {
+	min-height:500px;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}

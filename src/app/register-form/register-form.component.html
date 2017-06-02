@@ -1,0 +1,26 @@
+<div class="container">
+	<div class="register-container">
+            <div><h3>Register</h3></div>
+            <div class="form-box">
+                <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+					
+					<input name="firstname" id="firstname" type="text" placeholder="firstname" required [(ngModel)]="model.firstname" #firstname="ngModel">
+					<div [hidden]="firstname.valid || firstname.pristine" class="alert alert-danger">firstname is required</div>
+				
+					<input name="lastname" id="lastname" type="text" placeholder="lastname" required [(ngModel)]="model.lastname" #lastname="ngModel">
+					<div [hidden]="lastname.valid || lastname.pristine" class="alert alert-danger">lastname is required</div>
+				
+                    <input name="username" id="username" type="email" placeholder="username@example.com" required [(ngModel)]="model.username" #username="ngModel">
+					<div [hidden]="username.valid || username.pristine" class="alert alert-danger">username is required</div>
+					
+                    <input type="password" placeholder="password" name="password" id="password" [(ngModel)]="model.password" #password="ngModel">
+					<div [hidden]="password.valid || password.pristine" class="alert alert-danger">password is required</div>
+					
+					<input name="phone" id="phone" type="text" placeholder="phone" required [(ngModel)]="model.phone" #phone="ngModel">
+					<div [hidden]="phone.valid || phone.pristine" class="alert alert-danger">phone is required</div>
+					
+                    <button type="submit" class="btn btn-success submit-btn" >Submit</button>
+                </form>
+            </div>
+    </div>
+</div>
