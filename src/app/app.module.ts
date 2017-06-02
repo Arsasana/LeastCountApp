@@ -10,6 +10,7 @@ import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { HomeComponent } from './home/home.component';
+import { GameFormComponent } from './game-form/game-form.component';
 
 const ROUTES = [
   {
@@ -30,6 +31,11 @@ const ROUTES = [
     path:'home',
     component: HomeComponent
   }
+   ,
+  {
+    path:'game-form',
+    component: GameFormComponent
+  }
 
 ];
 
@@ -40,7 +46,8 @@ const ROUTES = [
     FooterComponent,
 	LoginComponent,
 	RegisterFormComponent,
-	HomeComponent
+	HomeComponent,
+	GameFormComponent
   ],
   imports: [
     BrowserModule,
