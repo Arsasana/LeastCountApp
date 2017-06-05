@@ -3,15 +3,15 @@
             <div id="output"></div>
             <div class="avatar"></div>
             <div class="form-box">
-                <form (ngSubmit)="onSubmit()" #gameForm="ngForm">
+                <form (ngSubmit)="onSubmit(gameForm)" #gameForm="ngForm">
                     <input name="gamename" id="gamename" type="text" placeholder="gamename" required [(ngModel)]="model.gamename" #gamename="ngModel">
 					<div [hidden]="gamename.valid || gamename.pristine" class="alert alert-danger">gamename is required</div>
 					
-					<input name="gamescore" id="gamescore" type="text" placeholder="gamescore" required [(ngModel)]="model.gamescore" #gamescore="ngModel">
+					<input name="gamescore" id="gamescore" type="number" placeholder="gamescore" required [(ngModel)]="model.gamescore" #gamescore="ngModel">
 					<div [hidden]="gamescore.valid || gamescore.pristine" class="alert alert-danger">gamescore is required</div>
-					
 					<button type="button" class="btn btn-success submit-btn" (click)="addPlayer()" >Add</button>
-					<ul [innerHtml]="playerName">
+					<ul>
+						<ng-container #liContainer></ng-container>
 					</ul>
 					
 					<br/>

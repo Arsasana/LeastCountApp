@@ -1,0 +1,1 @@
+<li class="player-name-li"><input type="text" placeholder="playername" name="playername" id="playername" [(ngModel)]="model.playername" (blur)="onBlurMethod(playername)" #playername="ngModel" ><div [hidden]="playername.valid || playername.pristine" class="alert alert-danger">playername is required</div></li>

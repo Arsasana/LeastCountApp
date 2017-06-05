@@ -1,22 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver,AfterViewInit,ViewChild, ViewContainerRef, OnInit } from '@angular/core';
+import {NgForm} from '@angular/forms';
+import { PlayerNameComponent } from '../player-name/player-name.component';
+import { PlayerNameService} from '../player-name.service';
 
 @Component({
   selector: 'app-game-form',
   templateUrl: './game-form.component.html',
   styleUrls: ['./game-form.component.css']
 })
-export class GameFormComponent implements OnInit {
+export class GameFormComponent implements OnInit,AfterViewInit {
+	@ViewChild("liContainer", {read: ViewContainerRef}) activeComponent: ViewContainerRef;
+	playerNames = [];
 	
-	playerName="";
-	model="";	
-
-  constructor() { }
+	model:any="";	
 
   ngOnInit() {
   }
+  
+  ngAfterViewInit() {
+    
+  }
+  
+  constructor(private componentFactoryResolver: ComponentFactoryResolver,
+                private viewContainerRef: ViewContainerRef,
+				private playerNameService : PlayerNameService) {
+    }
 
-  addPlayer(){
-	  this.playerName = `<li><input type="text" placeholder="playername" name="playername" id="playername" [(ngModel)]="model.playername" #playername="ngModel"><div [hidden]="playername.valid || playername.pristine" class="alert alert-danger">playername is required</div></li>`;
+    private addPlayer() {
+        const factory = this.componentFactoryResolver.resolveComponentFactory(PlayerNameComponent);
+        const ref = this.activeComponent.createComponent(factory);
+        ref.changeDetectorRef.detectChanges();
+    }
+  
+  onSubmit(gameForm : NgForm){
+	  this.playerNames = this.playerNameService.getPlayer();
+	  console.log(this.playerNames);
+	  console.log(gameForm.value);
   }
   
 }

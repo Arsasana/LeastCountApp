@@ -11,11 +11,13 @@ import { LoginComponent } from './login/login.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { HomeComponent } from './home/home.component';
 import { GameFormComponent } from './game-form/game-form.component';
+import { PlayerNameComponent } from './player-name/player-name.component';
+import { PlayerNameService} from './player-name.service';
 
 const ROUTES = [
   {
     path: '',
-    redirectTo: 'app',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
@@ -47,15 +49,17 @@ const ROUTES = [
 	LoginComponent,
 	RegisterFormComponent,
 	HomeComponent,
-	GameFormComponent
+	GameFormComponent,
+	PlayerNameComponent
   ],
+  entryComponents: [PlayerNameComponent],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
 	RouterModule.forRoot(ROUTES)
   ],
-  providers: [],
+  providers: [PlayerNameService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
