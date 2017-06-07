@@ -8,11 +8,11 @@ export class PlayerNameService {
 
   constructor() { }
 
-  addPlayer(playerName){
-	  this.playerNames.push(playerName);
+  setPlayerNames(playerNames){
+	  this.playerNames = playerNames;
   } 
   
-  getPlayer(){
+  getPlayerNames(){
 	  return this.playerNames;
   }
   

@@ -1,7 +1,6 @@
-import { Component, ComponentFactoryResolver,AfterViewInit,ViewChild, ViewContainerRef, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {NgForm} from '@angular/forms';
 import { Router } from '@angular/router';
-import { PlayerNameComponent } from '../player-name/player-name.component';
 import { PlayerNameService} from '../player-name.service';
 
 @Component({
@@ -9,33 +8,29 @@ import { PlayerNameService} from '../player-name.service';
   templateUrl: './game-form.component.html',
   styleUrls: ['./game-form.component.css']
 })
-export class GameFormComponent implements OnInit,AfterViewInit {
-	@ViewChild("liContainer", {read: ViewContainerRef}) activeComponent: ViewContainerRef;
+export class GameFormComponent implements OnInit{
+
 	playerNames = [];
-	
-	model:any="";	
+	model:any={};	
 
   ngOnInit() {
   }
   
-  ngAfterViewInit() {
-    
-  }
-  
-  constructor(private componentFactoryResolver: ComponentFactoryResolver,
-                private viewContainerRef: ViewContainerRef,
-				private playerNameService : PlayerNameService,
-				private router : Router) {
+
+  constructor(private playerNameService : PlayerNameService,private router : Router) {
     }
 
-    private addPlayer() {
-        const factory = this.componentFactoryResolver.resolveComponentFactory(PlayerNameComponent);
-        const ref = this.activeComponent.createComponent(factory);
-        ref.changeDetectorRef.detectChanges();
+    private addPlayer(playerName : String) {
+       
+		this.playerNames.push(playerName);
+		console.log(playerName);
+		console.log(this);
+		this.model.playerName = '';
+		
     }
   
   onSubmit(gameForm : NgForm){
-	  this.playerNames = this.playerNameService.getPlayer();
+	  this.playerNameService.setPlayerNames(this.playerNames);
 	  console.log(this.playerNames);
 	  this.playerNameService.setGameName(gameForm.value.gamename);
 	  this.playerNameService.setGameScore(gameForm.value.gamescore);

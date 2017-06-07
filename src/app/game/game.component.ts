@@ -10,8 +10,8 @@ export class GameComponent implements OnInit{
 	
 	
 	//playerNames: any;
-	playerNames = ['xxx','yyy','zzz'];
-	playerScores = [[10,20,30],[20,30,40]];
+	playerNames = [];
+	playerScores = [];
 	individualPlayerScores=[];
 	dummyarray = [];
 	singleRoundScore = [];
@@ -22,10 +22,10 @@ export class GameComponent implements OnInit{
 	
   constructor(	private playerNameService : PlayerNameService
 				) {
-	//this.playerNames= this.playerNameService.getPlayer();
+	this.playerNames= this.playerNameService.getPlayerNames();
 	this.gameScore = this.playerNameService.getGameScore();
 	this.gameName = this.playerNameService.getGameName();
-	this.gameName = "Sunday Special"
+	
 	
   }
 
