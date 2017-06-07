@@ -13,6 +13,9 @@ import { HomeComponent } from './home/home.component';
 import { GameFormComponent } from './game-form/game-form.component';
 import { PlayerNameComponent } from './player-name/player-name.component';
 import { PlayerNameService} from './player-name.service';
+import { GameComponent } from './game/game.component';
+
+import { TableRowComponent } from './table-row/table-row.component';
 
 const ROUTES = [
   {
@@ -38,6 +41,11 @@ const ROUTES = [
     path:'game-form',
     component: GameFormComponent
   }
+  ,
+  {
+    path:'game',
+    component: GameComponent
+  }
 
 ];
 
@@ -50,9 +58,12 @@ const ROUTES = [
 	RegisterFormComponent,
 	HomeComponent,
 	GameFormComponent,
-	PlayerNameComponent
+	PlayerNameComponent,
+	GameComponent,
+	
+	TableRowComponent
   ],
-  entryComponents: [PlayerNameComponent],
+  entryComponents: [PlayerNameComponent,TableRowComponent],
   imports: [
     BrowserModule,
     FormsModule,

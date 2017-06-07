@@ -1,0 +1,17 @@
+.table{
+	margin-bottom:0;
+}
+
+.panel-body{
+	padding:0;
+}
+
+input{
+	width:100%;
+	line-height:1.428;
+	padding:8px;
+}
+
+.score-input td{
+	padding:0;
+}

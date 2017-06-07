@@ -1,5 +1,6 @@
 import { Component, ComponentFactoryResolver,AfterViewInit,ViewChild, ViewContainerRef, OnInit } from '@angular/core';
 import {NgForm} from '@angular/forms';
+import { Router } from '@angular/router';
 import { PlayerNameComponent } from '../player-name/player-name.component';
 import { PlayerNameService} from '../player-name.service';
 
@@ -23,7 +24,8 @@ export class GameFormComponent implements OnInit,AfterViewInit {
   
   constructor(private componentFactoryResolver: ComponentFactoryResolver,
                 private viewContainerRef: ViewContainerRef,
-				private playerNameService : PlayerNameService) {
+				private playerNameService : PlayerNameService,
+				private router : Router) {
     }
 
     private addPlayer() {
@@ -35,7 +37,11 @@ export class GameFormComponent implements OnInit,AfterViewInit {
   onSubmit(gameForm : NgForm){
 	  this.playerNames = this.playerNameService.getPlayer();
 	  console.log(this.playerNames);
-	  console.log(gameForm.value);
+	  this.playerNameService.setGameName(gameForm.value.gamename);
+	  this.playerNameService.setGameScore(gameForm.value.gamescore);
+	  console.log(this.playerNameService.getGameName());
+	  console.log(this.playerNameService.getGameScore());
+	  this.router.navigate(['/game']);
   }
   
 }
