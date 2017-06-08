@@ -20,7 +20,7 @@
 						<tr class="score-input">
 							<td *ngFor="let name of playerNames; let i = index"><input name="playerscore" id="playerscore" type="text" placeholder="playerscore" required [(ngModel)]="dummyarray[i]" #username="ngModel" (blur)="onBlurMethod(dummyarray[i])"></td>
 						</tr>
-						<tr>
+						<tr class="totalscore-row">
 							<th *ngFor="let totalScore of playerTotalScore">{{totalScore}}</th>
 						</tr>
 					</tbody>	

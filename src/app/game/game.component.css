@@ -27,3 +27,15 @@ input{
 .clear-fix{
 	clear:both;
 }
+
+.totalscore-row{
+    color: #333;
+}
+
+.totalscore-row th{
+	border:1px solid #333;
+}
+
+.score-input td{
+	border:0;
+}

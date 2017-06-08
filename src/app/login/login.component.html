@@ -10,7 +10,7 @@
                     <input type="password" placeholder="password" name="password" id="password" [(ngModel)]="model.password" #password="ngModel">
 					<div [hidden]="password.valid || password.pristine" class="alert alert-danger">password is required</div>
 					<br/>
-                    <button type="submit" class="btn btn-success submit-btn" [disabled]="!loginForm.form.valid">Submit</button>
+                    <button type="submit" class="btn btn-primary submit-btn" [disabled]="!loginForm.form.valid">Submit</button>
                 </form>
             </div>
     </div>

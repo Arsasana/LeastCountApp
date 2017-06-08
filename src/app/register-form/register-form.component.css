@@ -147,6 +147,8 @@ html,body{
 .submit-btn {
 	margin-top:20px;
 	width:100%;
+	    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .fadeInUp {

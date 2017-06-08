@@ -85,11 +85,3 @@ ul li{
 	padding-bottom:5px;
 	border-bottom : 1px solid black;
 }
-
-.btn-success{
-	background-color:rgb(85, 184, 255)
-}
-
-.btn-success:hover{
-	background-color:#106caf
-}

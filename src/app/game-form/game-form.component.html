@@ -15,7 +15,7 @@
 					<input name="playerName" id="playerName" type="text" placeholder="playerName" [(ngModel)]="model.playerName" #playerName="ngModel">
 					<div [hidden]="playerName.valid || playerName.pristine" class="alert alert-danger">playerName is required</div>
 					
-					<button type="button" id="add-btn" class="btn btn-success" (click)="addPlayer(playerName.value); playerName.value=null" >Add</button>
+					<button type="button" id="add-btn" class="btn btn-primary " (click)="addPlayer(playerName.value); playerName.value=null" >Add</button>
 					<div class="participants">
 					<h3><span>Participants</span></h3>
 					<ul>
@@ -24,7 +24,7 @@
 					</div>
 					<br/>
 					<div class="submit-btn-div">
-                    <button type="submit" class="btn btn-success submit-btn" [disabled]="!gameForm.form.valid">Start</button>
+                    <button type="submit" class="btn btn-primary submit-btn" [disabled]="!gameForm.form.valid">Start</button>
 					</div>
                 </form>
             </div>

@@ -8,8 +8,6 @@ import { PlayerNameService} from '../player-name.service';
 })
 export class GameComponent implements OnInit{
 	
-	
-	//playerNames: any;
 	playerNames = [];
 	playerScores = [];
 	individualPlayerScores=[];
