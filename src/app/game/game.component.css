@@ -15,3 +15,15 @@ input{
 .score-input td{
 	padding:0;
 }
+
+#gamename-span{
+	float:left;
+}
+
+#gamescore-span{
+	float:right;
+}
+
+.clear-fix{
+	clear:both;
+}

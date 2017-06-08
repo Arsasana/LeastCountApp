@@ -11,7 +11,6 @@ import { LoginComponent } from './login/login.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { HomeComponent } from './home/home.component';
 import { GameFormComponent } from './game-form/game-form.component';
-import { PlayerNameComponent } from './player-name/player-name.component';
 import { PlayerNameService} from './player-name.service';
 import { GameComponent } from './game/game.component';
 
@@ -57,10 +56,8 @@ const ROUTES = [
 	RegisterFormComponent,
 	HomeComponent,
 	GameFormComponent,
-	PlayerNameComponent,
 	GameComponent
   ],
-  entryComponents: [PlayerNameComponent],
   imports: [
     BrowserModule,
     FormsModule,

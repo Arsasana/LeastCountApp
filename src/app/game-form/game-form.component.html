@@ -10,16 +10,22 @@
 					<input name="gamescore" id="gamescore" type="number" placeholder="gamescore" required [(ngModel)]="model.gamescore" #gamescore="ngModel">
 					<div [hidden]="gamescore.valid || gamescore.pristine" class="alert alert-danger">gamescore is required</div>
 					
+					<div class="clear-fix"></div>
+					
 					<input name="playerName" id="playerName" type="text" placeholder="playerName" [(ngModel)]="model.playerName" #playerName="ngModel">
 					<div [hidden]="playerName.valid || playerName.pristine" class="alert alert-danger">playerName is required</div>
-					<button type="button" class="btn btn-success submit-btn" (click)="addPlayer(playerName.value); playerName.value=null" >Add</button>
+					
+					<button type="button" id="add-btn" class="btn btn-success" (click)="addPlayer(playerName.value); playerName.value=null" >Add</button>
+					<div class="participants">
+					<h3><span>Participants</span></h3>
 					<ul>
-						<!-- <ng-container #liContainer></ng-container> -->
 						<li *ngFor="let name of playerNames">{{name}}</li>
 					</ul>
-					
+					</div>
 					<br/>
+					<div class="submit-btn-div">
                     <button type="submit" class="btn btn-success submit-btn" [disabled]="!gameForm.form.valid">Start</button>
+					</div>
                 </form>
             </div>
     </div>
