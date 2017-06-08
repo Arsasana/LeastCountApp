@@ -17,6 +17,7 @@ export class GameComponent implements OnInit{
 	gameScore: number;
 	gameName: string;
 	model:any ={};
+	pattern = "^([0-9]|0[0-9]|1[0-9]|2[0-9]|3[0-9]|40|XX|xx)$";
 	
   constructor(	private playerNameService : PlayerNameService
 				) {
