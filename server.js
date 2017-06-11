@@ -6,7 +6,7 @@ const mongojs = require('mongojs');
 const mongoose = require('mongoose');
 const config = require('./config');
 const user   = require('./src/models/User');
-const game   = require('./src/models/Game');
+const gameDetails   = require('./src/models/GameDetails');
 
 const app = express();
 
@@ -25,8 +25,9 @@ routes.get('/test', function (req, res) {
   res.send('Our Sample API is up...');
 });
 
-routes.post('/register',function(req,res){
+routes.post('/user/register',function(req,res){
 	var host = req.body.host;
+	// Circles not be created while registration
 	var newUser = new user({
 		firstName : req.body.firstName,
 		lastName : req.body.lastName,
@@ -48,13 +49,13 @@ routes.post('/register',function(req,res){
 					return res.json({success:false,message:"email already exists"});
 				}
 			}else{
-				res.json({success:true, message : 'User had been registered successfully'});
+				res.json({success:true, message : 'User had been registered successfully',resultObj:newUser});
 			}
 		});
 });
 
-//authenticate a user
-routes.post('/login',function(req,res){
+// authenticate a user
+routes.post('/user/login',function(req,res){
 	user.findOne({
 	email : req.body.email,
 	'isActive':true
@@ -85,6 +86,7 @@ routes.post('/login',function(req,res){
 	});
 });
 
+// Currently not using
 routes.post('/createGame',function(req,res){
 	var newGame = new game({
 		gameName : req.body.gameName,
@@ -112,7 +114,176 @@ routes.post('/createGame',function(req,res){
 		
 });
 
+routes.post('/game/details',function(req,res){
+	// var host = req.body.host;
+		var playersNames = []
+		playersNames = req.body.Names;
+		
+		return insertGame(req,playersNames,res)
+		
 
+	});
+
+	var insertGame = function(req,playerNames,res) {
+
+					 var playerDetailRecs = []
+					 for(i=0 ; i < playerNames.length;i++) {
+						 
+						 playerDetailRecs.push({name:playerNames[i],fullCount:0,showCount:0});
+						 
+					 }
+					 var newGameDetails = new gameDetails ({
+							activeFlag : 1,
+							gameName : req.body.gameName,
+							winningScore : req.body.Score,
+							winner : "",
+							createdTime :  new Date(),
+							playerDetails : playerDetailRecs
+						});
+							
+					 newGameDetails.save(function(err,result){
+								 if(err) {
+									console.log('Error Inserting New Data');
+									if (err.name === 'ValidationError') {
+										for (field in err.errors) {
+										console.log(err.errors[field].message);
+										
+										return 	res.json({success:false, message : 'Unable to create game'});
+										
+										}
+									}
+									
+								return 	res.json({success:false, message : 'Unable to create game'});
+								 }else{
+									 return res.json({success:true, message : 'Successfully  created game',gameId : result._id});
+								 }
+								
+								 });
+					
+	};
+
+	routes.post('/game/scorecard',function(req,res){
+		// var host = req.body.host;
+			var playerDetailScores = req.body.details;
+			var gameId = req.body.gameId;
+			var winner = req.body.winner;
+			
+			gameDetails.findOne({_id:gameId},function(err,foundObj){
+				
+				if(err){
+					console.log('Error Inserting New Data');
+					if (err.name === 'ValidationError') {
+						for (field in err.errors) {
+						console.log(err.errors[field].message);
+						
+						return 	res.json({success:false, message : 'Unable to update score'});
+						
+						}
+					}
+					
+				return 	res.json({success:false, message : 'Unable to update score'});
+				}else{
+					foundObj.winner = winner;
+					foundObj.playerDetails = playerDetailScores;
+					foundObj.save(function(err,updateObj){
+						
+						if(err){
+							console.log('Error Inserting New Data');
+							if (err.name === 'ValidationError') {
+								for (field in err.errors) {
+								console.log(err.errors[field].message);
+								
+								return 	res.json({success:false, message : 'Unable to update score'});
+								
+								}
+							}
+							
+						return 	res.json({success:false, message : 'Unable to update score'});
+						}else{
+							
+							return 	res.json({success:true, message : 'Successfully updated score',resultObj :foundObj });
+							
+							
+							
+						}
+					});
+				}
+				
+				
+				
+			})
+			
+		});
+
+
+	routes.post('/user/create/circle',function(req,res){
+		// var host = req.body.host;
+			var email = req.body.email;
+			var circleDetails = {name: String,members : [String] };
+		var	circles = [{name : String,members : [String] ,isActive : {type:Boolean}}];
+			circleDetails = req.body.circleDetails;
+			
+			user.findOne({email:email},function(err,foundObj){
+				
+				if(err){
+					console.log('Error Inserting New Data');
+					if (err.name === 'ValidationError') {
+						for (field in err.errors) {
+						console.log(err.errors[field].message);
+						
+						return 	res.json({success:false, message : 'Unable to create circle'});
+						
+						}
+					}
+					
+				return 	res.json({success:false, message : 'Unable to create circle'});
+				}else{
+					//checking if circle name already exist or not
+					circles = foundObj.circles;
+					for(i=0;i < circles.length ;i++){
+				
+					if(circleDetails.name === circles[i].name)
+						 {
+						
+						return 	res.json({success:false, message : 'Circle name already exist'});
+						}
+						 }
+                	  foundObj.circles.push({name:circleDetails.name,members:circleDetails.members,isActive:true});
+						 
+					 
+  
+					//foundObj.circles += circleDetails;
+					foundObj.save(function(err,updateObj){
+						
+						if(err){
+							console.log('Error Inserting New Data');
+							if (err.name === 'ValidationError') {
+								for (field in err.errors) {
+								console.log(err.errors[field].message);
+								
+								return 	res.json({success:false, message : 'Unable to create circle'});
+								
+								}
+							}
+							
+						return 	res.json({success:false, message : 'Unable to create circle'});
+						}else{
+							
+							return 	res.json({success:true, message : 'Successfully created circle',resultObj :foundObj });
+							
+							
+							
+						}
+					});
+				}
+				
+				
+				
+			})
+			
+		});
+
+	
 // Set our api routes
 app.use('/api/v1.0', routes);
 

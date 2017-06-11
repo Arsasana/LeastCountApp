@@ -7,7 +7,8 @@ var User = mongoose.model('user', new Schema({
 	email : {type:String, unique : true},
 	password : String,
 	phone : {type:Number},
-	isActive : {type:Boolean , default:true}
+	isActive : {type:Boolean , default:true},
+	circles : [{name : String,members : [String] ,isActive : {type:Boolean , default:false}}]
 }));
 
 module.exports = User;
