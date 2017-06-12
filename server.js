@@ -40,7 +40,7 @@ routes.post('/register',function(req,res){
 				console.log('Error Inserting New Data');
 				if (err.name === 'ValidationError') {
 					for (field in err.errors) {
-					console.log(err.errors[field].message); 
+					console.log(err.errors[field].message);
 					}
 				}
 				if(err.name === 'MongoError' && err.code === 11000){
@@ -64,17 +64,17 @@ routes.post('/login',function(req,res){
 		if(!user){
 			res.json({success:false,message : 'Authentication failed! User not found'});
 		}else if(user){
-			
+
 			 // check if password matches
 			 console.log(user);
 			 console.log(user.email);
 			if(user.password != req.body.user.password){
 			res.json({success:false, message : 'Authentication failed! invalid username and password'});
 			}else{
-				
+
 				 // if user is found and password is right
-				
-				
+
+
 				// return the information including token as JSON
 				res.json({
 					success:true,
@@ -93,13 +93,13 @@ routes.post('/createGame',function(req,res){
 		gameScore : req.body.gameScore,
 		players :req.body.players
 	});
-		
+
 		newGame.save(function(err){
 			 if(err) {
 				console.log('Error Inserting New Data');
 				if (err.name === 'ValidationError') {
 					for (field in err.errors) {
-					console.log(err.errors[field].message); 
+					console.log(err.errors[field].message);
 					}
 				}
 				if(err.name === 'MongoError' && err.code === 11000){
@@ -110,7 +110,7 @@ routes.post('/createGame',function(req,res){
 				res.json({success:true, message : 'game created successfully'});
 			}
 		});
-		
+
 });
 
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router} from '@angular/router'
+import { Router} from '@angular/router';
 
 @Component({
   selector: 'home',
@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
   }
-  
+
   start(){
 	  this.router.navigate(['home']);
   }

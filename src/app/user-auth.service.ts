@@ -9,7 +9,7 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class UserAuthService {
-	
+
 	loginUrl = 'http://localhost:5000/api/v1.0/login';
 	registerUrl = 'http://localhost:5000/api/v1.0/register';
 
@@ -30,16 +30,17 @@ export class UserAuthService {
 	return this.http.post(this.loginUrl, { user }, options)
              .map(this.extractData)
              .catch(this.handleError);
-		
+
 }
 
-  
+
   private extractData(res: Response) {
     let body = res.json();
 	console.log(body);
+    console.log(body.data);
     return body.data || { };
   }
-  
+
   private handleError (error: Response | any) {
     // In a real world app, you might use a remote logging infrastructure
     let errMsg: string;

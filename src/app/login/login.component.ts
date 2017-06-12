@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserAuthService } from '../user-auth.service';
-import { User } from '../user';
+import { Router} from '@angular/router';
+
 
 @Component({
   selector: 'login-form',
@@ -9,22 +10,30 @@ import { User } from '../user';
 })
 export class LoginComponent implements OnInit {
 
- errorMessage: string;
+  errorMessage: string;
   mode = 'Observable';
-  user = new User('','','','','',0,true);
-  constructor(private userAuthService: UserAuthService ) { }
+  user: any = {};
+  submitted = false;
+  constructor(private userAuthService: UserAuthService,
+              public router: Router ) { }
 
   ngOnInit() {
   }
-  
-  submitted = false;
+
+
   onSubmit() {
-	 
-	  this.userAuthService.authenticateUser(this.user)
+    this.userAuthService.authenticateUser(this.user)
                      .subscribe(
-                       user => this.user = user,
+                       user => {
+
+                         this.user = user;
+                          console.log(this.user);
+                          if ( this.user.success ) {
+                            this.router.navigate(['home']);
+                          }
+                       },
                        error =>  this.errorMessage = <any>error);
-  
+
   console.log(this.user);
   this.submitted = true; }
 
