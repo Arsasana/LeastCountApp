@@ -13,7 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { GameFormComponent } from './game-form/game-form.component';
 import { PlayerNameService} from './player-name.service';
 import { GameComponent } from './game/game.component';
-
+import { UserAuthService } from './user-auth.service';
 
 const ROUTES = [
   {
@@ -64,7 +64,7 @@ const ROUTES = [
     HttpModule,
 	RouterModule.forRoot(ROUTES)
   ],
-  providers: [PlayerNameService],
+  providers: [PlayerNameService,UserAuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

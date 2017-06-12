@@ -55,8 +55,9 @@ routes.post('/register',function(req,res){
 
 //authenticate a user
 routes.post('/login',function(req,res){
+	console.log(req.body.user);
 	user.findOne({
-	email : req.body.email,
+	email : req.body.user.email,
 	'isActive':true
 	},function(err,user){
 		if(err) throw err;
@@ -67,7 +68,7 @@ routes.post('/login',function(req,res){
 			 // check if password matches
 			 console.log(user);
 			 console.log(user.email);
-			if(user.password != req.body.password){
+			if(user.password != req.body.user.password){
 			res.json({success:false, message : 'Authentication failed! invalid username and password'});
 			}else{
 				
