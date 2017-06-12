@@ -18,7 +18,7 @@
 							<td *ngFor="let score of row">{{score}}</td>
 						</tr>
 						<tr class="score-input">
-							<td *ngFor="let name of playerNames; let i = index"><input name="playerscore" [attr.id]="i" type="text" placeholder="playerscore" required [(ngModel)]="dummyarray[i]" [pattern]="pattern" #playerscore (blur)="onBlurMethod($event)"><span [hidden]="playerscore.valid || playerscore.pristine">please	enter a valid score below 40</span></td>
+              <td *ngFor="let name of playerNames; let i = index"><form #scoreForm="ngForm"><input name="playerscore" [attr.id]="i" type="text" placeholder="playerscore" required [(ngModel)]="dummyarray[i]" [pattern]="pattern" #playerscore="ngModel" (blur)="onBlurMethod($event,scoreForm)"><span [hidden]="playerscore.valid || playerscore.pristine">please	enter a valid score below 40</span></form></td>
 						</tr>
 						<tr class="totalscore-row">
 							<th *ngFor="let totalScore of playerTotalScore">{{totalScore}}</th>
