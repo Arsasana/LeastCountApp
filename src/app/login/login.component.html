@@ -4,10 +4,10 @@
             <div class="avatar"></div>
             <div class="form-box">
                 <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-                    <input name="username" id="username" type="text" placeholder="username" required [(ngModel)]="model.username" #username="ngModel">
+                    <input name="username" id="username" type="text" placeholder="username" required [(ngModel)]="user.email" #username="ngModel">
 					<div [hidden]="username.valid || username.pristine" class="alert alert-danger">username is required</div>
 					
-                    <input type="password" placeholder="password" name="password" id="password" [(ngModel)]="model.password" #password="ngModel">
+                    <input type="password" placeholder="password" name="password" required id="password" [(ngModel)]="user.password" #password="ngModel">
 					<div [hidden]="password.valid || password.pristine" class="alert alert-danger">password is required</div>
 					<br/>
                     <button type="submit" class="btn btn-primary submit-btn" [disabled]="!loginForm.form.valid">Submit</button>

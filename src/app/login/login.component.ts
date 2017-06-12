@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginModel }    from './login';
+import { UserAuthService } from '../user-auth.service';
+import { User } from '../user';
 
 @Component({
   selector: 'login-form',
@@ -8,13 +9,23 @@ import { LoginModel }    from './login';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+ errorMessage: string;
+  mode = 'Observable';
+  user = new User('','','','','',0,true);
+  constructor(private userAuthService: UserAuthService ) { }
 
   ngOnInit() {
   }
   
-   model = new LoginModel('','');
   submitted = false;
-  onSubmit() { this.submitted = true; }
+  onSubmit() {
+	 
+	  this.userAuthService.authenticateUser(this.user)
+                     .subscribe(
+                       user => this.user = user,
+                       error =>  this.errorMessage = <any>error);
+  
+  console.log(this.user);
+  this.submitted = true; }
 
 }
