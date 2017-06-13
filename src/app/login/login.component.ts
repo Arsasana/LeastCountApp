@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserAuthService } from '../user-auth.service';
 import { Router} from '@angular/router';
+import { CoolSessionStorage } from 'angular2-cool-storage';
 
 
 @Component({
@@ -14,8 +15,12 @@ export class LoginComponent implements OnInit {
   mode = 'Observable';
   user: any = {};
   submitted = false;
+  sessionStorage: CoolSessionStorage;
+  
   constructor(private userAuthService: UserAuthService,
-              public router: Router ) { }
+              public router: Router,
+			  sessionStorage: CoolSessionStorage  ) { 
+			  this.sessionStorage = sessionStorage;}
 
   ngOnInit() {
   }
@@ -27,7 +32,7 @@ export class LoginComponent implements OnInit {
                        user => {
 
                          this.user = user;
-                          console.log(this.user);
+						  this.sessionStorage.setItem("user",JSON.stringify(this.user.obj));
                           if ( this.user.success ) {
                             this.router.navigate(['home']);
                           }

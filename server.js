@@ -28,11 +28,11 @@ routes.get('/test', function (req, res) {
 routes.post('/register',function(req,res){
 	var host = req.body.host;
 	var newUser = new user({
-		firstName : req.body.firstName,
-		lastName : req.body.lastName,
-		email : req.body.email,
-		password : req.body.password,
-		phone : req.body.phone
+		firstName : req.body.user.firstname,
+		lastName : req.body.user.lastname,
+		email : req.body.user.email,
+		password : req.body.user.password,
+		phone : req.body.user.phone
 	});
 
 			newUser.save(function(err){
@@ -48,7 +48,7 @@ routes.post('/register',function(req,res){
 					return res.json({success:false,message:"email already exists"});
 				}
 			}else{
-				res.json({success:true, message : 'User had been registered successfully'});
+				res.json({success:true, message : 'User had been registered successfully. Please wait while we redirect you to login'});
 			}
 		});
 });

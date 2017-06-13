@@ -10,9 +10,17 @@
 		  <a class="navbar-brand" routerLink="/home" routerLinkActive="active">LeastCountApp</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-right" *ngIf="!user">
             <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
             <li><a routerLink="/register" routerLinkActive="active">Register</a></li>
+          </ul>
+		  <ul class="nav navbar-nav navbar-right" *ngIf="user">
+            <li class="dropdown">
+                  <a routerLink="/home" routerLinkActive="active" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user.firstName}} {{user.lastName}} <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><button type="button" id="logout-btn" (click)="logout()">Logout</button></li>
+                  </ul>
+                </li>
           </ul>
         </div>
       </div>

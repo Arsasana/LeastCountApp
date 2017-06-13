@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { RegisterModel }    from './register';
+import { UserAuthService } from '../user-auth.service';
+import { Router} from '@angular/router';
+import { CoolSessionStorage } from 'angular2-cool-storage';
 
 @Component({
   selector: 'register-form',
@@ -8,13 +10,36 @@ import { RegisterModel }    from './register';
 })
 export class RegisterFormComponent implements OnInit {
 
-  constructor() { }
+  errorMessage: string;
+  successMessage: string;
+  mode = 'Observable';
+  user: any = {};
+  submitted = false;
+  sessionStorage: CoolSessionStorage;
+ 
+constructor(private userAuthService: UserAuthService,
+              public router: Router,
+			  sessionStorage: CoolSessionStorage  ) { 
+			  this.sessionStorage = sessionStorage;}
 
   ngOnInit() {
   }
 
-  model = new RegisterModel('','','','',0);
-  submitted = false;
-  onSubmit() { this.submitted = true;
-	console.log(this.model)}
+  onSubmit() { 
+  
+   this.userAuthService.registerUser(this.user)
+                     .subscribe(
+                       user => {
+                         this.user = user;
+						 this.successMessage = this.user.message;
+                          if ( this.user.success ) {
+							setTimeout(() => {  
+                            this.router.navigate(['login']);
+							},5000);
+                          }
+                       },
+                       error =>  this.errorMessage = <any>error);
+
+  console.log(this.user);
+  this.submitted = true;}
 }

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {RouterModule,Routes} from '@angular/router';
+import { CoolStorageModule } from 'angular2-cool-storage';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -62,6 +63,7 @@ const ROUTES = [
     BrowserModule,
     FormsModule,
     HttpModule,
+	CoolStorageModule,
 	RouterModule.forRoot(ROUTES)
   ],
   providers: [PlayerNameService,UserAuthService],

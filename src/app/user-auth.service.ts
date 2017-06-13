@@ -4,6 +4,7 @@ import { Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { User } from './user';
 
+
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
@@ -15,7 +16,7 @@ export class UserAuthService {
 
   constructor(private http: Http) { }
 
-  registerUser (user: User): Observable<User> {
+  registerUser (user: any): Observable<any> {
   let headers = new Headers({ 'Content-Type': 'application/json' });
   let options = new RequestOptions({ headers: headers });
   return this.http.post(this.registerUrl, { user }, options)
@@ -23,8 +24,7 @@ export class UserAuthService {
              .catch(this.handleError);
 }
 
-	authenticateUser (user: User): Observable<User> {
-		console.log(user);
+	authenticateUser (user: any): Observable<any> {
 	let headers = new Headers({ 'Content-Type': 'application/json' });
 	let options = new RequestOptions({ headers: headers });
 	return this.http.post(this.loginUrl, { user }, options)
@@ -36,9 +36,7 @@ export class UserAuthService {
 
   private extractData(res: Response) {
     let body = res.json();
-	console.log(body);
-    console.log(body.data);
-    return body.data || { };
+    return body || { };
   }
 
   private handleError (error: Response | any) {
