@@ -4,14 +4,14 @@
 		<div class="col-md-12">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h3 class="panel-title"><span id="gamename-span">{{gameName}}</span><span id="gamescore-span">Gamescore : {{gameScore}}</span><div class="clear-fix"></div></h3>
+					<h3 class="panel-title"><span id="gamename-span">{{game.gameName}}</span><span id="gamescore-span">Gamescore : {{game.gameScore}}</span><div class="clear-fix"></div></h3>
 				</div>
 				<div class="panel-body">
 					<div class="table-responsive">
 				<table class="table table-bordered">
 					<thead>
 						<tr>
-							<th *ngFor="let name of playerNames">{{name}}</th>
+							<th *ngFor="let player of game.players">{{player.name}}</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -19,7 +19,7 @@
 							<td *ngFor="let score of row">{{score}}</td>
 						</tr>
 						<tr class="score-input">
-              <td *ngFor="let name of playerNames; let i = index"><form #scoreForm="ngForm"><input name="playerscore" [attr.id]="i" type="text" placeholder="playerscore" required [(ngModel)]="dummyarray[i]" [pattern]="pattern" #playerscore="ngModel" (blur)="onBlurMethod($event,scoreForm)"><span [hidden]="playerscore.valid || playerscore.pristine">please	enter a valid score below 40</span></form></td>
+              <td *ngFor="let player of game.players; let i = index"><form #scoreForm="ngForm"><input name="playerscore" [attr.id]="i" type="text" placeholder="playerscore" required [(ngModel)]="dummyarray[i]" [pattern]="pattern" #playerscore="ngModel" (blur)="onBlurMethod($event,scoreForm)"><span [hidden]="playerscore.valid || playerscore.pristine">please	enter a valid score below 40</span></form></td>
 						</tr>
 						<tr class="totalscore-row">
 							<th *ngFor="let totalScore of playerTotalScore">{{totalScore}}</th>

@@ -86,20 +86,21 @@ routes.post('/login',function(req,res){
 	});
 });
 
+// Currently not using
 routes.post('/createGame',function(req,res){
+	
 	var newGame = new game({
-		gameName : req.body.gameName,
-		playersCount : req.body.playersCount,
-		gameScore : req.body.gameScore,
-		players :req.body.players
+		gameName : req.body.game.gamename,
+		playersCount : req.body.game.playersCount,
+		gameScore : req.body.game.gamescore,
+		players :req.body.game.players
 	});
-
 		newGame.save(function(err){
 			 if(err) {
 				console.log('Error Inserting New Data');
 				if (err.name === 'ValidationError') {
 					for (field in err.errors) {
-					console.log(err.errors[field].message);
+					console.log(err.errors[field].message); 
 					}
 				}
 				if(err.name === 'MongoError' && err.code === 11000){
@@ -107,10 +108,10 @@ routes.post('/createGame',function(req,res){
 					return res.json({success:false,message:"error"});
 				}
 			}else{
-				res.json({success:true, message : 'game created successfully'});
+				res.json({success:true, message : 'game created successfully', obj:newGame});
 			}
 		});
-
+		
 });
 
 

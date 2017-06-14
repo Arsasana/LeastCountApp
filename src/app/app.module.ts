@@ -12,9 +12,12 @@ import { LoginComponent } from './login/login.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { HomeComponent } from './home/home.component';
 import { GameFormComponent } from './game-form/game-form.component';
-import { PlayerNameService} from './player-name.service';
 import { GameComponent } from './game/game.component';
+
 import { UserAuthService } from './user-auth.service';
+import { GameService} from './game.service';
+import { PlayerNameService} from './player-name.service';
+
 
 const ROUTES = [
   {
@@ -66,7 +69,7 @@ const ROUTES = [
 	CoolStorageModule,
 	RouterModule.forRoot(ROUTES)
   ],
-  providers: [PlayerNameService,UserAuthService],
+  providers: [PlayerNameService,UserAuthService,GameService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
