@@ -19,7 +19,7 @@
 							<td *ngFor="let score of row">{{score}}</td>
 						</tr>
 						<tr class="score-input">
-              <td *ngFor="let player of game.players; let i = index"><form #scoreForm="ngForm"><input name="playerscore" [attr.id]="i" type="text" placeholder="playerscore" required [(ngModel)]="dummyarray[i]" [pattern]="pattern" #playerscore="ngModel" (blur)="onBlurMethod($event,scoreForm)"><span [hidden]="playerscore.valid || playerscore.pristine">please	enter a valid score below 40</span></form></td>
+              <td *ngFor="let player of game.players; let i = index"><form #scoreForm="ngForm"><input name="playerscore" [attr.id]="i" type="text" placeholder="playerscore" [(ngModel)]="dummyarray[i]" [pattern]="pattern" #playerscore="ngModel" [disabled]="playerTotalScore[i] >= game.gameScore" (blur)="onBlurMethod($event,scoreForm)"><span [hidden]="playerscore.valid || playerscore.pristine || playerscore.disabled">please enter a valid score below 40</span></form></td>
 						</tr>
 						<tr class="totalscore-row">
 							<th *ngFor="let totalScore of playerTotalScore">{{totalScore}}</th>
@@ -27,10 +27,11 @@
 					</tbody>
 				</table>
 			</div>
+			
 				</div>
 			</div>
 
-
+		<div>{{game.winner}}</div>
 		</div>
 	</div>
 </div>
