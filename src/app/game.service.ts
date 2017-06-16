@@ -26,6 +26,15 @@ export class GameService {
 
 }
 
+  saveGame (game: any,saveGameUrl: string): Observable<any> {
+	let headers = new Headers({ 'Content-Type': 'application/json' });
+	let options = new RequestOptions({ headers: headers });
+	return this.http.post(saveGameUrl, { game }, options)
+             .map(this.extractData)
+             .catch(this.handleError);
+
+}
+
 	public setGame(game){
 		this.game = game;
 	}

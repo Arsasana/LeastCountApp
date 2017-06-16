@@ -8,6 +8,7 @@ var Game = mongoose.model('game', new Schema({
 	isActive : {type:Boolean , default:true},
 	players :[{
 				name : String,
+				score : [],
 				fullCount: {type: Number, default: 0},
 				showCount: {type: Number, default: 0}
 			}]

@@ -114,6 +114,44 @@ routes.post('/createGame',function(req,res){
 		
 });
 
+//to like a post
+routes.post('/saveGame/:gameId',function(req,res){
+	console.log(req.body.game.players);
+	game.find({'_id':req.params.gameId},function(err,game){
+			if(err) throw err;
+			if(!game){
+				res.json({success:false,message : 'Game with id : '+req.params.gameId+' could not be found'});
+			}else{
+				game.findOneAndUpdate(
+					{'_id':req.params.game},
+					{$inc:{"likes":1},
+					updatedTime : Date.now(),
+					$push : {likedBy : ObjectId(req.body.userId)}},
+					{upsert:false,new:true},
+					function(err,doc){
+						if(err) throw err;
+						return res.json({success:true,message:'post liked successfully',doc:doc});
+					}
+				);
+			}
+	});
+});
+
+//to save a game
+routes.post('/saveGame/:gameId',function(req,res){
+	
+	game.findOneAndUpdate({_id : req.params.gameId},{$set:{winner : req.body.game.winner, 'players.$.score' : req.body.game.players.score}}, {upsert:false, new:true}, function(err,game){
+		if(err) throw err;
+		
+		
+		}else{
+			
+			res.json({success:true,message : 'Game successfully saved',obj:game});
+		}
+		
+	});
+});
+
 
 // Set our api routes
 app.use('/api/v1.0', routes);
