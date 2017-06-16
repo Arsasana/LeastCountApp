@@ -18,7 +18,7 @@ export class GameComponent implements OnInit {
 	model: any = {};
 	game: any = {};
 	pattern = '^([0-9]|0[0-9]|1[0-9]|2[0-9]|3[0-9]|40|XX|xx|NA|na|SW|sw)$';
-	saveGameUrl = 'http://localhost:5000/api/v1.0/saveGame/5940f308a2c024341dfb86b8';
+	saveGameUrl = 'http://localhost:5000/api/v1.0/saveGame/';
 	errorMessage: string;
 	mode = 'Observable';
 
@@ -29,7 +29,7 @@ export class GameComponent implements OnInit {
   }
 
   ngOnInit() {
-	this.game = {
+	/*this.game = {
     "_id": {
         "$oid": "5940f308a2c024341dfb86b8"
     },
@@ -77,8 +77,8 @@ export class GameComponent implements OnInit {
     ],
     "isActive": true,
     "__v": 0
-}
-	//this.gameService.getGame();
+}*/
+	this.game = this.gameService.getGame();
 	if(this.game){
 	this.createInitialArrays();
 	}else{
@@ -174,6 +174,7 @@ export class GameComponent implements OnInit {
 	}
 	
 	saveGame(){
+		this.saveGameUrl = this.saveGameUrl + this.game._id;
 		this.gameService.saveGame(this.game,this.saveGameUrl)
                      .subscribe(
                       resp => {

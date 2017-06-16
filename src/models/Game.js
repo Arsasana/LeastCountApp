@@ -6,12 +6,8 @@ var Game = mongoose.model('game', new Schema({
 	playersCount : {type:Number},
 	gameScore : {type:Number},
 	isActive : {type:Boolean , default:true},
-	players :[{
-				name : String,
-				score : [],
-				fullCount: {type: Number, default: 0},
-				showCount: {type: Number, default: 0}
-			}]
+	winner : {type:String, default:null},
+	players :[]
 	
 }));
 
