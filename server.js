@@ -25,7 +25,7 @@ routes.get('/test', function (req, res) {
   res.send('Our Sample API is up...');
 });
 
-routes.post('/register',function(req,res){
+routes.post('/user/register',function(req,res){
 	var host = req.body.host;
 	var newUser = new user({
 		firstName : req.body.user.firstname,
@@ -54,7 +54,7 @@ routes.post('/register',function(req,res){
 });
 
 //authenticate a user
-routes.post('/login',function(req,res){
+routes.post('/user/login',function(req,res){
 	console.log(req.body.user);
 	user.findOne({
 	email : req.body.user.email,
@@ -88,7 +88,7 @@ routes.post('/login',function(req,res){
 
 // Currently not using
 routes.post('/createGame',function(req,res){
-	
+
 	var newGame = new game({
 		gameName : req.body.game.gamename,
 		playersCount : req.body.game.playersCount,
@@ -100,7 +100,7 @@ routes.post('/createGame',function(req,res){
 				console.log('Error Inserting New Data');
 				if (err.name === 'ValidationError') {
 					for (field in err.errors) {
-					console.log(err.errors[field].message); 
+					console.log(err.errors[field].message);
 					}
 				}
 				if(err.name === 'MongoError' && err.code === 11000){
@@ -111,35 +111,14 @@ routes.post('/createGame',function(req,res){
 				res.json({success:true, message : 'game created successfully', obj:newGame});
 			}
 		});
-		
-});
 
-//to like a post
-/*routes.post('/saveGame/:gameId',function(req,res){
-	console.log(req.body.game.players);
-	game.find({'_id':req.params.gameId},function(err,game){
-			if(err) throw err;
-			if(!game){
-				res.json({success:false,message : 'Game with id : '+req.params.gameId+' could not be found'});
-			}else{
-				game.update(
-					{'_id':req.params.game},
-					{$set:{winner : req.body.game.winner, 'players' : req.body.game.players}},
-					{upsert:false,new:true},
-					function(err,doc){
-						if(err) throw err;
-						return res.json({success:true,message:'post liked successfully',doc:doc});
-					}
-				);
-			}
-	});
-});*/
+});
 
 //to save a game
 routes.post('/saveGame/:gameId',function(req,res){
 	console.log(req.body.game.players);
 	game.findOneAndUpdate(
-		{_id : req.params.gameId}, 
+		{_id : req.params.gameId},
 		{$set:{winner : req.body.game.winner, players: req.body.game.players}},
 		{upsert:false, new:true},
 		function(err,game) {
@@ -150,6 +129,62 @@ routes.post('/saveGame/:gameId',function(req,res){
 			}
 	});
 });
+
+//to create circle
+routes.post('/user/create/circle',function(req,res){
+  // var host = req.body.host;
+  var email = req.body.user.email;
+  var circleDetails = {name: String,members : [String] };
+  var	circles = [{name : String,members : [String] ,isActive : {type:Boolean}}];
+  circleDetails = req.body.user.circleDetails;
+
+  user.findOne({email:email},function(err,foundObj){
+
+    if(err){
+      console.log('Error Inserting New Data');
+      if (err.name === 'ValidationError') {
+        for (field in err.errors) {
+          console.log(err.errors[field].message);
+
+          return 	res.json({success:false, message : 'Unable to create circle'});
+
+        }
+      }
+
+      return 	res.json({success:false, message : 'Unable to create circle'});
+    }else{
+      //checking if circle name already exist or not
+      circles = foundObj.circles;
+      for(i=0;i < circles.length ;i++){
+
+        if(circleDetails.name === circles[i].name)
+        {
+
+          return 	res.json({success:false, message : 'Circle name already exist'});
+        }
+      }
+      foundObj.circles.push({name:circleDetails.name,members:circleDetails.members,isActive:true});
+
+      //foundObj.circles += circleDetails;
+      foundObj.save(function(err,updateObj){
+
+        if(err){
+          console.log('Error Inserting New Data');
+          if (err.name === 'ValidationError') {
+            for (field in err.errors) {
+              console.log(err.errors[field].message);
+              return 	res.json({success:false, message : 'Unable to create circle'});
+            }
+          }
+          return 	res.json({success:false, message : 'Unable to create circle'});
+        }else{
+          return 	res.json({success:true, message : 'Successfully created circle',resultObj :foundObj });
+        }
+      });
+    }
+  })
+});
+
 
 
 // Set our api routes
