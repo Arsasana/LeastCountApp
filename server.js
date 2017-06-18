@@ -93,6 +93,8 @@ routes.post('/createGame',function(req,res){
 		gameName : req.body.game.gamename,
 		playersCount : req.body.game.playersCount,
 		gameScore : req.body.game.gamescore,
+		gameOwner :  req.body.game.gameOwner,
+		circle :  req.body.game.cirle,
 		players :req.body.game.players
 	});
 		newGame.save(function(err){
@@ -181,6 +183,144 @@ routes.post('/user/create/circle',function(req,res){
           return 	res.json({success:true, message : 'Successfully created circle',resultObj :foundObj });
         }
       });
+    }
+  })
+});
+
+
+//to add member in  circle
+routes.post('/user/edit/circle/add',function(req,res){
+  // var host = req.body.host;
+  var email = req.body.user.email;
+  var circleName = req.body.user.circleName;
+  var newMember = req.body.user.member;
+  var	circles = [{name : String,members : [String] ,isActive : {type:Boolean}}];
+  user.findOne({email:email},function(err,foundObj){
+
+    if(err){
+      console.log('Error Inserting New Data');
+      if (err.name === 'ValidationError') {
+        for (field in err.errors) {
+          console.log(err.errors[field].message);
+
+          return 	res.json({success:false, message : 'Unable to update circle'});
+
+        }
+      }
+
+      return 	res.json({success:false, message : 'Unable to update circle'});
+    }else{
+    	
+    	console.log("result : ",foundObj)
+    	 circles = foundObj.circles;
+        for(i=0;i < circles.length ;i++){
+
+          if(circleName === circles[i].name)
+          {
+            if(foundObj.circles[i].members.indexOf(newMember) === -1)
+            	{
+            foundObj.circles[i].members.push(newMember);
+            break;
+            	}
+            else {
+            	return 	res.json({success:false, message : 'Member already exist'});
+            }
+          }
+        }
+        
+       
+      foundObj.save(function(err,updateObj){
+
+        if(err){
+          console.log('Error Inserting New Data');
+          if (err.name === 'ValidationError') {
+            for (field in err.errors) {
+              console.log(err.errors[field].message);
+              return 	res.json({success:false, message : 'Unable to create circle'});
+            }
+          }
+          return 	res.json({success:false, message : 'Unable to update circle'});
+        }else{
+          return 	res.json({success:true, message : 'Successfully update circle',resultObj :updateObj });
+        }
+      });
+      
+    }
+  })
+});
+
+//to delete a member in  circle
+routes.post('/user/edit/circle/delete',function(req,res){
+  // var host = req.body.host;
+  var email = req.body.user.email;
+  var circleName = req.body.user.circleName;
+  var member = req.body.user.member;
+  var	circles = [{name : String,members : [String] ,isActive : {type:Boolean}}];
+  user.findOne({email:email},function(err,foundObj){
+
+    if(err){
+      console.log('Error Inserting New Data');
+      if (err.name === 'ValidationError') {
+        for (field in err.errors) {
+          console.log(err.errors[field].message);
+
+          return 	res.json({success:false, message : 'Unable to delete member circle'});
+
+        }
+      }
+
+      return 	res.json({success:false, message : 'Unable to update circle'});
+    }else{
+    	
+    	console.log("result : ",foundObj)
+    	 circles = foundObj.circles;
+        for(i=0;i < circles.length ;i++){
+
+          if(circleName === circles[i].name)
+          {
+            if(foundObj.circles[i].members.indexOf(member) === -1)
+            	{
+            	return 	res.json({success:false, message : 'Member doen not exist to delete'});
+            	}
+            else {
+            	foundObj.circles[i].members.splice(foundObj.circles[i].members.indexOf(member),1) 
+            }
+          }
+        }
+        
+        
+    /*
+    	/
+      //checking if circle name already exist or not
+      circles = foundObj.circles;
+      for(i=0;i < circles.length ;i++){
+
+        if(circleDetails.name === circles[i].name)
+        {
+
+          return 	res.json({success:false, message : 'Circle name already exist'});
+        }
+      }
+      foundObj.circles.push({name:circleDetails.name,members:circleDetails.members,isActive:true});
+
+      //foundObj.circles += circleDetails;
+      */
+      foundObj.save(function(err,updateObj){
+
+        if(err){
+          console.log('Error Inserting New Data');
+          if (err.name === 'ValidationError') {
+            for (field in err.errors) {
+              console.log(err.errors[field].message);
+              return 	res.json({success:false, message : 'Unable to create circle'});
+            }
+          }
+          return 	res.json({success:false, message : 'Unable to delete member circle'});
+        }else{
+          return 	res.json({success:true, message : 'Successfully delete member from circle',resultObj :updateObj });
+        }
+      });
+      
     }
   })
 });

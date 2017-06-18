@@ -7,7 +7,9 @@ var Game = mongoose.model('game', new Schema({
 	gameScore : {type:Number},
 	isActive : {type:Boolean , default:true},
 	winner : {type:String, default:null},
-	players :[]
+	players :[],
+	gameOwner : String,
+	circle : String
 	
 }));
 
