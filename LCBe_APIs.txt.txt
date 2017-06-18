@@ -1,107 +1,5 @@
 
-1)Create Game API :-
 
-localhost:5000/api/v1.0/game/details
-
-Sample Input:- 
-
-{"gameName":"testgame2","Score":"50","Names":["shiva","kiran","jagan"]}
-
-
-Sample Output :-
-
-{
-  "success": true,
-  "message": "Successfully  created game",
-  "gameId": "5939a6e16ab00dd03d97542a"
-}
-
-#########################################################################################
-2)Update Player score card API :-
-
-localhost:5000/api/v1.0/game/scorecard
-
-Sample Input :-
-
-{"gameId":"593d392f77e3958830b2b728","winner":"shiva","details":[{"name" : "shiva","fullCount" : 1,"showCount" : 3}]}
-
-Sample Output :-
-
-{
-  "success": true,
-  "message": "Successfully updated score",
-  "resultObj": {
-    "_id": "5939a6e16ab00dd03d97542a",
-    "activeFlag": 1,
-    "gameName": "testgame3",
-    "winningScore": 40,
-    "winner": "shiva",
-    "createdTime": "Fri Jun 09 2017 01:04:57 GMT+0530 (India Standard Time)",
-    "__v": 2,
-    "playerDetails": [
-      {
-        "name": "shiva",
-        "fullCount": 5,
-        "showCount": 3,
-        "_id": "5939bcf23b8ce45c3d9226c1"
-      }
-    ]
-  }
-}
-
-#########################################################################################
-
-3) Login API :-
-
-localhost:5000/api/v1.0/user/login
-
-Sample Input :-
-
-{"email":"ravin@leastcount.com","password":"password"}
-
-Sample Output :-
-
-{
-    "success": true,
-    "message": "user login successfull",
-    "obj": {
-        "_id": "592e63a640c4395410a53d2c",
-        "firstName": "Ravinder",
-        "lastName": "Singh",
-        "email": "ravin@leastcount.com",
-        "password": "password",
-        "phone": 123456789,
-        "__v": 0,
-        "isActive": true
-    }
-}
-
-###########################################################################################
-
-4)Register :-
-
-localhost:5000/api/v1.0/user/register
-
-Sample Input:-
-{"firstName": "karan","lastName": "vengala","email": "karan@leastcount.com","password": "password123","phone": 123456789}
-
-
-Sample Output :-
-{
-    "success": true,
-    "message": "User had been registered successfully",
-    "resultObj": {
-        "__v": 0,
-        "firstName": "karan",
-        "lastName": "vengala",
-        "email": "karan@leastcount.com",
-        "password": "password123",
-        "phone": 123456789,
-        "_id": "593d41ac3fe2fdf0036dcce6",
-        "circles": [],
-        "isActive": true
-    }
-}
 
 ######################################################################################
 5) Create Circle 
@@ -217,11 +115,11 @@ Sample Output :-
 ######################################################################################
 1)Create Game API :-
 
-localhost:5000/api/v1.0/game/details
+localhost:5000/api/v1.0/game/createGame
 
 Sample Input:- 
 
-{"game":{"gameName":"testgame2","Score":"50","Names":["shiva","kiran","jagan"]}}
+{"game":{"gameName":"testgame2","gamescore":"50","players":[{"name" : "shiva1","fullCount" : 0,"showCount" : 0},{"name" : "shiva2","fullCount" : 0,"showCount" : 0}],"gameOwner":"nishant@leastcount.com","circle":"NA"}}
 
 
 Sample Output :-
@@ -235,36 +133,40 @@ Sample Output :-
 #########################################################################################
 2)Update Player score card API :-
 
-localhost:5000/api/v1.0/game/scorecard
+localhost:5000/api/v1.0/saveGame/{gameid}
 
 Sample Input :-
 
-{"scorecard":{"gameId":"593d392f77e3958830b2b728","winner":"shiva","details":[{"name" : "shiva","fullCount" : 1,"showCount" : 3}]}}
+{"game":{"winner":"shiva1","players":[{"name" : "shiva1","fullCount" : 4,"showCount" : 3},{"name" : "shiva2","fullCount" : 5,"showCount" : 3}]}}
 
 Sample Output :-
 
 {
-  "success": true,
-  "message": "Successfully updated score",
-  "resultObj": {
-    "_id": "5939a6e16ab00dd03d97542a",
-    "activeFlag": 1,
-    "gameName": "testgame3",
-    "winningScore": 40,
-    "winner": "shiva",
-    "createdTime": "Fri Jun 09 2017 01:04:57 GMT+0530 (India Standard Time)",
-    "__v": 2,
-    "playerDetails": [
-      {
-        "name": "shiva",
-        "fullCount": 5,
-        "showCount": 3,
-        "_id": "5939bcf23b8ce45c3d9226c1"
-      }
-    ]
-  }
+    "success": true,
+    "message": "Game successfully saved",
+    "obj": {
+        "_id": "59468ffd5a30b17833981654",
+        "gameScore": 50,
+        "gameOwner": "nishant@leastcount.com",
+        "circle": "NA",
+        "__v": 0,
+        "createdTime": "2017-06-18T14:36:45.609Z",
+        "players": [
+            {
+                "name": "shiva1",
+                "fullCount": 4,
+                "showCount": 3
+            },
+            {
+                "name": "shiva2",
+                "fullCount": 5,
+                "showCount": 3
+            }
+        ],
+        "winner": "shiva1",
+        "isActive": true
+    }
 }
-
 
 ######################################################################################
 5) Create Circle 
@@ -439,3 +341,70 @@ If member does not exist
 }
 
 ###############################################################################
+
+to get the user GAME history :-
+
+localhost:5000/api/v1.0/user/getHistory/{emailId}
+
+
+Sample output :- (Recent game comes first)
+
+{
+    "success": true,
+    "message": "History available",
+    "resultObj": [
+        {
+            "_id": "59468ffd5a30b17833981654",
+            "gameScore": 50,
+            "gameOwner": "nishant@leastcount.com",
+            "circle": "NA",
+            "__v": 0,
+            "createdTime": "2017-06-18T14:36:45.609Z",
+            "players": [
+                {
+                    "name": "shiva1",
+                    "fullCount": 4,
+                    "showCount": 3
+                },
+                {
+                    "name": "shiva2",
+                    "fullCount": 5,
+                    "showCount": 3
+                }
+            ],
+            "winner": "shiva1",
+            "isActive": true
+        },
+        {
+            "_id": "59469abe5a30b17833981655",
+            "gameScore": 40,
+            "gameOwner": "nishant@leastcount.com",
+            "circle": "NA",
+            "__v": 0,
+            "createdTime": "2017-06-18T15:22:38.229Z",
+            "players": [
+                {
+                    "name": "ram1",
+                    "fullCount": 4,
+                    "showCount": 1
+                },
+                {
+                    "name": "ram2",
+                    "fullCount": 3,
+                    "showCount": 2
+                }
+            ],
+            "winner": "ram2",
+            "isActive": true
+        }
+    ]
+}
+
+IF emailID not available or no history 
+
+{
+    "success": false,
+    "message": "History not available for this user"
+}
+
+########################################

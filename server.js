@@ -87,15 +87,16 @@ routes.post('/user/login',function(req,res){
 });
 
 // Currently not using
-routes.post('/createGame',function(req,res){
+routes.post('/game/createGame',function(req,res){
 
 	var newGame = new game({
 		gameName : req.body.game.gamename,
 		playersCount : req.body.game.playersCount,
 		gameScore : req.body.game.gamescore,
 		gameOwner :  req.body.game.gameOwner,
-		circle :  req.body.game.cirle,
-		players :req.body.game.players
+		circle :  req.body.game.circle,
+		players :req.body.game.players,
+		//createdTime : new Timestamp()
 	});
 		newGame.save(function(err){
 			 if(err) {
@@ -288,23 +289,6 @@ routes.post('/user/edit/circle/delete',function(req,res){
           }
         }
         
-        
-    /*
-    	/
-      //checking if circle name already exist or not
-      circles = foundObj.circles;
-      for(i=0;i < circles.length ;i++){
-
-        if(circleDetails.name === circles[i].name)
-        {
-
-          return 	res.json({success:false, message : 'Circle name already exist'});
-        }
-      }
-      foundObj.circles.push({name:circleDetails.name,members:circleDetails.members,isActive:true});
-
-      //foundObj.circles += circleDetails;
-      */
       foundObj.save(function(err,updateObj){
 
         if(err){
@@ -325,7 +309,34 @@ routes.post('/user/edit/circle/delete',function(req,res){
   })
 });
 
+//to get the user history based on emailId
+routes.get('/user/getHistory/:emailId',function(req,res){
+	 
+	  var emailId = req.params.emailId;
+	  
 
+	  game.find({gameOwner:emailId}).sort({createdTime : -1}).find(function(err,foundObj){
+
+	    if(err){
+	      console.log('Error Inserting New Data');
+	      if (err.name === 'ValidationError') {
+	        for (field in err.errors) {
+	          console.log(err.errors[field].message);
+
+	          return 	res.json({success:false, message : 'Unable to get history'});
+
+	        }
+	      }
+
+	      return 	res.json({success:false, message : 'Unable to get history'});
+	    }else{
+	    	if(!foundObj || foundObj.length === 0){
+	    		return 	res.json({success:false, message : 'History not available for this user'});
+	    	}
+	   		return 	res.json({success:true, message : 'History available',resultObj:foundObj});
+	    }
+	  })
+	});
 
 // Set our api routes
 app.use('/api/v1.0', routes);
