@@ -17,6 +17,7 @@ import { GameComponent } from './game/game.component';
 import { UserAuthService } from './user-auth.service';
 import { GameService} from './game.service';
 import { PlayerNameService} from './player-name.service';
+import { ProfileComponent } from './profile/profile.component';
 
 
 const ROUTES = [
@@ -32,6 +33,11 @@ const ROUTES = [
   {
     path:'register',
     component: RegisterFormComponent
+  }
+  ,
+  {
+    path:'profile',
+    component: ProfileComponent
   }
   ,
   {
@@ -60,7 +66,8 @@ const ROUTES = [
 	RegisterFormComponent,
 	HomeComponent,
 	GameFormComponent,
-	GameComponent
+	GameComponent,
+	ProfileComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,39 @@
+.profile-container{
+	padding-bottom:20px;
+	border-bottom: 1px solid #ddd;
+}
+
+.badges{
+	border-bottom: 1px solid #ddd;
+}
+
+.user-display{
+	margin-top:12px;
+}
+
+.stats-list{
+	padding-left:0;
+	padding-top:15px;
+}
+
+.stats-list li{
+	display:inline-block;
+	padding-right:20px;
+}
+.badge-list,.circle-list{
+	padding-top:2px;
+	padding-left:0;
+}
+
+.badge-list li,.circle-list li{
+	display:inline-block;
+	padding-right:5px;
+	padding-bottom:10px;
+}
+
+.history-div-list{
+	margin-top:10px;
+	margin-bottom:10px;
+	padding-bottom:10px;
+	border-bottom:1px solid #ddd;
+}
