@@ -13,10 +13,22 @@
 					
 					<div class="clear-fix"></div>
 					
-					<input name="playerName" id="playerName" type="text" placeholder="playerName" [(ngModel)]="model.playerName" #playerName="ngModel">
+					<input name="playerName" id="playerName" type="text" [disabled]="disablePlayerNameField" placeholder="playerName" [(ngModel)]="model.playerName" #playerName="ngModel">
 					<div [hidden]="playerName.valid || playerName.pristine" class="alert alert-danger">playerName is required</div>
 					
-					<button type="button" id="add-btn" class="btn btn-primary " (click)="addPlayer(playerName.value); playerName.value=null" >Add</button>
+					<button type="button" id="add-btn" class="btn btn-primary " (click)="addPlayer(playerName.value); playerName.value=null" [disabled]="disablePlayerNameField">Add</button>
+					<div class="choice"><span>or</span><br>
+					<span>add from your circles</span></div>
+					<!-- Single button -->
+								<div class="btn-group btn-centered">
+								  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									Circles <span class="caret"></span>
+								  </button>
+								  <ul class="dropdown-menu">
+									<li *ngFor="let circle of user.circles ; let i = index"><a (click)="addPlayersFromCircle(i)">{{circle.name}}</a></li>
+								  </ul>
+								</div>
+								<br>
 					<div class="participants">
 					<h3><span>Participants</span></h3>
 					<ul>

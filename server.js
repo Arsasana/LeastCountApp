@@ -118,7 +118,7 @@ routes.post('/game/createGame',function(req,res){
 });
 
 //to save a game
-routes.post('/saveGame/:gameId',function(req,res){
+routes.post('/game/saveGame/:gameId',function(req,res){
 	console.log(req.body.game.players);
 	game.findOneAndUpdate(
 		{_id : req.params.gameId},
