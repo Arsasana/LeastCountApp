@@ -309,6 +309,47 @@ routes.post('/user/edit/circle/delete',function(req,res){
   })
 });
 
+//to update user stats such as no of games, total full counts till date, total show counts till date only for registered users.
+routes.post('/user/updateUserStats',function(req,res){
+	var playersStats = req.body.user.playersStats;
+	console.log(playersStats);
+	var playerIds = [];
+	var count = 0;
+	for(let i = 0; i < playersStats.length; i++ ){
+		user.findOne({'_id':playersStats[i].playerId},function(err,Obj){
+			if(err)
+				throw err;
+			if(Obj){
+				Obj.stats.games = Obj.stats.games + 1;
+				Obj.stats.fullCount = Obj.stats.fullCount + playersStats[i].fullCount;
+				Obj.stats.showCount = Obj.stats.showCount + playersStats[i].showCount;
+			}
+			
+		Obj.save(function(err,updateObj){
+
+        if(err){
+          console.log('Error Inserting New Data');
+          if (err.name === 'ValidationError') {
+            for (field in err.errors) {
+              console.log(err.errors[field].message);
+              return 	res.json({success:false, message : 'Unable to create User'});
+            }
+          }
+          return 	res.json({success:false, message : 'Unable to update user Stats'});
+        }else{
+			count++;
+          console.log(count);
+		  playerIds.push(playersStats[i].playerId);
+		  if(count === playersStats.length){
+				return 	res.json({success:true, message : 'Successfully updated '+playerIds+' stats'});
+			}
+        }
+      });
+			
+	});
+	}
+});
+
 //to get the user history based on emailId
 routes.get('/user/getHistory/:emailId',function(req,res){
 	 

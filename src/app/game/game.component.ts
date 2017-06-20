@@ -29,7 +29,7 @@ export class GameComponent implements OnInit {
   }
 
   ngOnInit() {
-	/*this.game = {
+	this.game = {
     "_id": {
         "$oid": "5940f308a2c024341dfb86b8"
     },
@@ -40,9 +40,7 @@ export class GameComponent implements OnInit {
     "players": [
         {
             "name": "Sindhu",
-            "_id": {
-                "$oid": "5940f308a2c024341dfb86bc"
-            },
+            "playerId":"5940f308a2c024341dfb86bb",
 			"score":[],
             "showCount": 0,
             "fullCount": 0
@@ -77,8 +75,8 @@ export class GameComponent implements OnInit {
     ],
     "isActive": true,
     "__v": 0
-}*/
-	this.game = this.gameService.getGame();
+}
+	//this.game = this.gameService.getGame();
 	if(this.game){
 	this.createInitialArrays();
 	}else{
@@ -189,6 +187,24 @@ export class GameComponent implements OnInit {
                        error =>  this.errorMessage = <any>error);
 	}
 	
+	updateUserStats(){
+				
+		let players = this.game.players;
+		let playersStats = [];
+		
+		for(let i = 0; i < players.length; i++){
+			let stats: any = {};
+			if(players[i].playerId !== 0){
+				stats.fullCount = players[i].fullCount;
+				stats.showCount = players[i].showCount;
+				stats.playerId = players[i].playerId;
+				playersStats.push(stats);
+			}
+		}
+		console.log(playersStats);
+		
+	}
+	
 	checkForWinner(){
 		
 		let count = 0;
@@ -211,7 +227,8 @@ export class GameComponent implements OnInit {
 					}
 				}
 			this.game.winner = this.game.players[index].name;
-			this.saveGame();
+			//this.saveGame();
+			this.updateUserStats();
 		}
 	}
 

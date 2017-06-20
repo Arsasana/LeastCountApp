@@ -39,13 +39,26 @@ export class GameFormComponent implements OnInit{
             },
             "isActive": false,
             "members": [
-                "Ravinder",
-                "Sindhu",
-                "Bharat",
-				"Karthik",
-				"Nishant",
-				"Ibrahim",
-				"Achyuth"
+			{
+				"playerId":"593daab845a35df8148d0a80",
+				"name":"Ravinder"
+			},
+			{
+				"playerId":null,
+				"name":"Sindhu"
+			},
+			{
+				"playerId":"593daab845a35df8148d0a80",
+				"name":"Bharat"
+			},
+			{
+				"playerId":null,
+				"name":"Karthik"
+			},
+			{
+				"playerId":"593daab845a35df8148d0a80",
+				"name":"Nishant"
+			}
             ]
         },
         {
@@ -86,7 +99,17 @@ export class GameFormComponent implements OnInit{
     }
 	
 	private addPlayersFromCircle(index: number){
-		this.playerNames = this.user.circles[index].members;
+		let circleMembers = this.user.circles[index].members;
+		for(let i = 0 ;i < circleMembers.length ; i++){
+				let playerDetails: any ={};
+				this.playerNames.push(circleMembers[i].name);
+				playerDetails.name = circleMembers[i].name;
+				playerDetails.playerId = circleMembers[i].playerId;
+				playerDetails.fullCount = 0;
+				playerDetails.showCount = 0;
+				this.playerDetails.push(playerDetails);
+		}
+		console.log(this.playerDetails);
 		this.disablePlayerNameField = true;
 	}
   
@@ -94,7 +117,7 @@ export class GameFormComponent implements OnInit{
 	  this.playerNameService.setPlayerNames(this.playerNames);
 	  this.game.players = this.playerDetails;
 	  this.game.playersCount = this.playerNames.length;
-	  this.gameService.createGame(this.game)
+	  /*this.gameService.createGame(this.game)
                      .subscribe(
                       game => {
 
@@ -105,6 +128,6 @@ export class GameFormComponent implements OnInit{
                             this.router.navigate(['game']);
                           }
                        },
-                       error =>  this.errorMessage = <any>error);
+                       error =>  this.errorMessage = <any>error);*/
   }
 }
