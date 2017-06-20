@@ -10,7 +10,7 @@
 					</div>
 					<div class="col-md-10">
 						<div class="user-display">
-							<span>{{user.firstName}} {{user.lastName}}</span>
+							<span>Ravinder Singh</span>
 							<div class="stats-overview">
 								<ul class="stats-list">
 									<li>Games <br>20</li>
@@ -23,21 +23,72 @@
 				</div>		
 			</div>
 			<div class="user-history">
-							<h4 class="float-left">History<small>  (last 5)</small></h4>
+							<h4 class="float-left">History   (last 5)</h4>
 							<span class="view-all float-right"><a href="#">view all</a></span>
 							<div class="clear-fix"></div>
 							<div class="history-container">
-								<div class="history-div-list" *ngFor="let game of gameHistory">
-									<h4>{{game.name}}</h4>
+								<div class="history-div-list">
+									<h4>Sunday Special</h4>
 									<span class="hist-date">on 18 June, 2017</span><br>
 									<div class="row">
 										<div class="col-md-5">
 											<h5>Players</h5>
-											<span>{{game.players}}</span>
+											<span>Ravinder,Sindhu,Bharat</span>
 										</div>
 										<div class="col-md-5">
 											<h5>Winner</h5>
-											{{game.winner}}
+											Ravinder
+										</div>
+										<div class="col-md-2">
+										<button type="button" class="btn btn-primary stats">view stats</button>
+										</div>
+									</div>
+								</div>
+								<div class="history-div-list">
+									<h4>Sunday Special</h4>
+									<span class="hist-date">on 18 June, 2017</span><br>
+									<div class="row">
+										<div class="col-md-5">
+											<h5>Players</h5>
+											<span>Ravinder,Sindhu,Bharat</span>
+										</div>
+										<div class="col-md-5">
+											<h5>Winner</h5>
+											Ravinder
+										</div>
+										<div class="col-md-2">
+										<button type="button" class="btn btn-primary stats">view stats</button>
+										</div>
+									</div>
+								</div>
+								<div class="history-div-list">
+									<h4>Sunday Special</h4>
+									<span class="hist-date">on 18 June, 2017</span><br>
+									<div class="row">
+										<div class="col-md-5">
+											<h5>Players</h5>
+											<span>Ravinder,Sindhu,Bharat</span>
+										</div>
+										<div class="col-md-5">
+											<h5>Winner</h5>
+											Ravinder
+										</div>
+										<div class="col-md-2">
+										<button type="button" class="btn btn-primary stats">view stats</button>
+										</div>
+									</div>
+								</div>
+								<div class="history-div-list">
+									<h4>Sunday Special</h4>
+									<span class="hist-date">on 18 June, 2017</span><br>
+									<div class="row">
+										<div class="col-md-5">
+											<h5>Players</h5>
+											<span>Ravinder,Sindhu,Bharat</span>
+										</div>
+										<div class="col-md-5">
+											<h5>Winner</h5>
+											Ravinder
 										</div>
 										<div class="col-md-2">
 										<button type="button" class="btn btn-primary stats">view stats</button>
@@ -69,7 +120,10 @@
 				<span class="view-all float-right"><a href="#">view all</a></span>
 							<div class="clear-fix"></div>
 				<ul class="circle-list">
-					<li *ngFor="let circle of user.circles"><img class="img-circle" src="http://placehold.it/50x50"><br>{{circle.name}}</li>
+					<li><img class="img-circle" src="http://placehold.it/50x50"></li>
+					<li><img class="img-circle" src="http://placehold.it/50x50"></li>
+					<li><img class="img-circle" src="http://placehold.it/50x50"></li>
+					<li><img class="img-circle" src="http://placehold.it/50x50"></li>
 				</ul>
 			</div>
 		</div>

@@ -10,6 +10,7 @@ import { Router } from '@angular/router'
 export class ProfileComponent implements OnInit {
 
 	user: any = {};
+	gameHistory:any = {};
 	sessionStorage: CoolSessionStorage;
 
   constructor(sessionStorage: CoolSessionStorage, private router: Router) {
@@ -23,6 +24,29 @@ export class ProfileComponent implements OnInit {
 	  } else {
 		  this.user = null;
 	  }
+	  
+	  this.gameHistory=[{
+		  "name":"Awesome",
+		  "players":['Karan','Vinod','Sumanth'],
+		  "winner":"Karan"
+	  },{
+		  "name":"Sunday Match",
+		  "players":['Gautham','Raj','Balu','pawan','Kalyan'],
+		  "winner":"pawan"
+	  },{
+		  "name":"Three showdown",
+		  "players":['Mahesh','Brahmi','30 years Industry'],
+		  "winner":"30 years Industry"
+	  },{
+		  "name":"Friendly Match",
+		  "players":['Bablu','Arjun','Karan','sam','Kajal'],
+		  "winner":"Kajal"
+	  },{
+		  "name":"WorldCup",
+		  "players":['pawan','Gautham','Kajal'],
+		  "winner":"Gautham"
+	  }]
+	  
   }
   
   logout(){
