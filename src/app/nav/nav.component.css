@@ -1,0 +1,9 @@
+ul.dropdown-menu{
+	    min-width: 145px;
+}
+
+#logout-btn{
+	padding: 10px 15px;
+	background: none;
+	border: 0;
+}

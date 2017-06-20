@@ -1,0 +1,104 @@
+.game-form-container,form{
+	padding:25px;
+}
+
+.game-form{
+	margin:25px;
+}
+
+.form-box{
+	width: 500px;
+    margin: 0 auto;
+}
+
+#gamename{
+	float:left;
+}
+
+#gamescore{
+	float:right;
+}
+
+.clear-fix{
+	clear:both;
+}
+
+input{
+	width: 48%;
+    height: 50px;
+    margin-bottom: 10px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    border: 1px solid #a8b0b5;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 20px;
+    font-size: 18px;
+}
+
+#playerName{
+	width:80%;
+}
+
+#add-btn{
+	padding: 14px;
+    margin-top: -3px;
+    width: 19%;
+}
+
+.submit-btn-div{
+	text-align:center;
+}
+
+.submit-btn{
+	padding: 14px;
+    margin-top: -3px;
+    width: 30%;
+	text-align:center;
+}
+
+ul{
+	padding:0;
+	margin-top:15px;
+}
+
+ul li{
+	color:#455565;
+	list-style: none;
+    height: 20px;
+    font-size: 18px;
+    text-align: center;
+	margin-bottom:10px;
+}
+
+.participants h3{
+	color:#455565;
+	text-align:center;
+}
+
+.participants h3 span{
+	color:#455565;
+	padding-left: 10px;
+    padding-right: 10px;
+	padding-bottom:5px;
+	border-bottom : 1px solid black;
+}
+
+.choice{
+	text-align:center;
+}
+.btn-centered{
+	width:80px;
+	display:block;
+	margin:0 auto;
+	margin-top: 10px;
+	margin-bottom: 30px;
+}
+.btn-centered .btn{
+	color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    padding: 14px;
+}

@@ -1,0 +1,41 @@
+.table{
+	margin-bottom:0;
+}
+
+.panel-body{
+	padding:0;
+}
+
+input{
+	width:100%;
+	line-height:1.428;
+	padding:8px;
+}
+
+.score-input td{
+	padding:0;
+}
+
+#gamename-span{
+	float:left;
+}
+
+#gamescore-span{
+	float:right;
+}
+
+.clear-fix{
+	clear:both;
+}
+
+.totalscore-row{
+    color: #333;
+}
+
+.totalscore-row th{
+	border:1px solid #333;
+}
+
+.score-input td{
+	border:0;
+}

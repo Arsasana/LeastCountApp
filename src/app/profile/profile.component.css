@@ -1,0 +1,82 @@
+.left-container{
+	border-right:1px solid #ddd;
+	padding-right:25px;
+}
+
+.profile-container{
+	padding-bottom:20px;
+}
+
+.badges{
+	border-bottom: 1px solid #ddd;
+}
+
+.user-display{
+	margin-top:12px;
+}
+
+.stats-list{
+	padding-left:0;
+	padding-top:15px;
+}
+
+.stats-list li{
+	display:inline-block;
+	padding-right:20px;
+}
+.badge-list,.circle-list{
+	padding-top:2px;
+	padding-left:0;
+}
+
+.badge-list li,.circle-list li{
+	display:inline-block;
+	padding-right:5px;
+	padding-bottom:10px;
+}
+
+.user-history{
+	margin-top:85px;
+	margin-bottom:100px;
+}
+
+.history-div-list{
+	margin-top:10px;
+	margin-bottom:10px;
+	padding-bottom:10px;
+	border-top:1px solid #ddd;
+}
+
+.history-div-list h4{
+	margin-bottom:0;
+	color:#337ab7;
+}
+
+.history-div-list h5{
+	margin-bottom:3px;
+}
+
+.hist-date{
+	font-size:12px;
+}
+
+.history-div-list .stats{
+	margin-top:10px;
+}
+
+.view-all{
+	margin-top:12px;
+	margin-right:20px;
+}
+
+.float-right{
+	float:right;
+}
+
+.float-left{
+	float:left;
+}
+
+.clear-fix{
+	clear:both;
+}
