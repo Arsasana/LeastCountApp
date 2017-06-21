@@ -13,10 +13,10 @@
 					
 					<div class="clear-fix"></div>
 					
-					<input name="playerName" id="playerName" type="text" [disabled]="disablePlayerNameField" placeholder="playerName" [(ngModel)]="model.playerName" #playerName="ngModel">
-					<div [hidden]="playerName.valid || playerName.pristine" class="alert alert-danger">playerName is required</div>
+					<app-autocomplete></app-autocomplete>
 					
-					<button type="button" id="add-btn" class="btn btn-primary " (click)="addPlayer(playerName.value); playerName.value=null" [disabled]="disablePlayerNameField">Add</button>
+					<!-- <button type="button" id="add-btn" class="btn btn-primary " (click)="addPlayer(playerName.value); playerName.value=null" [disabled]="disablePlayerNameField">Add</button> -->
+					<div class="clear-fix"></div>
 					<div class="choice"><span>or</span><br>
 					<span>add from your circles</span></div>
 					<!-- Single button -->

@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {NgForm} from '@angular/forms';
 import { Router } from '@angular/router';
 import { PlayerNameService} from '../player-name.service';
 import { GameService} from '../game.service';
+import { AutoCompleteService} from '../auto-complete.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-game-form',
@@ -19,6 +21,7 @@ export class GameFormComponent implements OnInit{
 	errorMessage: string;
 	mode = 'Observable';
 	disablePlayerNameField = false;
+	private subscription: Subscription;
 	
 
   ngOnInit() {
@@ -77,26 +80,26 @@ export class GameFormComponent implements OnInit{
     "isActive": true,
     "__v": 12
 }
+this.subscription = this.autoCompleteService.notifyObservable$.subscribe((res) => {
+      if (res.hasOwnProperty('option') && res.option === 'updatePlayerDetails') {
+        console.log(res.value);
+        // perform your other action from here
+		this.playerDetails = res.value;
+			this.playerNames = [];
+		for(let i = 0 ; i < this.playerDetails.length; i++){
+			this.playerNames.push(this.playerDetails[i].name);
+		}
+      }
+    });
   }
   
 
   constructor(private playerNameService: PlayerNameService,
 			  private router: Router, 
-			  private gameService: GameService) {
+			  private gameService: GameService,
+			  private autoCompleteService: AutoCompleteService) {
     }
 
-    private addPlayer(playerName : String) {
-       
-	   let playerDetails: any ={};
-		this.playerNames.push(playerName);
-		console.log(playerName);
-		this.model.playerName = '';
-		playerDetails.name = playerName;
-		playerDetails.fullCount = 0;
-		playerDetails.showCount = 0;
-		this.playerDetails.push(playerDetails);
-		
-    }
 	
 	private addPlayersFromCircle(index: number){
 		let circleMembers = this.user.circles[index].members;
@@ -110,13 +113,15 @@ export class GameFormComponent implements OnInit{
 				this.playerDetails.push(playerDetails);
 		}
 		console.log(this.playerDetails);
+		this.autoCompleteService.setPlayerDetails(this.playerDetails);
 		this.disablePlayerNameField = true;
 	}
   
   onSubmit(gameForm : NgForm){
 	  this.playerNameService.setPlayerNames(this.playerNames);
-	  this.game.players = this.playerDetails;
+	  this.game.players = this.autoCompleteService.getPlayerDetails();
 	  this.game.playersCount = this.playerNames.length;
+	  console.log(this.game);
 	  /*this.gameService.createGame(this.game)
                      .subscribe(
                       game => {

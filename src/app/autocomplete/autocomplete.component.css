@@ -1,0 +1,52 @@
+input{
+	width: 48%;
+    height: 50px;
+    margin-bottom: 10px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    border: 1px solid #a8b0b5;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 20px;
+    font-size: 18px;
+}
+
+#name{
+	width:80%;
+	float:left;
+}
+
+.suggestions ul{
+	padding: 0px;
+	position: absolute;
+    margin-top: 60px;
+	width: 18.8%;
+    z-index: 999;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.suggestions ul li{
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+.suggestions ul li a{
+	padding:5px;
+	display: block;
+	text-decoration: none;
+	color:#7E7E7E;
+}
+
+.suggestions ul li a:hover{
+	background-color: #f1f1f1;
+}
+
+#add-btn{
+	padding: 14px;
+    width: 19%;
+	float:right;
+}

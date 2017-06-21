@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule  } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {RouterModule,Routes} from '@angular/router';
 import { CoolStorageModule } from 'angular2-cool-storage';
@@ -17,7 +17,9 @@ import { GameComponent } from './game/game.component';
 import { UserAuthService } from './user-auth.service';
 import { GameService} from './game.service';
 import { PlayerNameService} from './player-name.service';
+import { AutoCompleteService} from './auto-complete.service';
 import { ProfileComponent } from './profile/profile.component';
+import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 
 
 const ROUTES = [
@@ -67,16 +69,18 @@ const ROUTES = [
 	HomeComponent,
 	GameFormComponent,
 	GameComponent,
-	ProfileComponent
+	ProfileComponent,
+	AutocompleteComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+	ReactiveFormsModule,
     HttpModule,
 	CoolStorageModule,
 	RouterModule.forRoot(ROUTES)
   ],
-  providers: [PlayerNameService,UserAuthService,GameService],
+  providers: [PlayerNameService,UserAuthService,GameService,AutoCompleteService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

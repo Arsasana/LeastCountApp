@@ -350,6 +350,29 @@ routes.post('/user/updateUserStats',function(req,res){
 	}
 });
 
+
+// to search users based on the search term, its will match from the beginning of the email field.
+routes.get('/user/search/:term',function(req,res){
+	
+	user.find({email: new RegExp('^' + req.params.term )},function(err,obj){
+		if(err)
+			throw err;
+		if(obj){
+			console.log(obj);
+			let objArr = [];
+			for(let i = 0 ; i < obj.length; i++){
+			let user = {};
+			user.email = obj[i].email;
+			user.name = obj[i].firstName+" "+obj[i].lastName;
+			user.playerId = obj[i]._id;
+			objArr.push(user);
+			}
+			
+			return 	res.send(objArr);
+		}
+	});
+});
+
 //to get the user history based on emailId
 routes.get('/user/getHistory/:emailId',function(req,res){
 	 
