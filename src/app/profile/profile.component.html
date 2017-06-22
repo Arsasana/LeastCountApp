@@ -66,7 +66,7 @@
 			</div>
 			<div class="Circles">
 				<h4 class="float-left">Cirlces</h4>
-				<span class="view-all float-right"><a href="#">view all</a></span>
+				<span class="view-all float-right"><a [routerLink]="['view-circle']">view all</a></span>
 							<div class="clear-fix"></div>
 				<ul class="circle-list">
 					<li *ngFor="let circle of user.circles"><img class="img-circle" src="http://placehold.it/50x50"><br>{{circle.name}}</li>
