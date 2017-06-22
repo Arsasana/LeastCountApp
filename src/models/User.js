@@ -12,6 +12,7 @@ var User = mongoose.model('user', new Schema({
 	  showCount : {type:Number, default:0},
 	  fullCount : {type:Number, default:0}
   },
+  showGameRulesMsg : {type:Boolean , default: true},
   isActive : {type:Boolean , default:true},
   circles : [{name : String,members : [String] ,isActive : {type:Boolean , default:false}}],
   createdTime :  { type : Date, default: Date.now }

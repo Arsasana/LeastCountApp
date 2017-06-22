@@ -309,6 +309,23 @@ routes.post('/user/edit/circle/delete',function(req,res){
   })
 });
 
+
+//to update showGameRulesMsg field in user object
+routes.post('/user/updateGameMsgOption/:userId',function(req,res){
+	game.findOneAndUpdate(
+		{_id : req.params.userId},
+		{$set:{showGameRulesMsg : req.body.user.value}},
+		{upsert:false, new:true},
+		function(err,game) {
+			if(err) {
+				throw err;
+			}else{
+				res.json({success:true,message : 'user showGameRulesMsg udpated successfully',obj:game});
+			}
+	});
+});
+
+
 //to update user stats such as no of games, total full counts till date, total show counts till date only for registered users.
 routes.post('/user/updateUserStats',function(req,res){
 	var playersStats = req.body.user.playersStats;

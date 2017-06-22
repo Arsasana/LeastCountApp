@@ -53,7 +53,7 @@ export class AutocompleteComponent implements OnInit {
 	   let playerDetails: any ={};
 		this.playerNames.push(user.value);
 		playerDetails.name = user.value;
-		playerDetails.playerId = null;
+		playerDetails.playerId = 0;
 		playerDetails.fullCount = 0;
 		playerDetails.showCount = 0;
 		this.playerDetails.push(playerDetails);

@@ -1,0 +1,21 @@
+
+	<div class="background-div" *ngIf="!read">
+		<div class="container">
+			<h4>Game Rules</h4>
+				<ul>
+					<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+					<li>Aliquam semper ante urna, at egestas erat efficitur vel</li>
+					<li>ornare sit amet elit quis, </li>
+					<li>Vestibulum accumsan semper ante quis consequat.</li>
+					<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+					<li>Nam in pulvinar mauris. Vivamus posuere neque a venenatis ornare. </li>
+					<li> Duis non urna tempor, finibus ligula eget, scelerisque dolor.</li>
+					<li> Etiam a porttitor nisi. Phasellus pretium ipsum id mauris cursus porttitor.</li>
+				</ul>
+				<div class="float-left input-div">
+				 <input class="hidden-xs-up" id="cbx" type="checkbox" name="showAgain" [(ngModel)]="showAgain" /><label class="cbx" for="cbx"></label><label class="lbl" for="cbx">never show this message again</label>
+				</div>
+				<button type="button" class="btn btn-primary float-right btn-ok" (click)="close()">Ok</button>
+				<div class="clear-fix"></div>
+		</div>
+	</div>

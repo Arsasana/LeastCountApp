@@ -18,8 +18,10 @@ import { UserAuthService } from './user-auth.service';
 import { GameService} from './game.service';
 import { PlayerNameService} from './player-name.service';
 import { AutoCompleteService} from './auto-complete.service';
+import { UserService} from './user.service';
 import { ProfileComponent } from './profile/profile.component';
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
+import { GamerulesComponent } from './gamerules/gamerules.component';
 
 
 const ROUTES = [
@@ -55,6 +57,10 @@ const ROUTES = [
   {
     path:'game',
     component: GameComponent
+  } ,
+  {
+    path:'gamerules',
+    component: GamerulesComponent
   }
 
 ];
@@ -70,7 +76,8 @@ const ROUTES = [
 	GameFormComponent,
 	GameComponent,
 	ProfileComponent,
-	AutocompleteComponent
+	AutocompleteComponent,
+	GamerulesComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +87,7 @@ const ROUTES = [
 	CoolStorageModule,
 	RouterModule.forRoot(ROUTES)
   ],
-  providers: [PlayerNameService,UserAuthService,GameService,AutoCompleteService],
+  providers: [PlayerNameService,UserAuthService,GameService,AutoCompleteService,UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
