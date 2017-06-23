@@ -1,45 +1,47 @@
 <app-nav></app-nav>
 <div class="container">
 	<div class="game-form-container">
-            <div id="output"></div>
-            <div class="avatar"></div>
-            <div class="form-box">
-                <form (ngSubmit)="onSubmit(gameForm)" #gameForm="ngForm">
-                    <input name="gamename" id="gamename" type="text" placeholder="gamename" required [(ngModel)]="game.gamename" #gamename="ngModel">
-					<div [hidden]="gamename.valid || gamename.pristine" class="alert alert-danger">gamename is required</div>
-					
-					<input name="gamescore" id="gamescore" type="number" placeholder="gamescore" required [(ngModel)]="game.gamescore" #gamescore="ngModel">
-					<div [hidden]="gamescore.valid || gamescore.pristine" class="alert alert-danger">gamescore is required</div>
-					
-					<div class="clear-fix"></div>
-					
-					<app-autocomplete></app-autocomplete>
-					
-					<!-- <button type="button" id="add-btn" class="btn btn-primary " (click)="addPlayer(playerName.value); playerName.value=null" [disabled]="disablePlayerNameField">Add</button> -->
-					<div class="clear-fix"></div>
-					<div class="choice"><span>or</span><br>
-					<span>add from your circles</span></div>
-					<!-- Single button -->
-								<div class="btn-group btn-centered">
-								  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									Circles <span class="caret"></span>
-								  </button>
-								  <ul class="dropdown-menu">
-									<li *ngFor="let circle of user.circles ; let i = index"><a (click)="addPlayersFromCircle(i)">{{circle.name}}</a></li>
-								  </ul>
-								</div>
-								<br>
-					<div class="participants">
-					<h3><span>Participants</span></h3>
-					<ul>
-						<li *ngFor="let name of playerNames">{{name}}</li>
-					</ul>
-					</div>
-					<br/>
-					<div class="submit-btn-div">
-                    <button type="submit" class="btn btn-primary submit-btn" [disabled]="!gameForm.form.valid">Start</button>
-					</div>
-                </form>
-            </div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-box">
+					<form (ngSubmit)="onSubmit(gameForm)" #gameForm="ngForm">
+						<input name="gamename" id="gamename" type="text" placeholder="gamename" required [(ngModel)]="game.gamename" #gamename="ngModel">
+						<div [hidden]="gamename.valid || gamename.pristine" class="alert alert-danger">gamename is required</div>
+						
+						<input name="gamescore" id="gamescore" type="number" placeholder="gamescore" required [(ngModel)]="game.gamescore" #gamescore="ngModel">
+						<div [hidden]="gamescore.valid || gamescore.pristine" class="alert alert-danger">gamescore is required</div>
+						
+						<div class="clear-fix"></div>
+						
+						<app-autocomplete></app-autocomplete>
+						
+						<!-- <button type="button" id="add-btn" class="btn btn-primary " (click)="addPlayer(playerName.value); playerName.value=null" [disabled]="disablePlayerNameField">Add</button> -->
+						<div class="clear-fix"></div>
+						<div class="choice"><span>or</span><br>
+						<span>add from your circles</span></div>
+						<!-- Single button -->
+									<div class="btn-group btn-centered">
+									  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Circles <span class="caret"></span>
+									  </button>
+									  <ul class="dropdown-menu">
+										<li *ngFor="let circle of user.circles ; let i = index"><a (click)="addPlayersFromCircle(i)">{{circle.name}}</a></li>
+									  </ul>
+									</div>
+									<br>
+						<div class="participants">
+						<h3><span>Participants</span></h3>
+						<ul>
+							<li *ngFor="let name of playerNames">{{name}}</li>
+						</ul>
+						</div>
+						<br/>
+						<div class="submit-btn-div">
+						<button type="submit" class="btn btn-primary submit-btn" [disabled]="!gameForm.form.valid">Start</button>
+						</div>
+					</form>
+				</div>
+			</div>	
+		</div>		
     </div>
 </div>

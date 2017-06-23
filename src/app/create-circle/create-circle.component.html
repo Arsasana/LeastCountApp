@@ -1,3 +1,28 @@
-<p>
-  create-circle works!
-</p>
+<app-nav></app-nav>
+<div class="container">
+	<div class="create-circle-container">
+            <div id="output"></div>
+            <div class="avatar"></div>
+            <div class="form-box">
+                <form (ngSubmit)="onSubmit(createCircleForm)" #createCircleForm="ngForm">
+                    <input name="circlename" id="circlename" type="text" placeholder="Please enter name of circle" required [(ngModel)]="circle.circlename" #circlename="ngModel">
+					<div [hidden]="circlename.valid || circlename.pristine" class="alert alert-danger">circlename is required</div>
+					
+					<app-autocomplete></app-autocomplete>
+					<div class="clear-fix"></div>
+					
+								<br>
+					<div class="members">
+					<h3><span>Members</span></h3>
+					<ul>
+						<li *ngFor="let name of playerNames; let i = index">{{name}} <span class="glyphicon glyphicon-minus" aria-hidden="true" (click)="removeMember(i)"></span></li>
+					</ul>
+					</div>
+					<br/>
+					<div class="submit-btn-div">
+                    <button type="submit" class="btn btn-primary submit-btn" [disabled]="!createCircleForm.form.valid">Create Circle</button>
+					</div>
+                </form>
+            </div>
+    </div>
+</div>

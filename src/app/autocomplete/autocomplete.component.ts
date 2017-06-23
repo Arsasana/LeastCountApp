@@ -30,7 +30,8 @@ export class AutocompleteComponent implements OnInit {
 	 this.items = this.term.valueChanges
                  .debounceTime(400)
                  .distinctUntilChanged()
-                 .switchMap(term => this.autoCompleteService.search(term)); 
+                 .switchMap(term => this.autoCompleteService.search(term))
+				 
   }
   
   
@@ -39,8 +40,6 @@ export class AutocompleteComponent implements OnInit {
 	  this.playerNames.push(item.name);
 		playerDetails.name = item.name;
 		playerDetails.playerId = item.playerId;
-		playerDetails.fullCount = 0;
-		playerDetails.showCount = 0;
 		this.playerDetails.push(playerDetails);
 		this.autoCompleteService.setPlayerDetails(this.playerDetails);
 		this.autoCompleteService.notifyOther({option: 'updatePlayerDetails', value: this.playerDetails});
@@ -54,8 +53,6 @@ export class AutocompleteComponent implements OnInit {
 		this.playerNames.push(user.value);
 		playerDetails.name = user.value;
 		playerDetails.playerId = 0;
-		playerDetails.fullCount = 0;
-		playerDetails.showCount = 0;
 		this.playerDetails.push(playerDetails);
 		this.autoCompleteService.setPlayerDetails(this.playerDetails);
 		this.autoCompleteService.notifyOther({option: 'updatePlayerDetails', value: this.playerDetails});
@@ -68,4 +65,17 @@ export class AutocompleteComponent implements OnInit {
 		console.log(this.searchTerm);
 	}
 
+}
+
+//This inherits from our base component and uses a different style sheet.
+@Component({
+  selector: 'app-autocomplete-2',
+  //This is sharing the template with the parent class.  Note
+  //this needs to be included since templateUrl doesn't automatically
+  //inherit.
+  templateUrl: './autocomplete.component.html',
+  //This is using a unique css file 
+  styleUrls: ['./autocomplete2.component.css']
+})
+export class Autocomplete2Component extends AutocompleteComponent {
 }

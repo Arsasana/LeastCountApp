@@ -21,10 +21,12 @@ import { AutoCompleteService} from './auto-complete.service';
 import { UserService} from './user.service';
 import { ProfileComponent } from './profile/profile.component';
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
+import { Autocomplete2Component } from './autocomplete/autocomplete.component';
 import { GamerulesComponent } from './gamerules/gamerules.component';
 import { CreateCircleComponent } from './create-circle/create-circle.component';
 import { ViewCircleComponent } from './view-circle/view-circle.component';
 import { ViewBadgesComponent } from './view-badges/view-badges.component';
+import { EditCircleComponent } from './edit-circle/edit-circle.component';
 
 
 const ROUTES = [
@@ -45,6 +47,16 @@ const ROUTES = [
   {
     path:'profile',
     component: ProfileComponent
+  }
+  ,
+  {
+    path:'create-circle',
+    component: CreateCircleComponent
+  }
+  ,
+  {
+    path:'view-circles',
+    component: ViewCircleComponent
   }
   ,
   {
@@ -80,10 +92,12 @@ const ROUTES = [
 	GameComponent,
 	ProfileComponent,
 	AutocompleteComponent,
+	Autocomplete2Component,
 	GamerulesComponent,
 	CreateCircleComponent,
 	ViewCircleComponent,
-	ViewBadgesComponent
+	ViewBadgesComponent,
+	EditCircleComponent
   ],
   imports: [
     BrowserModule,

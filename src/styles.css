@@ -25,3 +25,16 @@ html, body {
     padding-top: 15px;
 }
 
+.float-right{
+	float:right;
+}
+
+.float-left{
+	float:left;
+}
+
+.clear-fix{
+	clear:both;
+}
+
+

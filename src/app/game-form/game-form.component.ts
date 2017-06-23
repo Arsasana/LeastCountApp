@@ -119,7 +119,13 @@ this.subscription = this.autoCompleteService.notifyObservable$.subscribe((res) =
   
   onSubmit(gameForm : NgForm){
 	  this.playerNameService.setPlayerNames(this.playerNames);
-	  this.game.players = this.autoCompleteService.getPlayerDetails();
+	  let tempArr = this.autoCompleteService.getPlayerDetails();
+		for(let i = 0 ; i < tempArr.length; i++){
+			tempArr[i].fullCount = 0;
+			tempArr[i].showCount = 0;
+		}
+	  this.game.players = tempArr;
+	  /* this.autoCompleteService.getPlayerDetails(); */
 	  this.game.playersCount = this.playerNames.length;
 	  console.log(this.game);
 	  /*this.gameService.createGame(this.game)

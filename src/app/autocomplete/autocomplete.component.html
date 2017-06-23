@@ -1,6 +1,6 @@
 <input name="name" id="name" type="text" placeholder="name" [formControl]="term" (keyup)="filter()"/>
 <button type="button" id="add-btn" class="btn btn-primary " (click)="addPlayer(term);">Add</button>
-<div class="suggestions" [hidden]="searchTerm.length <= 0">
+<div class="suggestions" [hidden]="!searchTerm && searchTerm.length <= 0">
 <ul>
 		<li *ngFor="let item of items | async"><a (click)="selectItem(item)">{{item.username}}</a></li>
 </ul>
