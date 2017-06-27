@@ -28,12 +28,12 @@
 							<div class="clear-fix"></div>
 							<div class="history-container">
 								<div class="history-div-list" *ngFor="let game of gameHistory">
-									<h4>{{game.name}}</h4>
-									<span class="hist-date">on 18 June, 2017</span><br>
+									<!-- <h4>{{game.gameName}}</h4> -->
+									<span class="hist-date">{{game.createdTime}}</span><br>
 									<div class="row">
 										<div class="col-md-5">
 											<h5>Players</h5>
-											<span>{{game.players}}</span>
+											<span *ngFor="let player of game.players">{{player.name}}</span>
 										</div>
 										<div class="col-md-5">
 											<h5>Winner</h5>
@@ -66,7 +66,7 @@
 			</div>
 			<div class="Circles">
 				<h4 class="float-left">Cirlces</h4>
-				<span class="view-all float-right"><a [routerLink]="['view-circle']">view all</a></span>
+				<span class="view-all float-right"><a routerLink="/view-circles">view all</a></span>
 							<div class="clear-fix"></div>
 				<ul class="circle-list">
 					<li *ngFor="let circle of user.circles"><img class="img-circle" src="http://placehold.it/50x50"><br>{{circle.name}}</li>

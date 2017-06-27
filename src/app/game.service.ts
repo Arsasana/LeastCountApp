@@ -35,6 +35,7 @@ export class GameService {
 
 }
 
+
 	public setGame(game){
 		this.game = game;
 	}

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CoolSessionStorage } from 'angular2-cool-storage';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
+import { UserService } from '../user.service';
+
 
 @Component({
   selector: 'app-profile',
@@ -9,11 +11,13 @@ import { Router } from '@angular/router'
 })
 export class ProfileComponent implements OnInit {
 
+	errorMessage: string;
+	mode = 'Observable';
 	user: any = {};
-	gameHistory:any = {};
+	gameHistory = [];
 	sessionStorage: CoolSessionStorage;
 
-  constructor(sessionStorage: CoolSessionStorage, private router: Router) {
+  constructor(sessionStorage: CoolSessionStorage, private router: Router, private userService: UserService) {
         this.sessionStorage = sessionStorage;   
     }
 
@@ -25,29 +29,86 @@ export class ProfileComponent implements OnInit {
 		  this.user = null;
 	  }
 	  
-	  this.gameHistory=[{
-		  "name":"Awesome",
-		  "players":['Karan','Vinod','Sumanth'],
-		  "winner":"Karan"
-	  },{
-		  "name":"Sunday Match",
-		  "players":['Gautham','Raj','Balu','pawan','Kalyan'],
-		  "winner":"pawan"
-	  },{
-		  "name":"Three showdown",
-		  "players":['Mahesh','Brahmi','30 years Industry'],
-		  "winner":"30 years Industry"
-	  },{
-		  "name":"Friendly Match",
-		  "players":['Bablu','Arjun','Karan','sam','Kajal'],
-		  "winner":"Kajal"
-	  },{
-		  "name":"WorldCup",
-		  "players":['pawan','Gautham','Kajal'],
-		  "winner":"Gautham"
-	  }]
+	  this.userService.getGamesHistory(this.user.email)
+                     .subscribe(
+                       gameHistory => {
+						   console.log(gameHistory.resultObj);
+                         this.gameHistory = gameHistory.resultObj;
+                       },
+                       error =>  this.errorMessage = <any>error);			   
 	  
-  }
+	  /* this.gameHistory=[{
+						"_id": "5946bb1683474248249c520d",
+						"gameScore": 40,
+						"gameName":"awesome",
+						"gameOwner": "nishant@leastcount.com",
+						"circle": "NA",
+						"__v": 0,
+						"createdTime": "2017-06-18T17:40:38.540Z",
+						"players": [
+						  {
+						"name": "sita1",
+						"fullCount": 4,
+						"showCount": 1
+						},
+						  {
+						"name": "sita2",
+						"fullCount": 3,
+						"showCount": 2
+						}
+						],
+						"winner": "sita2",
+						
+						"isActive": true
+						},
+						  {
+						"_id": "59469abe5a30b17833981655",
+						"gameScore": 40,
+						"gameName":"Special",
+						"gameOwner": "nishant@leastcount.com",
+						"circle": "NA",
+						"__v": 0,
+						"createdTime": "2017-06-18T15:22:38.229Z",
+						"players": [
+						  {
+						"name": "ram1",
+						"fullCount": 4,
+						"showCount": 1
+						},
+						  {
+						"name": "ram2",
+						"fullCount": 3,
+						"showCount": 2
+						}
+						],
+						"winner": "ram2",
+						"isActive": true
+						},
+						  {
+						"_id": "59468ffd5a30b17833981654",
+						"gameScore": 50,
+						"gameName":"Something",
+						"gameOwner": "nishant@leastcount.com",
+						"circle": "NA",
+						"__v": 0,
+						"createdTime": "2017-06-18T14:36:45.609Z",
+						"players": [
+						  {
+						"name": "shiva1",
+						"fullCount": 4,
+						"showCount": 3
+						},
+						  {
+						"name": "shiva2",
+						"fullCount": 5,
+						"showCount": 3
+						}
+						],
+						"winner": "shiva1",
+						"isActive": true
+						}]*/
+	  
+  } 
   
   logout(){
 	  if(this.user){

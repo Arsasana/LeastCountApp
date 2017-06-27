@@ -23,6 +23,16 @@ export class UserService {
 
 }
 
+	getGamesHistory(email: string){
+	let getHistoryUrl = 'http://localhost:5000/api/v1.0/user/getHistory/';
+	getHistoryUrl = getHistoryUrl + email; 
+	let headers = new Headers({ 'Content-Type': 'application/json' });
+	let options = new RequestOptions({ headers: headers });
+	return this.http.get(getHistoryUrl,options)
+             .map(this.extractData)
+             .catch(this.handleError);
+	}
+
  private extractData(res: Response) {
     let body = res.json();
     return body || { };

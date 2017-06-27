@@ -11,8 +11,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class UserAuthService {
 
-	loginUrl = 'http://localhost:5000/api/v1.0/login';
-	registerUrl = 'http://localhost:5000/api/v1.0/register';
+	loginUrl = 'http://localhost:5000/api/v1.0/user/login';
+	registerUrl = 'http://localhost:5000/api/v1.0/user/register';
 
   constructor(private http: Http) { }
 
