@@ -1,4 +1,4 @@
-
+NEW API"S NEEDED ARE AT LINE 414. please check and let me know if you have any questions.
 
 
 ######################################################################################
@@ -408,3 +408,20 @@ IF emailID not available or no history
 }
 
 ########################################
+
+
+
+TODO's IN THE APP
+View game Stats Api
+--------------------
+write an API to get the stats of each game in the history. When a user clicks view stats in the game history, he should be shown with the game details like when the game was played, players of the game, winner, game name, game score, shows, full counts and analytics. 
+
+Export to PDF API
+----------------
+we need a api to export either the graph, or the score table to the pdf. Need an api for this.
+
+Share to Social Media
+--------------------
+we need to have this functionality, but this can wait we need to discuss on this little more.
+
+
