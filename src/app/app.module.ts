@@ -27,6 +27,7 @@ import { CreateCircleComponent } from './create-circle/create-circle.component';
 import { ViewCircleComponent } from './view-circle/view-circle.component';
 import { ViewBadgesComponent } from './view-badges/view-badges.component';
 import { EditCircleComponent } from './edit-circle/edit-circle.component';
+import { GameStatsComponent } from './game-stats/game-stats.component';
 
 
 const ROUTES = [
@@ -76,6 +77,10 @@ const ROUTES = [
   {
     path:'gamerules',
     component: GamerulesComponent
+  },
+  {
+    path:'game-stats',
+    component: GameStatsComponent
   }
 
 ];
@@ -97,7 +102,8 @@ const ROUTES = [
 	CreateCircleComponent,
 	ViewCircleComponent,
 	ViewBadgesComponent,
-	EditCircleComponent
+	EditCircleComponent,
+	GameStatsComponent
   ],
   imports: [
     BrowserModule,

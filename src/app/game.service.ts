@@ -13,6 +13,8 @@ export class GameService {
 	createGameUrl = 'http://localhost:5000/api/v1.0/createGame';
 	
 	game: any = {};
+	gameStats: any = {};
+	gameHistory = [];
 	
 
   constructor(private http: Http) { }
@@ -42,6 +44,22 @@ export class GameService {
   
 	public getGame(){
 		return this.game;
+	}
+	
+	public setGameStats(gameStats){
+		this.gameStats = gameStats;
+	}
+  
+	public getGameStats(){
+		return this.gameStats;
+	}
+	
+	public setGameHistory(gameHistory){
+		this.gameHistory = gameHistory;
+	}
+  
+	public getGameHistory(){
+		return this.gameHistory;
 	}
   
    private extractData(res: Response) {

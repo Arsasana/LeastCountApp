@@ -27,9 +27,9 @@
 							<span class="view-all float-right"><a href="#">view all</a></span>
 							<div class="clear-fix"></div>
 							<div class="history-container">
-								<div class="history-div-list" *ngFor="let game of gameHistory">
-									<!-- <h4>{{game.gameName}}</h4> -->
-									<span class="hist-date">{{game.createdTime}}</span><br>
+								<div class="history-div-list" *ngFor="let game of gameHistory; let i = index">
+									<h4>{{game.gameName}}</h4>
+									<span class="hist-date">{{game.createdTime | date:'medium'}}</span><br>
 									<div class="row">
 										<div class="col-md-5">
 											<h5>Players</h5>
@@ -40,7 +40,7 @@
 											{{game.winner}}
 										</div>
 										<div class="col-md-2">
-										<button type="button" class="btn btn-primary stats">view stats</button>
+										<button type="button" class="btn btn-primary stats" (click)="viewGameStats(i)">view stats</button>
 										</div>
 									</div>
 								</div>
@@ -64,13 +64,20 @@
 					<li><img class="img-circle" src="http://placehold.it/50x50"></li>
 				</ul>
 			</div>
-			<div class="Circles">
+			<div class="circles">
 				<h4 class="float-left">Cirlces</h4>
-				<span class="view-all float-right"><a routerLink="/view-circles">view all</a></span>
+				<div class="circles-container" *ngIf="hasCircles">
+				<span class="view-all float-right"><a routerLink="/create-circle" class="create-link">Create</a><a routerLink="/view-circles">view all</a></span>
 							<div class="clear-fix"></div>
 				<ul class="circle-list">
 					<li *ngFor="let circle of user.circles"><img class="img-circle" src="http://placehold.it/50x50"><br>{{circle.name}}</li>
 				</ul>
+				</div>
+				<div class="create-new" *ngIf="!hasCircles">
+				<div class="clear-fix"></div>
+					<span class="glyphicon glyphicon-plus-sign" aria-hidden="true" (click)="createCircle()" ></span><br>
+					<span>Create Circle</span>
+				</div>
 			</div>
 		</div>
 	</div>

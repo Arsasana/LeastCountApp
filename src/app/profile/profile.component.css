@@ -56,6 +56,16 @@
 	margin-bottom:3px;
 }
 
+.view-all a{
+	padding-left:6px;
+	padding-right:6px;
+}
+
+.create-link{
+	border-right:1px solid #ddd;
+	
+}
+
 .hist-date{
 	font-size:12px;
 }
@@ -79,4 +89,23 @@
 
 .clear-fix{
 	clear:both;
+}
+
+.circles{
+	position:relative;
+	min-height:260px;
+}
+
+.create-new{
+	position:absolute;
+	top:40%;
+	left:33%;
+	cursor:pointer;
+}
+
+span.glyphicon-plus-sign{
+	margin-left: 10px;
+    font-size: 60px;
+	color:#ddd;
+	
 }

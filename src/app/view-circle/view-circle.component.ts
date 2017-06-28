@@ -81,13 +81,16 @@ export class ViewCircleComponent implements OnInit {
 		showMembers = false;
 		prevIndex = 0;
 		circleIndex = 0;
-		isEditCircle = false;
-		addNewMember = false;
+		isEditCircle = [];
+		addNewMember = [];
 		
   constructor() { }
 
   ngOnInit() {
-	  
+	  for(let i = 0 ; i < this.circles.length; i++){
+		  this.isEditCircle[i] = false;
+		  this.addNewMember[i] = false;
+	  }
   }
   
   listMembers(index){
@@ -112,25 +115,32 @@ export class ViewCircleComponent implements OnInit {
     removeMember(index){
 	  console.log(index);
 	  this.circles[this.circleIndex].members.splice(index,1);
-	  //this.circleMembers.splice(index,1);
   }
   
   deleteCircle(){
-	  
+	  // implement delete circle
   }
   
   editCircle(index){
 	  this.circleIndex = index;
-	  this.isEditCircle = true;
+	  if(this.isEditCircle[index]){
+		  this.isEditCircle[index] = false;
+	  }else{
+		  this.isEditCircle[index] = true;
+	  }
   }
   
   saveCircle(){
-	  this.isEditCircle =false;
+	  //implement save circle
+  }
+  
+  addMember(){
+	  // implement add member
   }
   
   openInput(index){
 	  console.log(index);
-	  this.addNewMember = true;
+	  this.addNewMember[index] = true;
   }
 
 }
