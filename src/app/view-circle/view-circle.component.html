@@ -14,7 +14,7 @@
 					</div>
 					<div class="clear-fix"></div>
 					 <input type="text" class="desc" [(ngModel)]="desc" placeholder = "desc" *ngIf="isEditCircle[j]"/>
-					<span class="circle-desc">Here goes the description about the circle will limit this to 140 characters</span>
+					<span class="circle-desc" *ngIf="!isEditCircle[j]">Here goes the description about the circle will limit this to 140 characters</span>
 					<div class="members">
 						<ul class="ul-members">
 							<li *ngFor="let member of circle.members; let i = index"><img class="img-circle" src="http://placehold.it/50x50" /><br><span class="member-name">{{member.name}}</span><br><span class="glyphicon glyphicon-remove" *ngIf="isEditCircle[j]" aria-hidden="true" (click)="removeMember(i)"></span></li>
