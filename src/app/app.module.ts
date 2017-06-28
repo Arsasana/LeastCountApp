@@ -28,6 +28,7 @@ import { ViewCircleComponent } from './view-circle/view-circle.component';
 import { ViewBadgesComponent } from './view-badges/view-badges.component';
 import { EditCircleComponent } from './edit-circle/edit-circle.component';
 import { GameStatsComponent } from './game-stats/game-stats.component';
+import { HistoryComponent } from './history/history.component';
 
 
 const ROUTES = [
@@ -81,6 +82,10 @@ const ROUTES = [
   {
     path:'game-stats',
     component: GameStatsComponent
+  },
+  {
+    path:'history',
+    component: HistoryComponent
   }
 
 ];
@@ -103,6 +108,7 @@ const ROUTES = [
 	ViewCircleComponent,
 	ViewBadgesComponent,
 	EditCircleComponent,
+	HistoryComponent,
 	GameStatsComponent
   ],
   imports: [

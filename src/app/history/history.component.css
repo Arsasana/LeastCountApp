@@ -1,0 +1,44 @@
+
+.history-div-list{
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.history-div-list h4{
+  margin-bottom:0;
+  color:#337ab7;
+}
+
+.history-div-list h5{
+  margin-bottom:8px;
+}
+
+.stats{
+  margin-top: 30px;
+  margin-right: 0;
+  margin-left: 40px;
+}
+
+.hist-date{
+  font-size:12px;
+}
+
+ul{
+  padding-left: 0;
+}
+
+ul li{
+  display: inline-block;
+  padding:5px;
+  background: #f4c242;
+  border-radius: 3px;
+  color: #FFF;
+  margin-right: 5px;
+}
+
+#winner{
+  background: #2b8c08;
+  padding:5px;
+  border-radius: 3px;
+  color: #FFF;
+}
