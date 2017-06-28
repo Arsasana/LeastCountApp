@@ -13,12 +13,15 @@
 						<span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="deleteCircle(j)"></span>
 					</div>
 					<div class="clear-fix"></div>
+					 <input type="text" class="desc" [(ngModel)]="desc" placeholder = "desc" *ngIf="isEditCircle[j]"/>
 					<span class="circle-desc">Here goes the description about the circle will limit this to 140 characters</span>
 					<div class="members">
 						<ul class="ul-members">
 							<li *ngFor="let member of circle.members; let i = index"><img class="img-circle" src="http://placehold.it/50x50" /><br><span class="member-name">{{member.name}}</span><br><span class="glyphicon glyphicon-remove" *ngIf="isEditCircle[j]" aria-hidden="true" (click)="removeMember(i)"></span></li>
 							<li class="add-member-li"><a (click)="openInput(j)"><img class="img-circle img-circle-add" src="http://placehold.it/50x50"><br><span *ngIf="!addNewMember[j]">Add member</span></a><span class="add-circle-member" *ngIf="addNewMember[j]"><app-autocomplete-2></app-autocomplete-2></span></li>
 						</ul>
+						<button type="button" *ngIf="isEditCircle[j]" (click)="saveCircle()" class="btn-save btn btn-primary float-right">save</button>
+						<div class="clear-fix"></div>
 					</div>
 				</div>
 			</div>

@@ -83,6 +83,7 @@ export class ViewCircleComponent implements OnInit {
 		circleIndex = 0;
 		isEditCircle = [];
 		addNewMember = [];
+		desc = "Here goes the description about the circle will limit this to 140 characters";
 		
   constructor() { }
 
