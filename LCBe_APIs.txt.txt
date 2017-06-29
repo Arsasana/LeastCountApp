@@ -425,3 +425,7 @@ Share to Social Media
 we need to have this functionality, but this can wait we need to discuss on this little more.
 
 
+Issues
+##########################################
+
+1. if the circle name is long the UI is messed.

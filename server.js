@@ -136,10 +136,11 @@ routes.post('/game/saveGame/:gameId',function(req,res){
 //to create circle
 routes.post('/user/create/circle',function(req,res){
   // var host = req.body.host;
+  console.log(req.body);
   var email = req.body.user.email;
-  var circleDetails = {name: String,members : [String] };
-  var	circles = [{name : String,members : [String] ,isActive : {type:Boolean}}];
-  circleDetails = req.body.user.circleDetails;
+  //var circle = {name: String,members : [],isActive : {type:Boolean, default: true},membersCount: Number };
+  //var	circles = [{name : String,members : [] ,isActive : {type:Boolean}}];
+  var circle = req.body.user.circle;
 
   user.findOne({email:email},function(err,foundObj){
 
@@ -157,22 +158,23 @@ routes.post('/user/create/circle',function(req,res){
       return 	res.json({success:false, message : 'Unable to create circle'});
     }else{
       //checking if circle name already exist or not
-      circles = foundObj.circles;
+      var circles = foundObj.circles;
       for(i=0;i < circles.length ;i++){
 
-        if(circleDetails.name === circles[i].name)
+        if(circle.name === circles[i].name)
         {
 
           return 	res.json({success:false, message : 'Circle name already exist'});
         }
       }
-      foundObj.circles.push({name:circleDetails.name,members:circleDetails.members,isActive:true});
+	  foundObj.circles.push(circle);
+      //foundObj.circles.push({name:circle.name,members:circle.members,membersCount:circle.membersCount,isActive:true});
 
-      //foundObj.circles += circleDetails;
+      //foundObj.circles += circle;
       foundObj.save(function(err,updateObj){
 
         if(err){
-          console.log('Error Inserting New Data');
+          console.log('Error Inserting New Data while saving object');
           if (err.name === 'ValidationError') {
             for (field in err.errors) {
               console.log(err.errors[field].message);
@@ -188,14 +190,61 @@ routes.post('/user/create/circle',function(req,res){
   })
 });
 
+/* //to add member in  circle
+routes.post('/user/edit/circle',function(req,res){
+	var email = req.body.user.email;
+	
+	user.findOne({email:email},function(err,foundObj){
+		if(err){
+		  console.log('Error Inserting New Data');
+		  if (err.name === 'ValidationError') {
+			for (field in err.errors) {
+			  console.log(err.errors[field].message);
+
+			  return 	res.json({success:false, message : 'Unable to update circle'});
+
+			}
+		  }
+
+		  return 	res.json({success:false, message : 'Unable to update circle'});
+		}else{
+			
+		}
+	}
+	
+} */
 
 //to add member in  circle
+routes.post('/user/edit/circle',function(req,res){
+	var email = req.body.user.email;
+	var circleId = req.body.user.circleId;
+	user.find({email:email},function(err,foundObj){
+			if(err) throw err;
+			if(!foundObj){
+				res.json({success:false,message:'Circle with id : '+circleId+' could not be found'});
+			}else{
+				console.log(req.body.user);
+				user.update(
+					{'email': email},
+					{$set: 
+					{"comments.$": req.body.user.circle},
+					updatedTime : Date.now()},
+					{upsert:false,new:true},
+					function(err,doc){
+						if(err) throw err;
+						return res.json({success:true,message:'Successfully updated the circle',resultObj :doc });
+					}
+				);
+			}
+	});
+});
+
+/* //to add member in  circle
 routes.post('/user/edit/circle/add',function(req,res){
   // var host = req.body.host;
   var email = req.body.user.email;
   var circleName = req.body.user.circleName;
   var newMember = req.body.user.member;
-  var	circles = [{name : String,members : [String] ,isActive : {type:Boolean}}];
   user.findOne({email:email},function(err,foundObj){
 
     if(err){
@@ -213,7 +262,7 @@ routes.post('/user/edit/circle/add',function(req,res){
     }else{
     	
     	console.log("result : ",foundObj)
-    	 circles = foundObj.circles;
+    	var circles = foundObj.circles;
         for(i=0;i < circles.length ;i++){
 
           if(circleName === circles[i].name)
@@ -248,10 +297,10 @@ routes.post('/user/edit/circle/add',function(req,res){
       
     }
   })
-});
+}); */
 
 //to delete a member in  circle
-routes.post('/user/edit/circle/delete',function(req,res){
+routes.post('/user/delete/circle',function(req,res){
   // var host = req.body.host;
   var email = req.body.user.email;
   var circleName = req.body.user.circleName;

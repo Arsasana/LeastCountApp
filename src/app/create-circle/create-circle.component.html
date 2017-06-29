@@ -5,7 +5,7 @@
             <div class="avatar"></div>
             <div class="form-box">
                 <form (ngSubmit)="onSubmit(createCircleForm)" #createCircleForm="ngForm">
-                    <input name="circlename" id="circlename" type="text" placeholder="Please enter name of circle" required [(ngModel)]="circle.circlename" #circlename="ngModel">
+                    <input name="circlename" id="circlename" type="text" placeholder="Please enter name of circle" required [(ngModel)]="circle.name" #circlename="ngModel">
 					<div [hidden]="circlename.valid || circlename.pristine" class="alert alert-danger">circlename is required</div>
 					
 					<app-autocomplete></app-autocomplete>

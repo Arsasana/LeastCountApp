@@ -2,6 +2,6 @@
 <button type="button" id="add-btn" class="btn btn-primary " (click)="addPlayer(term);">Add</button>
 <div class="suggestions" [hidden]="!searchTerm && searchTerm.length <= 0">
 <ul>
-		<li *ngFor="let item of items | async"><a (click)="selectItem(item)">{{item.username}}</a></li>
+		<li *ngFor="let item of items | async"><a (click)="selectItem(item)">{{item.name}}</a></li>
 </ul>
 <div>

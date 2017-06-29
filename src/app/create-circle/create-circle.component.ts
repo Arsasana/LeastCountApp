@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {NgForm} from '@angular/forms';
 import { AutoCompleteService} from '../auto-complete.service';
+import { UserService} from '../user.service';
 import { Subscription } from 'rxjs/Subscription';
+import { CoolSessionStorage } from 'angular2-cool-storage';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-circle',
@@ -16,11 +19,27 @@ export class CreateCircleComponent implements OnInit {
 	disablePlayerNameField = false;
 	playerDetails = [];
 	playerNames = [];
+	user: any = {};
+	userDetails: any = {};
+	sessionStorage: CoolSessionStorage;
 	private subscription: Subscription;
 
-  constructor(private autoCompleteService: AutoCompleteService) { }
+  constructor(private autoCompleteService: AutoCompleteService,
+			  private userService: UserService,
+			  private router: Router,
+			  sessionStorage: CoolSessionStorage)
+			  { 		  
+			  this.sessionStorage = sessionStorage;  
+			  }
 
   ngOnInit() {
+	  
+	  let loggedUser = this.sessionStorage.getItem('user');
+	  if (loggedUser) {
+		this.user = JSON.parse(loggedUser);
+	  } else {
+		  this.user = null;
+	  }
 	  
 	  this.subscription = this.autoCompleteService.notifyObservable$.subscribe((res) => {
       if (res.hasOwnProperty('option') && res.option === 'updatePlayerDetails') {
@@ -44,21 +63,23 @@ export class CreateCircleComponent implements OnInit {
   }
   
   onSubmit(createCircleForm : NgForm){
-	  this.circle.players = this.playerDetails;
-	  this.circle.playersCount = this.playerNames.length;
+	  this.circle.members = this.playerDetails;
+	  this.circle.membersCount = this.playerNames.length;
 	  console.log(this.circle);
-	  /*this.gameService.createGame(this.game)
+	  this.userDetails.email = this.user.email;
+	  this.userDetails.circle = this.circle;
+	  this.userService.createCircle(this.userDetails)
                      .subscribe(
-                      game => {
-
-                         this.game = game;
-						 console.log(this.game);
-						 this.gameService.setGame(this.game.obj);
-                          if ( this.game.success ) {
-                            this.router.navigate(['game']);
+                      resp => {
+						 console.log(resp)
+                         this.user = resp.resultObj;
+						 console.log(this.user);
+						  this.sessionStorage.setItem("user",JSON.stringify(this.user));
+                          if ( resp.success ) {
+                            this.router.navigate(['profile']);
                           }
                        },
-                       error =>  this.errorMessage = <any>error);*/
+                       error =>  this.errorMessage = <any>error);
   }
 
 }

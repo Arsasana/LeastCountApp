@@ -14,8 +14,9 @@ var User = mongoose.model('user', new Schema({
   },
   showGameRulesMsg : {type:Boolean , default: true},
   isActive : {type:Boolean , default:true},
-  circles : [{name : String,members : [String] ,isActive : {type:Boolean , default:false}}],
-  createdTime :  { type : Date, default: Date.now }
+  circles : [{name : String, desc: String, members : [] ,isActive : {type:Boolean , default:true}, membersCount: {type: Number}}],
+  createdTime :  { type : Date, default: Date.now },
+  updatedTime :  { type : Date, default: Date.now }
 }));
 
 module.exports = User;

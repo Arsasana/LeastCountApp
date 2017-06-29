@@ -10,6 +10,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class UserService {
 	
+	createCircleUrl = "http://localhost:5000/api/v1.0/user/create/circle";
+	saveCircleUrl = "http://localhost:5000/api/v1.0/user/edit/circle";
 	
 
   constructor(private http: Http) { }
@@ -32,6 +34,24 @@ export class UserService {
              .map(this.extractData)
              .catch(this.handleError);
 	}
+	
+	createCircle(user: any){
+		console.log(user);
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({ headers: headers });
+		return this.http.post(this.createCircleUrl, { user }, options)
+             .map(this.extractData)
+             .catch(this.handleError);
+	}
+	
+	saveCircle(user: any){
+		console.log(user);
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({ headers: headers });
+		return this.http.post(this.saveCircleUrl, { user }, options)
+             .map(this.extractData)
+             .catch(this.handleError);
+	}	
 
  private extractData(res: Response) {
     let body = res.json();
