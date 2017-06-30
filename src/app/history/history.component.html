@@ -2,12 +2,12 @@
 <div class="container">
   <div class="view-history-container">
     <div class="history-div-list" *ngFor="let game of gameHistory; let i = index">
-      <h4>{{game.name}}</h4>
-      <span class="hist-date">on 18 June, 2017</span><br>
+      <h4>{{game.gameName}}</h4>
+      <span class="hist-date">{{game.createdTime | date:'medium'}}</span><br>
       <div class="row">
         <div class="col-md-5">
           <h5>Players</h5>
-          <ul><li *ngFor="let player of game.players">{{player}}</li></ul>
+          <ul><li *ngFor="let player of game.players">{{player.name}}</li></ul>
         </div>
         <div class="col-md-5">
           <h5>Winner</h5>

@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class GameService {
 
-	createGameUrl = 'http://localhost:5000/api/v1.0/createGame';
+	createGameUrl = 'http://localhost:5000/api/v1.0/game/createGame';
 	
 	game: any = {};
 	gameStats: any = {};

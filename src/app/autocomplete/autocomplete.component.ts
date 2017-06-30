@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { AutoCompleteService} from '../auto-complete.service';
@@ -21,7 +21,7 @@ export class AutocompleteComponent implements OnInit {
   playerNames = [];
   searchTerm: String = "";
   
-  constructor(private autoCompleteService: AutoCompleteService) {
+  constructor(public autoCompleteService: AutoCompleteService) {
     
   }
 
@@ -47,7 +47,7 @@ export class AutocompleteComponent implements OnInit {
 		this.ngOnInit();
   }
   
-  private addPlayer(user: any) {
+  addPlayer(user: any) {
 
 	   let playerDetails: any ={};
 		this.playerNames.push(user.value);
@@ -78,4 +78,40 @@ export class AutocompleteComponent implements OnInit {
   styleUrls: ['./autocomplete2.component.css']
 })
 export class Autocomplete2Component extends AutocompleteComponent {
+	
+	@Input() circleIndex: Number ;
+	
+	term = new FormControl();
+  playerDetails = [];
+  playerNames = [];
+  searchTerm: String = "";
+	
+	selectItem(item: any){
+	  let playerDetails: any ={};
+	  this.playerNames.push(item.name);
+		playerDetails.name = item.name;
+		playerDetails.playerId = item.playerId;
+		playerDetails.circleIndex = this.circleIndex;
+		this.playerDetails.push(playerDetails);
+		this.autoCompleteService.setPlayerDetails(this.playerDetails);
+		this.autoCompleteService.notifyOther({option: 'updatePlayerDetails', value: this.playerDetails});
+		this.term = new FormControl();
+		this.playerDetails = [];
+		super.ngOnInit();
+  }
+  
+  addPlayer(user: any) {
+
+	   let playerDetails: any ={};
+		this.playerNames.push(user.value);
+		playerDetails.name = user.value;
+		playerDetails.playerId = 0;
+		playerDetails.circleIndex = this.circleIndex;
+		this.playerDetails.push(playerDetails);
+		this.autoCompleteService.setPlayerDetails(this.playerDetails);
+		this.autoCompleteService.notifyOther({option: 'updatePlayerDetails', value: this.playerDetails});
+		this.term = new FormControl();
+		this.playerDetails = [];
+		super.ngOnInit();
+    }
 }

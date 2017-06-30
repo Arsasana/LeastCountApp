@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const config = require('./config');
 const user   = require('./src/models/User');
 const game   = require('./src/models/Game');
+const circle   = require('./src/models/Circle');
 
 const app = express();
 
@@ -190,173 +191,52 @@ routes.post('/user/create/circle',function(req,res){
   })
 });
 
-/* //to add member in  circle
-routes.post('/user/edit/circle',function(req,res){
-	var email = req.body.user.email;
-	
-	user.findOne({email:email},function(err,foundObj){
-		if(err){
-		  console.log('Error Inserting New Data');
-		  if (err.name === 'ValidationError') {
-			for (field in err.errors) {
-			  console.log(err.errors[field].message);
-
-			  return 	res.json({success:false, message : 'Unable to update circle'});
-
-			}
-		  }
-
-		  return 	res.json({success:false, message : 'Unable to update circle'});
-		}else{
-			
-		}
-	}
-	
-} */
-
-//to add member in  circle
-routes.post('/user/edit/circle',function(req,res){
-	var email = req.body.user.email;
-	var circleId = req.body.user.circleId;
-	user.find({email:email},function(err,foundObj){
+//to edit a circle 
+routes.post('/user/edit/circle/:email',function(req,res){
+	user.find({"email":req.params.email},function(err,userDoc){
 			if(err) throw err;
-			if(!foundObj){
-				res.json({success:false,message:'Circle with id : '+circleId+' could not be found'});
+			if(!userDoc){
+				res.json({success:false,message:'User with email : '+req.params.email+' could not be found'});
 			}else{
-				console.log(req.body.user);
-				user.update(
-					{'email': email},
-					{$set: 
-					{"comments.$": req.body.user.circle},
+				console.log(userDoc);
+				console.log(req.body.user.circle);
+				user.findOneAndUpdate(
+					{"email":req.params.email,"circles._id":req.body.user.circle._id},
+					{$set : {"circles.$" : req.body.user.circle},
 					updatedTime : Date.now()},
 					{upsert:false,new:true},
 					function(err,doc){
 						if(err) throw err;
-						return res.json({success:true,message:'Successfully updated the circle',resultObj :doc });
+						return res.json({success:true,message:'circle updated successfully',doc:doc});
 					}
 				);
 			}
 	});
-});
+}); 
 
-/* //to add member in  circle
-routes.post('/user/edit/circle/add',function(req,res){
-  // var host = req.body.host;
-  var email = req.body.user.email;
-  var circleName = req.body.user.circleName;
-  var newMember = req.body.user.member;
-  user.findOne({email:email},function(err,foundObj){
+//to delete a circle
+routes.post('/user/delete/circle/:email',function(req,res){
+	user.find({"email":req.params.email},function(err,userDoc){
+			if(err) throw err;
+			if(!userDoc){
+				res.json({success:false,message:'User with email : '+req.params.email+' could not be found'});
+			}else{
+				console.log(userDoc);
+				console.log(req.body.user.circle);
+				user.findOneAndUpdate(
+					{"email":req.params.email,"circles._id":req.body.user.circle._id},
+					{$pull : {circles : {_id:req.body.user.circle._id}},
+					updatedTime : Date.now()},
+					{upsert:false,new:true},
+					function(err,doc){
+						if(err) throw err;
+						return res.json({success:true,message:'circle updated successfully',doc:doc});
+					}
+				);
+			}
+	});
+}); 
 
-    if(err){
-      console.log('Error Inserting New Data');
-      if (err.name === 'ValidationError') {
-        for (field in err.errors) {
-          console.log(err.errors[field].message);
-
-          return 	res.json({success:false, message : 'Unable to update circle'});
-
-        }
-      }
-
-      return 	res.json({success:false, message : 'Unable to update circle'});
-    }else{
-    	
-    	console.log("result : ",foundObj)
-    	var circles = foundObj.circles;
-        for(i=0;i < circles.length ;i++){
-
-          if(circleName === circles[i].name)
-          {
-            if(foundObj.circles[i].members.indexOf(newMember) === -1)
-            	{
-            foundObj.circles[i].members.push(newMember);
-            break;
-            	}
-            else {
-            	return 	res.json({success:false, message : 'Member already exist'});
-            }
-          }
-        }
-        
-       
-      foundObj.save(function(err,updateObj){
-
-        if(err){
-          console.log('Error Inserting New Data');
-          if (err.name === 'ValidationError') {
-            for (field in err.errors) {
-              console.log(err.errors[field].message);
-              return 	res.json({success:false, message : 'Unable to create circle'});
-            }
-          }
-          return 	res.json({success:false, message : 'Unable to update circle'});
-        }else{
-          return 	res.json({success:true, message : 'Successfully update circle',resultObj :updateObj });
-        }
-      });
-      
-    }
-  })
-}); */
-
-//to delete a member in  circle
-routes.post('/user/delete/circle',function(req,res){
-  // var host = req.body.host;
-  var email = req.body.user.email;
-  var circleName = req.body.user.circleName;
-  var member = req.body.user.member;
-  var	circles = [{name : String,members : [String] ,isActive : {type:Boolean}}];
-  user.findOne({email:email},function(err,foundObj){
-
-    if(err){
-      console.log('Error Inserting New Data');
-      if (err.name === 'ValidationError') {
-        for (field in err.errors) {
-          console.log(err.errors[field].message);
-
-          return 	res.json({success:false, message : 'Unable to delete member circle'});
-
-        }
-      }
-
-      return 	res.json({success:false, message : 'Unable to update circle'});
-    }else{
-    	
-    	console.log("result : ",foundObj)
-    	 circles = foundObj.circles;
-        for(i=0;i < circles.length ;i++){
-
-          if(circleName === circles[i].name)
-          {
-            if(foundObj.circles[i].members.indexOf(member) === -1)
-            	{
-            	return 	res.json({success:false, message : 'Member doen not exist to delete'});
-            	}
-            else {
-            	foundObj.circles[i].members.splice(foundObj.circles[i].members.indexOf(member),1) 
-            }
-          }
-        }
-        
-      foundObj.save(function(err,updateObj){
-
-        if(err){
-          console.log('Error Inserting New Data');
-          if (err.name === 'ValidationError') {
-            for (field in err.errors) {
-              console.log(err.errors[field].message);
-              return 	res.json({success:false, message : 'Unable to create circle'});
-            }
-          }
-          return 	res.json({success:false, message : 'Unable to delete member circle'});
-        }else{
-          return 	res.json({success:true, message : 'Successfully delete member from circle',resultObj :updateObj });
-        }
-      });
-      
-    }
-  })
-});
 
 
 //to update showGameRulesMsg field in user object
@@ -377,7 +257,7 @@ routes.post('/user/updateGameMsgOption/:userId',function(req,res){
 
 //to update user stats such as no of games, total full counts till date, total show counts till date only for registered users.
 routes.post('/user/updateUserStats',function(req,res){
-	var playersStats = req.body.user.playersStats;
+	var playersStats = req.body.playersStats;
 	console.log(playersStats);
 	var playerIds = [];
 	var count = 0;

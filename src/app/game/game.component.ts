@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlayerNameService} from '../player-name.service';
 import { GameService} from '../game.service';
+import { UserService} from '../user.service';
+import { CoolSessionStorage } from 'angular2-cool-storage';
 
 @Component({
   selector: 'app-game',
@@ -18,65 +20,30 @@ export class GameComponent implements OnInit {
 	model: any = {};
 	game: any = {};
 	pattern = '^([0-9]|0[0-9]|1[0-9]|2[0-9]|3[0-9]|40|XX|xx|NA|na|SW|sw)$';
-	saveGameUrl = 'http://localhost:5000/api/v1.0/saveGame/';
+	saveGameUrl = 'http://localhost:5000/api/v1.0/game/saveGame/';
 	errorMessage: string;
 	mode = 'Observable';
+	sessionStorage: CoolSessionStorage;
+	user: any = {};
 
-  constructor(	private playerNameService: PlayerNameService,
+  constructor(	sessionStorage: CoolSessionStorage,
+				private playerNameService: PlayerNameService,
 				private gameService: GameService,
+				private userService: UserService,
 				private router: Router) {
-
+		 this.sessionStorage = sessionStorage;
   }
 
   ngOnInit() {
-	this.game = {
-    "_id": {
-        "$oid": "5940f308a2c024341dfb86b8"
-    },
-    "gameName": "Sunday Special",
-    "playersCount": 4,
-    "gameScore": 80,
-	"winner":null,
-    "players": [
-        {
-            "name": "Sindhu",
-            "playerId":"5940f308a2c024341dfb86bb",
-			"score":[],
-            "showCount": 0,
-            "fullCount": 0
-        },
-        {
-            "name": "Ravinder",
-            "_id": {
-                "$oid": "5940f308a2c024341dfb86bb"
-            },
-			"score":[],
-            "showCount": 0,
-            "fullCount": 0
-        },
-        {
-            "name": "Nishant",
-            "_id": {
-                "$oid": "5940f308a2c024341dfb86ba"
-            },
-			"score":[],
-            "showCount": 0,
-            "fullCount": 0
-        },
-        {
-            "name": "Bharath",
-            "_id": {
-                "$oid": "5940f308a2c024341dfb86b9"
-            },
-			"score":[],
-            "showCount": 0,
-            "fullCount": 0
-        }
-    ],
-    "isActive": true,
-    "__v": 0
-}
-	//this.game = this.gameService.getGame();
+	
+	 let loggedUser = this.sessionStorage.getItem('user');
+		if (loggedUser) {
+			this.user = JSON.parse(loggedUser);
+		} else {
+			this.user = null;
+		}
+	
+	this.game = this.gameService.getGame();
 	if(this.game){
 	this.createInitialArrays();
 	}else{
@@ -177,12 +144,6 @@ export class GameComponent implements OnInit {
                      .subscribe(
                       resp => {
 							console.log(resp);
-                         /*this.game = game;
-						 console.log(this.game);
-						 this.gameService.setGame(this.game.obj);
-                          if ( this.game.success ) {
-                            this.router.navigate(['game']);
-                          }*/
                        },
                        error =>  this.errorMessage = <any>error);
 	}
@@ -201,6 +162,13 @@ export class GameComponent implements OnInit {
 				playersStats.push(stats);
 			}
 		}
+		
+		this.userService.updateUserStats(playersStats)
+                     .subscribe(
+                      resp => {
+							console.log(resp);
+                       },
+                       error =>  this.errorMessage = <any>error);
 		console.log(playersStats);
 		
 	}
@@ -227,7 +195,7 @@ export class GameComponent implements OnInit {
 					}
 				}
 			this.game.winner = this.game.players[index].name;
-			//this.saveGame();
+			this.saveGame();
 			this.updateUserStats();
 		}
 	}

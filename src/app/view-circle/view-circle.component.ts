@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CoolSessionStorage } from 'angular2-cool-storage';
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
+import { AutoCompleteService} from '../auto-complete.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-view-circle',
@@ -10,75 +12,9 @@ import { UserService } from '../user.service';
 })
 export class ViewCircleComponent implements OnInit {
 	
-	/* circles = [{
-            "name": "friends",
-            "_id": {
-                "$oid": "593d496e953e23801af37d91"
-            },
-            "isActive": false,
-            "members": [
-			{
-				"playerId":"593daab845a35df8148d0a80",
-				"name":"Ravinder"
-			},
-			{
-				"playerId":null,
-				"name":"Sindhu"
-			},
-			{
-				"playerId":"593daab845a35df8148d0a80",
-				"name":"Bharat"
-			},
-			{
-				"playerId":null,
-				"name":"Karthik"
-			},
-			{
-				"playerId":"593daab845a35df8148d0a80",
-				"name":"Nishant"
-			}
-            ]
-        },{
-            "name": "Family",
-            "_id": {
-                "$oid": "593d496e953e23801af37d91"
-            },
-            "isActive": false,
-            "members": [
-			{
-				"playerId":"593daab845a35df8148d0a80",
-				"name":"Ravinder"
-			},
-			{
-				"playerId":"593daab845a35df8148d0a80",
-				"name":"Bharat"
-			},
-			{
-				"playerId":null,
-				"name":"Karthik"
-			},
-			{
-				"playerId":"593daab845a35df8148d0a80",
-				"name":"Nishant"
-			}
-            ]
-        },{
-            "name": "collegues",
-            "_id": {
-                "$oid": "593d496e953e23801af37d91"
-            },
-            "isActive": false,
-            "members": [
-			{
-				"playerId":"593daab845a35df8148d0a80",
-				"name":"Ravinder"
-			},
-			{
-				"playerId":null,
-				"name":"Sindhu"
-			}
-            ]
-        }]; */
+	
+		playerNames = [];
+		playerDetails = [];
 		circles = [];
 		errorMessage: string;
 		mode = 'Observable';
@@ -89,8 +25,9 @@ export class ViewCircleComponent implements OnInit {
 		user: any = {};
 		data: any = {};
 		desc = "Here goes the description about the circle will limit this to 140 characters";
+		private subscription: Subscription;
 		
-  constructor(sessionStorage: CoolSessionStorage, private router: Router, private userService: UserService) {
+  constructor(sessionStorage: CoolSessionStorage, private router: Router, private userService: UserService, private autoCompleteService: AutoCompleteService) {
         this.sessionStorage = sessionStorage;   
     }
 
@@ -108,7 +45,25 @@ export class ViewCircleComponent implements OnInit {
 		  this.addNewMember[i] = false;
 	  }
 	  
-	  this.circles = this.user.circles
+	  this.circles = this.user.circles;
+	  
+	  this.subscription = this.autoCompleteService.notifyObservable$.subscribe((res) => {
+      if (res.hasOwnProperty('option') && res.option === 'updatePlayerDetails') {
+        console.log(res.value);
+        // perform your other action from here
+		this.playerDetails = res.value;
+			this.playerNames = [];
+		for(let i = 0 ; i < this.playerDetails.length; i++){
+			this.playerNames.push(this.playerDetails[i].name);
+		}
+		
+		let newMember: any = {};
+			newMember.name = this.playerDetails[0].name;
+			newMember.playerId = this.playerDetails[0].playerId;
+			
+		this.circles[this.playerDetails[0].circleIndex].members.push(newMember);
+      }
+    });
   }
   
 
@@ -119,7 +74,23 @@ export class ViewCircleComponent implements OnInit {
   }
   
   deleteCircle(index){
-	  this.circles.splice(index,1);
+	  
+	  this.data.circle = this.circles[index];
+	   console.log(this.data);
+	  this.userService.deleteCircle(this.data,this.user.email)
+                     .subscribe(
+                      resp => {
+						 console.log(resp)
+                         this.user = resp.doc;
+						 console.log(this.user);
+						  this.sessionStorage.setItem("user",JSON.stringify(this.user));
+                          if ( resp.success ) {
+                            //this.router.navigate(['profile']);
+                          }
+						  this.circles.splice(index,1);
+                       },
+                       error =>  this.errorMessage = <any>error);
+	
   }
   
   editCircle(index){
@@ -132,25 +103,24 @@ export class ViewCircleComponent implements OnInit {
   }
   
   saveCircle(index){
-	  //implement save circle
 	  
-	  this.data.email = this.user.email
-	  this.data.circleId = this.circles[index]._id;
 	  this.data.circle = this.circles[index];
+	  this.data.circle.desc = this.desc;
 	  this.data.circle.membersCount = this.data.circle.members.length;
 	  console.log(this.data);
-	  this.userService.saveCircle(this.data)
+	  this.userService.saveCircle(this.data,this.user.email)
                      .subscribe(
                       resp => {
 						 console.log(resp)
-                         this.user = resp.resultObj;
+                         this.user = resp.doc;
 						 console.log(this.user);
-						  //this.sessionStorage.setItem("user",JSON.stringify(this.user));
+						  this.sessionStorage.setItem("user",JSON.stringify(this.user));
                           if ( resp.success ) {
                             //this.router.navigate(['profile']);
                           }
                        },
                        error =>  this.errorMessage = <any>error);
+		this.isEditCircle[index] = false;			   
   }
   
   addMember(){

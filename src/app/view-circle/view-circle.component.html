@@ -1,6 +1,11 @@
 <app-nav></app-nav>
 <div class="container">
 	<div class="view-circle-container">
+		<div class="heading">
+			<h2 class="float-left">Circles</h2>
+			<a routerLink="/create-circle" class="create-link float-right">Create</a>
+		<div class="clear-fix"></div>
+		</div>
 		<div class="circle-container" *ngFor="let circle of circles; let j = index">
 			<div class="row">
 				<div class="col-md-2">
@@ -14,11 +19,11 @@
 					</div>
 					<div class="clear-fix"></div>
 					 <input type="text" class="desc" [(ngModel)]="desc" placeholder = "desc" *ngIf="isEditCircle[j]"/>
-					<span class="circle-desc" *ngIf="!isEditCircle[j]">Here goes the description about the circle will limit this to 140 characters</span>
+					<span class="circle-desc" *ngIf="!isEditCircle[j]">{{circle.desc}}</span>
 					<div class="members">
 						<ul class="ul-members float-left">
 							<li *ngFor="let member of circle.members; let i = index"><img class="img-circle" src="http://placehold.it/50x50" /><br><span class="member-name">{{member.name}}</span><br><span class="glyphicon glyphicon-remove" *ngIf="isEditCircle[j]" aria-hidden="true" (click)="removeMember(i)"></span></li>
-							<li class="add-member-li"><a (click)="openInput(j)"><img class="img-circle img-circle-add" src="http://placehold.it/50x50"><br><span *ngIf="!addNewMember[j]">Add member</span></a><span class="add-circle-member" *ngIf="addNewMember[j]"><app-autocomplete-2></app-autocomplete-2></span></li>
+							<li class="add-member-li"><a><img class="img-circle img-circle-add" src="http://placehold.it/50x50"><br><span *ngIf="!isEditCircle[j]">Add member</span></a><span class="add-circle-member" *ngIf="isEditCircle[j]"><app-autocomplete-2 [circleIndex]="j"></app-autocomplete-2></span></li>
 						</ul>
 						<button type="button" *ngIf="isEditCircle[j]" (click)="saveCircle(j)" class="btn-save btn btn-primary float-right">save</button>
 						<div class="clear-fix"></div>

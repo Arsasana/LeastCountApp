@@ -5,6 +5,7 @@ import { PlayerNameService} from '../player-name.service';
 import { GameService} from '../game.service';
 import { AutoCompleteService} from '../auto-complete.service';
 import { Subscription } from 'rxjs/Subscription';
+import { CoolSessionStorage } from 'angular2-cool-storage';
 
 @Component({
   selector: 'app-game-form',
@@ -17,6 +18,7 @@ export class GameFormComponent implements OnInit{
 	playerDetails = [];
 	game: any = {};
 	model: any = {};
+	sessionStorage: CoolSessionStorage;
 	user: any = {};
 	errorMessage: string;
 	mode = 'Observable';
@@ -25,61 +27,14 @@ export class GameFormComponent implements OnInit{
 	
 
   ngOnInit() {
-	  this.user = {
-    "_id": {
-        "$oid": "593d41ac3fe2fdf0036dcce6"
-    },
-    "firstName": "karan",
-    "lastName": "vengala",
-    "email": "karan@leastcount.com",
-    "password": "password123",
-    "phone": 123456789,
-    "circles": [
-        {
-            "name": "friends",
-            "_id": {
-                "$oid": "593d496e953e23801af37d91"
-            },
-            "isActive": false,
-            "members": [
-			{
-				"playerId":"593daab845a35df8148d0a80",
-				"name":"Ravinder"
-			},
-			{
-				"playerId":null,
-				"name":"Sindhu"
-			},
-			{
-				"playerId":"593daab845a35df8148d0a80",
-				"name":"Bharat"
-			},
-			{
-				"playerId":null,
-				"name":"Karthik"
-			},
-			{
-				"playerId":"593daab845a35df8148d0a80",
-				"name":"Nishant"
-			}
-            ]
-        },
-        {
-            "name": "cousines",
-            "_id": {
-                "$oid": "593daab845a35df8148d0a80"
-            },
-            "isActive": true,
-            "members": [
-                "raj",
-                "kiran",
-                "kumal"
-            ]
-        }
-    ],
-    "isActive": true,
-    "__v": 12
-}
+	  
+	  let loggedUser = this.sessionStorage.getItem('user');
+		if (loggedUser) {
+			this.user = JSON.parse(loggedUser);
+		} else {
+			this.user = null;
+		}
+	  
 this.subscription = this.autoCompleteService.notifyObservable$.subscribe((res) => {
       if (res.hasOwnProperty('option') && res.option === 'updatePlayerDetails') {
         console.log(res.value);
@@ -94,10 +49,12 @@ this.subscription = this.autoCompleteService.notifyObservable$.subscribe((res) =
   }
   
 
-  constructor(private playerNameService: PlayerNameService,
+  constructor(sessionStorage: CoolSessionStorage,
+			  private playerNameService: PlayerNameService,
 			  private router: Router, 
 			  private gameService: GameService,
 			  private autoCompleteService: AutoCompleteService) {
+				  this.sessionStorage = sessionStorage;
     }
 
 	
@@ -125,10 +82,10 @@ this.subscription = this.autoCompleteService.notifyObservable$.subscribe((res) =
 			tempArr[i].showCount = 0;
 		}
 	  this.game.players = tempArr;
-	  /* this.autoCompleteService.getPlayerDetails(); */
 	  this.game.playersCount = this.playerNames.length;
+	  this.game.gameOwner = this.user.email;
 	  console.log(this.game);
-	  /*this.gameService.createGame(this.game)
+	  this.gameService.createGame(this.game)
                      .subscribe(
                       game => {
 
@@ -139,6 +96,6 @@ this.subscription = this.autoCompleteService.notifyObservable$.subscribe((res) =
                             this.router.navigate(['game']);
                           }
                        },
-                       error =>  this.errorMessage = <any>error);*/
+                       error =>  this.errorMessage = <any>error);
   }
 }
