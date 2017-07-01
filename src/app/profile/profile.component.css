@@ -63,7 +63,7 @@
 
 .create-link{
 	border-right:1px solid #ddd;
-	
+
 }
 
 .hist-date{
@@ -71,7 +71,7 @@
 }
 
 .history-div-list .stats{
-	margin-top:10px;
+	margin-top:30px;
 }
 
 .view-all{
@@ -107,5 +107,31 @@ span.glyphicon-plus-sign{
 	margin-left: 10px;
     font-size: 60px;
 	color:#ddd;
-	
+
+}
+
+ul{
+  padding-left: 0;
+}
+
+.players-ul{
+  padding-left: 0;
+}
+
+.players-ul li{
+  display: inline-block;
+  padding:5px;
+  background: #f4c242;
+  border-radius: 3px;
+  color: #FFF;
+  margin-right: 3px;
+  margin-top: 3px;
+}
+
+#winner{
+  display: inline-block;
+  background: #2b8c08;
+  padding:5px;
+  border-radius: 3px;
+  color: #FFF;
 }

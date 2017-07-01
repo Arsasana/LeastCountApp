@@ -16,10 +16,10 @@ export class LoginComponent implements OnInit {
   user: any = {};
   submitted = false;
   sessionStorage: CoolSessionStorage;
-  
+
   constructor(private userAuthService: UserAuthService,
               public router: Router,
-			  sessionStorage: CoolSessionStorage  ) { 
+			  sessionStorage: CoolSessionStorage  ) {
 			  this.sessionStorage = sessionStorage;}
 
   ngOnInit() {
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
                        user => {
 
                          this.user = user;
-						  this.sessionStorage.setItem("user",JSON.stringify(this.user.obj));
+						              this.sessionStorage.setItem("user",JSON.stringify(this.user.obj));
                           if ( this.user.success ) {
                             this.router.navigate(['home']);
                           }
