@@ -1,5 +1,10 @@
-<input name="name" id="name" type="text" placeholder="name" [formControl]="term" (keyup)="filter()"/>
+<input name="name" id="name" type="text" placeholder="name" [formControl]="term" (keyup)="filter()" autocomplete="off" />
 <button type="button" id="add-btn" class="btn btn-primary " (click)="addPlayer(term);">Add</button>
+<div class="clear-fix"></div>
+<div class="alert alert-danger alert-dismissible" role="alert" *ngIf="selectedPlayerName">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>{{selectedPlayerName}}</strong> has already been added to the list.
+</div>
 <div class="suggestions" [hidden]="!searchTerm && searchTerm.length <= 0">
 <ul>
 		<li *ngFor="let item of items | async"><a (click)="selectItem(item)">{{item.name}}</a></li>

@@ -317,6 +317,7 @@ routes.get('/user/search/:term',function(req,res){
         user.email = obj[i].email;
         user.name = obj[i].firstName+" "+obj[i].lastName;
         user.playerId = obj[i]._id;
+		user.profilePic = obj[i].profilePic;
         objArr.push(user);
       }
 

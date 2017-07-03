@@ -32,7 +32,7 @@
 						<div class="participants">
 						<h3><span>Participants</span></h3>
 						<ul>
-							<li *ngFor="let name of playerNames">{{name}}</li>
+							<li *ngFor="let name of playerNames">{{name}}<span class="glyphicon glyphicon-minus" aria-hidden="true" (click)="removeMember(i)"></span></li>
 						</ul>
 						</div>
 						<br/>

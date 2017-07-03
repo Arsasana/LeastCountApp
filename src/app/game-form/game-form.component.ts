@@ -73,6 +73,15 @@ this.subscription = this.autoCompleteService.notifyObservable$.subscribe((res) =
 		this.autoCompleteService.setPlayerDetails(this.playerDetails);
 		this.disablePlayerNameField = true;
 	}
+	
+	 removeMember(index){
+	  console.log(index);
+	  this.playerNames.splice(index,1);
+	  this.playerDetails.splice(index,1);
+	  this.autoCompleteService.setPlayerDetails(this.playerDetails);
+  }
+  
+ 
   
   onSubmit(gameForm : NgForm){
 	  this.playerNameService.setPlayerNames(this.playerNames);

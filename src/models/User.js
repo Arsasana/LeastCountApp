@@ -7,6 +7,7 @@ var User = mongoose.model('user', new Schema({
   email : {type:String, unique : true},
   password : String,
   phone : {type:Number},
+  profilePic:{type:String},
   stats : {
 	  games: {type:Number, default:0},
 	  showCount : {type:Number, default:0},

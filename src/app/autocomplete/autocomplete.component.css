@@ -1,7 +1,6 @@
 input{
 	width: 48%;
     height: 50px;
-    margin-bottom: 10px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
@@ -18,12 +17,14 @@ input{
 	float:left;
 }
 
+.suggestions{
+	z-index: 999;
+}
+
 .suggestions ul{
 	padding: 0px;
 	position: absolute;
-    margin-top: 60px;
 	width: 18.8%;
-    z-index: 999;
     background-color: #fff;
     border: 1px solid #ddd;
 }

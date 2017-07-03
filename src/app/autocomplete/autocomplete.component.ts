@@ -20,6 +20,7 @@ export class AutocompleteComponent implements OnInit {
   playerDetails = [];
   playerNames = [];
   searchTerm: String = "";
+  selectedPlayerName: string = null;
   
   constructor(public autoCompleteService: AutoCompleteService) {
     
@@ -30,40 +31,69 @@ export class AutocompleteComponent implements OnInit {
 	 this.items = this.term.valueChanges
                  .debounceTime(400)
                  .distinctUntilChanged()
-                 .switchMap(term => this.autoCompleteService.search(term))
+                 .switchMap(term => this.autoCompleteService.search(term.toLowerCase()))
 				 
   }
   
   
   selectItem(item: any){
 	  let playerDetails: any ={};
-	  this.playerNames.push(item.name);
+		
 		playerDetails.name = item.name;
 		playerDetails.playerId = item.playerId;
+		playerDetails.profilePic = item.profilePic;
+		 if(this.containsObject(playerDetails,this.playerDetails)){
+			 this.selectedPlayerName = item.name;
+		 console.log("player already exists"); 
+		}else{
+			this.selectedPlayerName = null;
+		this.playerNames.push(item.name);
 		this.playerDetails.push(playerDetails);
 		this.autoCompleteService.setPlayerDetails(this.playerDetails);
 		this.autoCompleteService.notifyOther({option: 'updatePlayerDetails', value: this.playerDetails});
+		}
 		this.term = new FormControl();
 		this.ngOnInit();
+	  
   }
   
   addPlayer(user: any) {
 
 	   let playerDetails: any ={};
-		this.playerNames.push(user.value);
+		
 		playerDetails.name = user.value;
 		playerDetails.playerId = 0;
+		playerDetails.profilePic = "http://placehold.it/150x150";
+		if(this.containsObject(playerDetails,this.playerDetails)){
+		 console.log("player already exists"); 
+		 this.selectedPlayerName = user.value;
+		}else{
+			this.selectedPlayerName = null;
+		this.playerNames.push(user.value);
 		this.playerDetails.push(playerDetails);
 		this.autoCompleteService.setPlayerDetails(this.playerDetails);
 		this.autoCompleteService.notifyOther({option: 'updatePlayerDetails', value: this.playerDetails});
+		}
 		this.term = new FormControl();
 		this.ngOnInit();
+	  
     }
 	
 	private filter(){
 		this.searchTerm = this.term.value;
 		console.log(this.searchTerm);
 	}
+	
+	 containsObject(obj, list) {
+    var i;
+    for (i = 0; i < list.length; i++) {
+        if (list[i].name === obj.name && list[i].playerId === obj.playerId) {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 }
 
@@ -91,6 +121,7 @@ export class Autocomplete2Component extends AutocompleteComponent {
 	  this.playerNames.push(item.name);
 		playerDetails.name = item.name;
 		playerDetails.playerId = item.playerId;
+		playerDetails.profilePic = item.profilePic;
 		playerDetails.circleIndex = this.circleIndex;
 		this.playerDetails.push(playerDetails);
 		this.autoCompleteService.setPlayerDetails(this.playerDetails);
@@ -107,6 +138,7 @@ export class Autocomplete2Component extends AutocompleteComponent {
 		playerDetails.name = user.value;
 		playerDetails.playerId = 0;
 		playerDetails.circleIndex = this.circleIndex;
+		playerDetails.profilePic = "http://placehold.it/150x150";
 		this.playerDetails.push(playerDetails);
 		this.autoCompleteService.setPlayerDetails(this.playerDetails);
 		this.autoCompleteService.notifyOther({option: 'updatePlayerDetails', value: this.playerDetails});
