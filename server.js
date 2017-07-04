@@ -8,6 +8,8 @@ const config = require('./config');
 const user   = require('./src/models/User');
 const game   = require('./src/models/Game');
 const circle   = require('./src/models/Circle');
+const multer = require('multer');
+
 
 const app = express();
 
@@ -21,6 +23,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'dist')));
 
 const routes = express.Router();
+
+ let storage = multer.diskStorage({ //multers disk storage settings
+        destination: function (req, file, cb) {
+            cb(null, './src/assets/profilePictures/');
+        },
+        filename: function (req, file, cb) {
+            let datetimestamp = Date.now();
+            cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1]);
+        }
+    });
+
+let upload = multer({ //multer settings
+                    storage: storage
+                }).single('file');
 
 routes.get('/test', function (req, res) {
   res.send('Our Sample API is up...');
@@ -86,6 +102,20 @@ routes.post('/user/login',function(req,res){
     }
   });
 });
+
+routes.post('/upload', function(req, res) {
+        upload(req,res,function(err){
+            console.log(req.file);
+			
+            if(err){
+                 res.json({error_code:1,err_desc:err});
+                 return;
+            }
+				 res.json({success:true,message:"image uploaded successfully", file : req.file});
+			
+             
+        });
+    });
 
 // Currently not using
 routes.post('/game/createGame',function(req,res){

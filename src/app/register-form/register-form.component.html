@@ -21,6 +21,8 @@
 					<input name="phone" id="phone" type="text" placeholder="phone" required [(ngModel)]="user.phone" #phone="ngModel">
 					<div [hidden]="phone.valid || phone.pristine" class="alert alert-danger">phone is required</div>
 					
+					
+					
                     <button type="submit" class="btn btn-primary submit-btn" >Submit</button>
 					
                 </form>

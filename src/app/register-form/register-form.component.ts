@@ -16,6 +16,7 @@ export class RegisterFormComponent implements OnInit {
   user: any = {};
   submitted = false;
   sessionStorage: CoolSessionStorage;
+  userImg: any;
  
 constructor(private userAuthService: UserAuthService,
               public router: Router,
@@ -24,6 +25,8 @@ constructor(private userAuthService: UserAuthService,
 
   ngOnInit() {
   }
+  
+  
 
   onSubmit() { 
   

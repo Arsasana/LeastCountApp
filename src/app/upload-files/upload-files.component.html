@@ -1,0 +1,7 @@
+<form>
+  Select an image to upload:
+  <input type="file" name="image" (change)="readUrl($event)" />
+  <img [src]="url" width="150px" height="150px" *ngIf="url">
+  <button type="button" class="btn btn-primary" (click)="onSubmit()">Upload</button>
+  <img [src]="value" width="150px" height="150px" *ngIf="url">
+</form>

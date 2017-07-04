@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng build && node server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -28,6 +28,7 @@
     "mongojs": "latest",
     "mongoose": "~4.4",
     "rxjs": "^5.1.0",
+	"multer":"latest",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
