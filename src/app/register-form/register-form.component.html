@@ -21,7 +21,7 @@
 					<input name="phone" id="phone" type="text" placeholder="phone" required [(ngModel)]="user.phone" #phone="ngModel">
 					<div [hidden]="phone.valid || phone.pristine" class="alert alert-danger">phone is required</div>
 					
-					
+					<app-upload-files showPreview="true" ></app-upload-files>
 					
                     <button type="submit" class="btn btn-primary submit-btn" >Submit</button>
 					

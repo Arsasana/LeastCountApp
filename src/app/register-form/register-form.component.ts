@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserAuthService } from '../user-auth.service';
 import { Router} from '@angular/router';
 import { CoolSessionStorage } from 'angular2-cool-storage';
+import { UploadService } from '../upload.service';
 
 @Component({
   selector: 'register-form',
@@ -20,6 +21,7 @@ export class RegisterFormComponent implements OnInit {
  
 constructor(private userAuthService: UserAuthService,
               public router: Router,
+			  private uploadService: UploadService,
 			  sessionStorage: CoolSessionStorage  ) { 
 			  this.sessionStorage = sessionStorage;}
 
@@ -29,6 +31,12 @@ constructor(private userAuthService: UserAuthService,
   
 
   onSubmit() { 
+	
+	if(this.uploadService.getImgPath()){
+	this.user.profilePic = this.uploadService.getImgPath();
+	}else{
+	this.user.profilePic = "http://placehold.it/150x150";	
+	}
   
    this.userAuthService.registerUser(this.user)
                      .subscribe(

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router} from '@angular/router';
 import { Http, Response }          from '@angular/http';
 import { Headers, RequestOptions } from '@angular/http';
@@ -21,7 +21,10 @@ export class UploadFilesComponent implements OnInit {
   sessionStorage: CoolSessionStorage;
   formData: FormData;
   url: string;
-
+  imgSrc: string = "/assets/profilePictures/";
+   
+   @Input() showPreview: string;
+   
  constructor( private http: Http,
 				private uploadService: UploadService,
 			  public router: Router,
@@ -34,7 +37,7 @@ export class UploadFilesComponent implements OnInit {
     
   readUrl(event) {
   if (event.target.files && event.target.files[0]) {
-	  
+	  console.log(this.showPreview);
 	const files = event.target.files || event.srcElement.files;
 	const file = files[0];
     const formData = new FormData();
@@ -49,20 +52,20 @@ export class UploadFilesComponent implements OnInit {
     }
 
     reader.readAsDataURL(event.target.files[0]);
-  }
-}
-  
-  onSubmit(){
-	  
-	  const headers = new Headers({});
+	
+	 const headers = new Headers({});
 		let options = new RequestOptions({ headers });
 		let uploadUrl = "http://localhost:5000/api/v1.0/upload"
 
 	this.http.post(uploadUrl, this.formData, options).subscribe(res => {
       let body = res.json();
-      this.value = body.file.destination + body.file.filename;
-	  console.log(this.value);
+      this.value = this.imgSrc + body.file.filename;
+	  console.log(body);
+	  console.log(this.value)
+	  this.uploadService.setImgPath(this.value);
+	  this.uploadService.notifyOther({option: 'uploadImage', value: this.value});
     });
-	  
   }
+}
+  
 }

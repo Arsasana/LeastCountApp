@@ -3,6 +3,8 @@ import { CoolSessionStorage } from 'angular2-cool-storage';
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { GameService } from '../game.service';
+import { UploadService } from '../upload.service';
+import { Subscription } from 'rxjs/Subscription';
 
 
 @Component({
@@ -18,8 +20,10 @@ export class ProfileComponent implements OnInit {
   gameHistory = [];
   sessionStorage: CoolSessionStorage;
   hasCircles = false;
+  private subscription: Subscription;
+  profilePic: string;
 
-  constructor(sessionStorage: CoolSessionStorage, private router: Router, private userService: UserService, private gameService: GameService) {
+  constructor(sessionStorage: CoolSessionStorage, private router: Router,private uploadService: UploadService, private userService: UserService, private gameService: GameService) {
     this.sessionStorage = sessionStorage;
   }
 
@@ -41,18 +45,40 @@ export class ProfileComponent implements OnInit {
       .subscribe(
         gameHistory => {
           console.log(gameHistory.resultObj);
-          if (gameHistory.resultObj.length < 5) {
-            for (let i = 0; i < gameHistory.resultObj.length ; i++) {
-              this.gameHistory[i] = gameHistory.resultObj[i];
-            }
-          } else {
-            for (let i = 0; i < 5 ; i++) {
-              this.gameHistory[i] = gameHistory.resultObj[i];
-            }
-          }
+		  if(gameHistory.resultObj){
+			  if (gameHistory.resultObj.length < 5) {
+				for (let i = 0; i < gameHistory.resultObj.length ; i++) {
+				  this.gameHistory[i] = gameHistory.resultObj[i];
+				}
+			  } else {
+				for (let i = 0; i < 5 ; i++) {
+				  this.gameHistory[i] = gameHistory.resultObj[i];
+				}
+			  }
+			}  
 
         },
         error =>  this.errorMessage = <any>error);
+		
+		this.subscription = this.uploadService.notifyObservable$.subscribe((res) => {
+      if (res.hasOwnProperty('option') && res.option === 'uploadImage') {
+        console.log(res.value);
+        // perform your other action from here
+		this.profilePic = res.value;
+			console.log(this.profilePic);
+			this.user.profilePic = this.profilePic;
+			this.userService.updateUser(this.user)
+			.subscribe(
+        user => {
+          this.user = user.obj;
+		    this.sessionStorage.setItem("user",JSON.stringify(this.user));
+			this.ngOnInit();
+        },
+        error =>  this.errorMessage = <any>error);
+			//update user and save in sessionStorage
+      }
+    });
+  
 
     /* this.gameHistory=[{
      "_id": "5946bb1683474248249c520d",

@@ -15,6 +15,7 @@ export class UserService {
 	deleteCircleUrl = "http://localhost:5000/api/v1.0/user/delete/circle/";
 	getHistoryUrl = "http://localhost:5000/api/v1.0/user/getHistory/";
 	updateUserStatsUrl = "http://localhost:5000/api/v1.0/user/updateUserStats";
+	
 
   constructor(private http: Http) { }
 
@@ -32,6 +33,16 @@ export class UserService {
 	let headers = new Headers({ 'Content-Type': 'application/json' });
 	let options = new RequestOptions({ headers: headers });
 	return this.http.post(this.updateUserStatsUrl, { playersStats }, options)
+             .map(this.extractData)
+             .catch(this.handleError);
+	}
+	
+	updateUser(user: any){
+	console.log(user);
+	let updateUserUrl = "http://localhost:5000/api/v1.0/user/updateUser/" + user._id;
+	let headers = new Headers({ 'Content-Type': 'application/json' });
+	let options = new RequestOptions({ headers: headers });
+	return this.http.post(updateUserUrl, { user }, options)
              .map(this.extractData)
              .catch(this.handleError);
 	}

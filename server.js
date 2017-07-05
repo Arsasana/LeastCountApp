@@ -30,7 +30,8 @@ const routes = express.Router();
         },
         filename: function (req, file, cb) {
             let datetimestamp = Date.now();
-            cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1]);
+			let fileName = file.originalname.substring(0,file.originalname.lastIndexOf('.'));
+            cb(null, fileName + '_' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1]);
         }
     });
 
@@ -49,7 +50,8 @@ routes.post('/user/register',function(req,res){
     lastName : req.body.user.lastname,
     email : req.body.user.email,
     password : req.body.user.password,
-    phone : req.body.user.phone
+    phone : req.body.user.phone,
+	profilePic : req.body.user.profilePic
   });
 
   newUser.save(function(err){
@@ -103,6 +105,21 @@ routes.post('/user/login',function(req,res){
   });
 });
 
+routes.post('/user/updateUser/:userId',function(req,res){
+  console.log(req.body.user.profilePic);
+  user.findOneAndUpdate(
+    {_id : req.params.userId},
+    {$set:{profilePic : req.body.user.profilePic}, updatedTime : Date.now()},
+    {upsert:false, new:true},
+    function(err,obj) {
+      if(err) {
+        throw err;
+      }else{
+        res.json({success:true,message : 'Game successfully saved',obj:obj});
+      }
+    });
+});
+
 routes.post('/upload', function(req, res) {
         upload(req,res,function(err){
             console.log(req.file);
@@ -117,7 +134,7 @@ routes.post('/upload', function(req, res) {
         });
     });
 
-// Currently not using
+
 routes.post('/game/createGame',function(req,res){
 
   var newGame = new game({
