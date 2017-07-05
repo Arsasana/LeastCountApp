@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const http = require('http');
 const bodyParser = require('body-parser');
 const mongojs = require('mongojs');
@@ -14,6 +15,10 @@ const multer = require('multer');
 const app = express();
 
 const db = mongoose.connect(config.database);
+
+let filename ;
+let src;
+let destDir = path.join(__dirname, 'dist/assets/profilePictures/');
 
 // Parsers for POST data
 app.use(bodyParser.json());
@@ -39,6 +44,22 @@ let upload = multer({ //multer settings
                     storage: storage
                 }).single('file');
 
+				
+function copyFile(src, dest) {
+
+  let readStream = fs.createReadStream(src);
+
+  readStream.once('error', (err) => {
+    console.log(err);
+  });
+
+  readStream.once('end', () => {
+    console.log('done copying');
+  });
+
+  readStream.pipe(fs.createWriteStream(dest));
+}
+				
 routes.get('/test', function (req, res) {
   res.send('Our Sample API is up...');
 });
@@ -123,7 +144,15 @@ routes.post('/user/updateUser/:userId',function(req,res){
 routes.post('/upload', function(req, res) {
         upload(req,res,function(err){
             console.log(req.file);
+			this.filename = req.file.filename;
 			
+			this.src = path.join(__dirname, 'src/assets/profilePictures/'+this.filename);
+			fs.access(destDir, (err) => {
+				  if(err)
+					fs.mkdirSync(destDir);
+
+				  copyFile(src, path.join(destDir, this.filename));
+			});
             if(err){
                  res.json({error_code:1,err_desc:err});
                  return;
