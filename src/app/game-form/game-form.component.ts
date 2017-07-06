@@ -31,6 +31,13 @@ export class GameFormComponent implements OnInit{
 	  let loggedUser = this.sessionStorage.getItem('user');
 		if (loggedUser) {
 			this.user = JSON.parse(loggedUser);
+			let playerDetails: any ={};
+				playerDetails.name = this.user.firstName+" "+this.user.lastName;
+				playerDetails.playerId = this.user._id;
+				playerDetails.profilePic = this.user.profilePic;
+				playerDetails.fullCount = 0;
+				playerDetails.showCount = 0;
+				this.playerDetails.push(playerDetails);
 		} else {
 			this.user = null;
 		}
@@ -68,7 +75,11 @@ this.subscription = this.autoCompleteService.notifyObservable$.subscribe((res) =
 				playerDetails.profilePic = circleMembers[i].profilePic;
 				playerDetails.fullCount = 0;
 				playerDetails.showCount = 0;
+				if(this.playerDetails[i].playerId === playerDetails.playerId){
+					console.log('logged in user already exist in array');
+				}else{
 				this.playerDetails.push(playerDetails);
+				}
 		}
 		console.log(this.playerDetails);
 		this.autoCompleteService.setPlayerDetails(this.playerDetails);

@@ -1,6 +1,11 @@
 <app-nav></app-nav>
 <div class="container">
   <div class="view-history-container">
+  <div class="heading">
+			<h2 class="float-left">Game History</h2>
+			<a routerLink="/profile" class="profile-link float-right">< back to profile</a>
+		<div class="clear-fix"></div>
+		</div>
     <div class="history-div-list" *ngFor="let game of gameHistory; let i = index">
       <h4>{{game.gameName}}</h4>
       <span class="hist-date">{{game.createdTime | date:'medium'}}</span><br>

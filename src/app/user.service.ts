@@ -18,6 +18,8 @@ export class UserService {
   constructor(private http: Http) { }
 
   updateGameMsgOption (value: any, apiUrl : string): Observable<any> {
+	  console.log(apiUrl);
+	  console.log(value);
 	let headers = new Headers({ 'Content-Type': 'application/json' });
 	let options = new RequestOptions({ headers: headers });
 	return this.http.post(apiUrl, { value }, options)
@@ -87,6 +89,7 @@ export class UserService {
 
  private extractData(res: Response) {
     let body = res.json();
+	console.log(body);
     return body || { };
   }
 

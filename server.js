@@ -321,15 +321,16 @@ routes.post('/user/delete/circle/:email',function(req,res){
 
 //to update showGameRulesMsg field in user object
 routes.post('/user/updateGameMsgOption/:userId',function(req,res){
-  game.findOneAndUpdate(
+	console.log(req.body);
+  user.findOneAndUpdate(
     {_id : req.params.userId},
-    {$set:{showGameRulesMsg : req.body.user.value}},
+    {$set:{showGameRulesMsg : req.body.value.value}},
     {upsert:false, new:true},
-    function(err,game) {
+    function(err,user) {
       if(err) {
         throw err;
       }else{
-        res.json({success:true,message : 'user showGameRulesMsg udpated successfully',obj:game});
+        res.json({success:true,message : 'user showGameRulesMsg udpated successfully',obj:user});
       }
     });
 });

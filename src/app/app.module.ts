@@ -25,6 +25,7 @@ import { EditCircleComponent } from './edit-circle/edit-circle.component';
 import { GameStatsComponent } from './game-stats/game-stats.component';
 import { HistoryComponent } from './history/history.component';
 import { UploadFilesComponent } from './upload-files/upload-files.component';
+import { UploadFiles2Component } from './upload-files/upload-files.component';
 
 //service imports
 import { UserAuthService } from './user-auth.service';
@@ -118,7 +119,8 @@ const ROUTES = [
 	EditCircleComponent,
 	HistoryComponent,
 	GameStatsComponent,
-	UploadFilesComponent
+	UploadFilesComponent,
+	UploadFiles2Component
   ],
   imports: [
     BrowserModule,

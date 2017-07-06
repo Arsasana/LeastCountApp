@@ -69,3 +69,12 @@ export class UploadFilesComponent implements OnInit {
 }
   
 }
+
+@Component({
+  selector: 'app-upload-files-2',
+  templateUrl: './upload-files-2.component.html',
+  styleUrls: ['./upload-files.component.css']
+})
+export class UploadFiles2Component extends UploadFilesComponent {
+	
+}
