@@ -11,14 +11,15 @@ import 'rxjs/add/operator/map';
 export class UserService {
 	
 	createCircleUrl = "http://localhost:5000/api/v1.0/user/create/circle";
-	saveCircleUrl = "http://localhost:5000/api/v1.0/user/edit/circle/";
-	deleteCircleUrl = "http://localhost:5000/api/v1.0/user/delete/circle/";
 	getHistoryUrl = "http://localhost:5000/api/v1.0/user/getHistory/";
 	updateUserStatsUrl = "http://localhost:5000/api/v1.0/user/updateUserStats";
+	
 
   constructor(private http: Http) { }
 
   updateGameMsgOption (value: any, apiUrl : string): Observable<any> {
+	  console.log(apiUrl);
+	  console.log(value);
 	let headers = new Headers({ 'Content-Type': 'application/json' });
 	let options = new RequestOptions({ headers: headers });
 	return this.http.post(apiUrl, { value }, options)
@@ -32,6 +33,16 @@ export class UserService {
 	let headers = new Headers({ 'Content-Type': 'application/json' });
 	let options = new RequestOptions({ headers: headers });
 	return this.http.post(this.updateUserStatsUrl, { playersStats }, options)
+             .map(this.extractData)
+             .catch(this.handleError);
+	}
+	
+	updateUser(user: any){
+	console.log(user);
+	let updateUserUrl = "http://localhost:5000/api/v1.0/user/updateUser/" + user._id;
+	let headers = new Headers({ 'Content-Type': 'application/json' });
+	let options = new RequestOptions({ headers: headers });
+	return this.http.post(updateUserUrl, { user }, options)
              .map(this.extractData)
              .catch(this.handleError);
 	}
@@ -58,26 +69,27 @@ export class UserService {
 	
 	saveCircle(user: any,email){
 		console.log(user);
-		this.saveCircleUrl = this.saveCircleUrl + email;
+		let saveCircleUrl = "http://localhost:5000/api/v1.0/user/edit/circle/" + email;
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers });
-		return this.http.post(this.saveCircleUrl, { user }, options)
+		return this.http.post(saveCircleUrl, { user }, options)
              .map(this.extractData)
              .catch(this.handleError);
 	}	
 	
 	deleteCircle(user: any,email){
 		console.log(user);
-		this.deleteCircleUrl = this.deleteCircleUrl + email;
+		let deleteCircleUrl = "http://localhost:5000/api/v1.0/user/delete/circle/" + email;
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers });
-		return this.http.post(this.deleteCircleUrl, { user }, options)
+		return this.http.post(deleteCircleUrl, { user }, options)
              .map(this.extractData)
              .catch(this.handleError);
 	}	
 
  private extractData(res: Response) {
     let body = res.json();
+	console.log(body);
     return body || { };
   }
 

@@ -14,6 +14,8 @@ export class GamerulesComponent implements OnInit {
 	updateGameMsgUrl = 'http://localhost:5000/api/v1.0/user/updateGameMsgOption/';
 	user: any = {};
 	sessionStorage: CoolSessionStorage;
+	errorMessage: string;
+	mode = 'Observable';
 
    constructor(sessionStorage: CoolSessionStorage,  private userService: UserService,) {
         this.sessionStorage = sessionStorage;   
@@ -40,7 +42,14 @@ export class GamerulesComponent implements OnInit {
 		console.log(this.showAgain);
 		if(this.user){
 			this.updateGameMsgUrl = this.updateGameMsgUrl + this.user._id;
-			this.userService.updateGameMsgOption(!this.showAgain,this.updateGameMsgUrl);
+			this.userService.updateGameMsgOption(!this.showAgain,this.updateGameMsgUrl)
+			.subscribe(
+                      resp => {
+						 console.log(resp);
+						 this.user = resp.obj;
+						  this.sessionStorage.setItem("user",JSON.stringify(resp.obj));
+                       },
+                       error =>  this.errorMessage = <any>error);;
 		}
   }
 

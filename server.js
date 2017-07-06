@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const http = require('http');
 const bodyParser = require('body-parser');
 const mongojs = require('mongojs');
@@ -8,10 +9,16 @@ const config = require('./config');
 const user   = require('./src/models/User');
 const game   = require('./src/models/Game');
 const circle   = require('./src/models/Circle');
+const multer = require('multer');
+
 
 const app = express();
 
 const db = mongoose.connect(config.database);
+
+let filename ;
+let src;
+let destDir; 
 
 // Parsers for POST data
 app.use(bodyParser.json());
@@ -22,6 +29,37 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 const routes = express.Router();
 
+ let storage = multer.diskStorage({ //multers disk storage settings
+        destination: function (req, file, cb) {
+            cb(null, './src/assets/profilePictures/');
+        },
+        filename: function (req, file, cb) {
+            let datetimestamp = Date.now();
+			let fileName = file.originalname.substring(0,file.originalname.lastIndexOf('.'));
+            cb(null, fileName + '_' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1]);
+        }
+    });
+
+let upload = multer({ //multer settings
+                    storage: storage
+                }).single('file');
+
+				
+function copyFile(src, dest) {
+
+  let readStream = fs.createReadStream(src);
+
+  readStream.once('error', (err) => {
+    console.log(err);
+  });
+
+  readStream.once('end', () => {
+    console.log('done copying');
+  });
+
+  readStream.pipe(fs.createWriteStream(dest));
+}
+				
 routes.get('/test', function (req, res) {
   res.send('Our Sample API is up...');
 });
@@ -33,7 +71,8 @@ routes.post('/user/register',function(req,res){
     lastName : req.body.user.lastname,
     email : req.body.user.email,
     password : req.body.user.password,
-    phone : req.body.user.phone
+    phone : req.body.user.phone,
+	profilePic : req.body.user.profilePic
   });
 
   newUser.save(function(err){
@@ -87,7 +126,48 @@ routes.post('/user/login',function(req,res){
   });
 });
 
-// Currently not using
+routes.post('/user/updateUser/:userId',function(req,res){
+  console.log(req.body.user.profilePic);
+  user.findOneAndUpdate(
+    {_id : req.params.userId},
+    {$set:{profilePic : req.body.user.profilePic}, updatedTime : Date.now()},
+    {upsert:false, new:true},
+    function(err,obj) {
+      if(err) {
+        throw err;
+      }else{
+        res.json({success:true,message : 'Game successfully saved',obj:obj});
+      }
+    });
+});
+
+routes.post('/upload', function(req, res) {
+        upload(req,res,function(err){
+            console.log(req.file);
+			this.filename = req.file.filename;
+			
+			this.src = path.join(__dirname, 'src/assets/profilePictures/'+this.filename);
+			this.destDir = path.join(__dirname, 'dist/assets/profilePictures');
+			let destination = path.join(__dirname, 'dist/assets/profilePictures/'+this.filename);
+			console.log(this.src);
+			console.log(this.destDir);
+			fs.access(this.destDir, (err) => {
+				  if(err)
+					fs.mkdirSync(this.destDir);
+
+				  copyFile(this.src, destination);
+			});
+            if(err){
+                 res.json({error_code:1,err_desc:err});
+                 return;
+            }
+				 res.json({success:true,message:"image uploaded successfully", file : req.file});
+			
+             
+        });
+    });
+
+
 routes.post('/game/createGame',function(req,res){
 
   var newGame = new game({
@@ -241,15 +321,16 @@ routes.post('/user/delete/circle/:email',function(req,res){
 
 //to update showGameRulesMsg field in user object
 routes.post('/user/updateGameMsgOption/:userId',function(req,res){
-  game.findOneAndUpdate(
+	console.log(req.body);
+  user.findOneAndUpdate(
     {_id : req.params.userId},
-    {$set:{showGameRulesMsg : req.body.user.value}},
+    {$set:{showGameRulesMsg : req.body.value.value}},
     {upsert:false, new:true},
-    function(err,game) {
+    function(err,user) {
       if(err) {
         throw err;
       }else{
-        res.json({success:true,message : 'user showGameRulesMsg udpated successfully',obj:game});
+        res.json({success:true,message : 'user showGameRulesMsg udpated successfully',obj:user});
       }
     });
 });
@@ -317,6 +398,7 @@ routes.get('/user/search/:term',function(req,res){
         user.email = obj[i].email;
         user.name = obj[i].firstName+" "+obj[i].lastName;
         user.playerId = obj[i]._id;
+		user.profilePic = obj[i].profilePic;
         objArr.push(user);
       }
 

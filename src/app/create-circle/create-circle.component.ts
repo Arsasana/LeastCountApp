@@ -37,6 +37,7 @@ export class CreateCircleComponent implements OnInit {
 	  let loggedUser = this.sessionStorage.getItem('user');
 	  if (loggedUser) {
 		this.user = JSON.parse(loggedUser);
+				this.playerNames.push(this.user.firstName+" "+this.user.lastName);
 	  } else {
 		  this.user = null;
 	  }
@@ -45,8 +46,10 @@ export class CreateCircleComponent implements OnInit {
       if (res.hasOwnProperty('option') && res.option === 'updatePlayerDetails') {
         console.log(res.value);
         // perform your other action from here
+		
 		this.playerDetails = res.value;
 			this.playerNames = [];
+			this.playerNames.push(this.user.firstName+" "+this.user.lastName);
 		for(let i = 0 ; i < this.playerDetails.length; i++){
 			this.playerNames.push(this.playerDetails[i].name);
 		}
@@ -63,6 +66,11 @@ export class CreateCircleComponent implements OnInit {
   }
   
   onSubmit(createCircleForm : NgForm){
+	  let playerDetails: any ={};
+				playerDetails.name = this.user.firstName+" "+this.user.lastName;
+				playerDetails.playerId = this.user._id;
+				playerDetails.profilePic = this.user.profilePic;
+	  this.playerDetails.push(playerDetails);
 	  this.circle.members = this.playerDetails;
 	  this.circle.membersCount = this.playerNames.length;
 	  console.log(this.circle);

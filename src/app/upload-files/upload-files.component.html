@@ -1,0 +1,5 @@
+<form>
+  <input type="file" id="image" (change)="readUrl($event)" />
+  <label for="image">Change picture</label>
+  <img [src]="url" width="150px" height="150px" *ngIf="url && showPreview === 'true'">
+</form>
