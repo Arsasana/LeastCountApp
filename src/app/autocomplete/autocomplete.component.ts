@@ -125,7 +125,7 @@ export class Autocomplete2Component extends AutocompleteComponent {
 		playerDetails.circleIndex = this.circleIndex;
 		this.playerDetails.push(playerDetails);
 		this.autoCompleteService.setPlayerDetails(this.playerDetails);
-		this.autoCompleteService.notifyOther({option: 'updatePlayerDetails', value: this.playerDetails});
+		this.autoCompleteService.notifyOther({option: 'updatePlayerDetailsInViewCircle', value: this.playerDetails});
 		this.term = new FormControl();
 		this.playerDetails = [];
 		super.ngOnInit();
@@ -141,7 +141,7 @@ export class Autocomplete2Component extends AutocompleteComponent {
 		playerDetails.profilePic = "http://placehold.it/150x150";
 		this.playerDetails.push(playerDetails);
 		this.autoCompleteService.setPlayerDetails(this.playerDetails);
-		this.autoCompleteService.notifyOther({option: 'updatePlayerDetails', value: this.playerDetails});
+		this.autoCompleteService.notifyOther({option: 'updatePlayerDetailsInViewCircle', value: this.playerDetails});
 		this.term = new FormControl();
 		this.playerDetails = [];
 		super.ngOnInit();

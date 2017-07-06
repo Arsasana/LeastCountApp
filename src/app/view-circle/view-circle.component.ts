@@ -48,7 +48,7 @@ export class ViewCircleComponent implements OnInit {
 	  this.circles = this.user.circles;
 	  
 	  this.subscription = this.autoCompleteService.notifyObservable$.subscribe((res) => {
-      if (res.hasOwnProperty('option') && res.option === 'updatePlayerDetails') {
+      if (res.hasOwnProperty('option') && res.option === 'updatePlayerDetailsInViewCircle') {
         console.log(res.value);
         // perform your other action from here
 		this.playerDetails = res.value;
@@ -76,11 +76,11 @@ export class ViewCircleComponent implements OnInit {
   deleteCircle(index){
 	  
 	  this.data.circle = this.circles[index];
-	   console.log(this.data);
+	   console.log(this.user);
 	  this.userService.deleteCircle(this.data,this.user.email)
                      .subscribe(
                       resp => {
-						 console.log(resp)
+						 console.log(resp);
                          this.user = resp.doc;
 						 console.log(this.user);
 						  this.sessionStorage.setItem("user",JSON.stringify(this.user));
@@ -88,6 +88,7 @@ export class ViewCircleComponent implements OnInit {
                             //this.router.navigate(['profile']);
                           }
 						  this.circles.splice(index,1);
+						  this.ngOnInit();
                        },
                        error =>  this.errorMessage = <any>error);
 	

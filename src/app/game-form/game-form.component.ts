@@ -65,6 +65,7 @@ this.subscription = this.autoCompleteService.notifyObservable$.subscribe((res) =
 				this.playerNames.push(circleMembers[i].name);
 				playerDetails.name = circleMembers[i].name;
 				playerDetails.playerId = circleMembers[i].playerId;
+				playerDetails.profilePic = circleMembers[i].profilePic;
 				playerDetails.fullCount = 0;
 				playerDetails.showCount = 0;
 				this.playerDetails.push(playerDetails);
