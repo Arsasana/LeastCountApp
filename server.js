@@ -18,7 +18,7 @@ const db = mongoose.connect(config.database);
 
 let filename ;
 let src;
-let destDir = path.join(__dirname, 'dist/assets/profilePictures/');
+let destDir; 
 
 // Parsers for POST data
 app.use(bodyParser.json());
@@ -147,11 +147,15 @@ routes.post('/upload', function(req, res) {
 			this.filename = req.file.filename;
 			
 			this.src = path.join(__dirname, 'src/assets/profilePictures/'+this.filename);
-			fs.access(destDir, (err) => {
+			this.destDir = path.join(__dirname, 'dist/assets/profilePictures');
+			let destination = path.join(__dirname, 'dist/assets/profilePictures/'+this.filename);
+			console.log(this.src);
+			console.log(this.destDir);
+			fs.access(this.destDir, (err) => {
 				  if(err)
-					fs.mkdirSync(destDir);
+					fs.mkdirSync(this.destDir);
 
-				  copyFile(src, path.join(destDir, this.filename));
+				  copyFile(this.src, destination);
 			});
             if(err){
                  res.json({error_code:1,err_desc:err});
