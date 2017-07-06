@@ -79,7 +79,7 @@ export class AutocompleteComponent implements OnInit {
 	  
     }
 	
-	private filter(){
+	public filter(){
 		this.searchTerm = this.term.value;
 		console.log(this.searchTerm);
 	}
