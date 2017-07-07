@@ -100,3 +100,22 @@ img{
     margin-right: 15px;
     margin-top: 10px;
 }
+
+@media only screen and (max-width: 768px) {
+.add-member-li{
+	margin-top:0; 
+}
+
+.circle-details{
+	margin-left:15px;
+}
+
+.circle-image{
+	margin-left:35%;
+}
+
+.ul-members li img{
+	margin-left:12%;
+}
+
+}

@@ -5,3 +5,31 @@
 label{
 	margin-left:18px;
 }
+
+.hover-text{
+	display:none;
+}
+
+label:hover .hover-text{
+	display:block;
+}
+
+@media only screen and (max-width: 768px) {
+	.glyphicon{
+	display:block;
+	position: absolute;
+    left: 80%;
+    top: 10%;
+}
+
+.hover-text{
+	display:block;
+	position: absolute;
+    left: 80%;
+    top: 20%;
+}
+
+label{
+	margin-left:14px;
+}
+}

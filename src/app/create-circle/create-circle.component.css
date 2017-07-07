@@ -115,3 +115,15 @@ ul li{
 	background: #a94442;
 	border: 2px solid #a94442;
 }	
+
+@media only screen and (max-width: 768px) {
+	
+	.create-circle-container,form{
+	padding-top:25px;
+	}
+	
+	.form-box{
+		width:100%;
+	}
+	
+}

@@ -114,3 +114,15 @@ ul li{
     padding: 1px;
 	float:right;
 }
+
+@media only screen and (max-width: 768px) {
+	
+	.game-form-container,form{
+	padding-top:25px;
+	}
+	
+	.form-box{
+		width:100%;
+	}
+	
+}

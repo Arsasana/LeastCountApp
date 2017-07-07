@@ -7,12 +7,14 @@
 					<h2 class="game-name">{{game.gameName}}</h2>
 					<span class="played-date">{{game.createdTime | date:'medium'}}</span>
 					<div class="div-right">
-						<span>gameScore : {{game.gameScore}}</span>
-						<span>Winner : {{game.winner}}</span>
+						<ul class="game-small-details">
+							<li>GameScore <br>{{game.gameScore}}</li>
+							<li>Winner<br>{{game.winner}}</li>
+						</ul>
 					</div>
 				</div>
 				<div class="game-stats-body">
-					<h4>Player details</h4>
+					<h4 class="game-stat-heading">Player details</h4>
 					<div class="player-detail-div" *ngFor="let player of game.players; let i = index">
 						<div class="row">
 							<div class="col-md-2">

@@ -135,3 +135,45 @@ ul{
   border-radius: 3px;
   color: #FFF;
 }
+
+@media only screen and (max-width: 768px) {
+	.left-container{
+	border-right:none;
+	padding-right:0;
+	}
+	
+	.img-circle{
+		width: 50%;
+		margin-left: 22%;	
+	}
+	
+	.userspan{
+    font-size: 18px;
+    margin-left: -10px;
+	font-weight: 600;
+	}
+	
+	.user-display{
+		display:block;
+		text-align:center;
+	}
+	
+	.user-history{
+	margin-top: 30px;
+	margin-bottom: 30px;
+    border-bottom: 1px solid #ddd;
+	}
+	
+	.heading{
+		font-size:20px;
+		font-weight:500;
+	}
+	
+	.history-div-list .stats{
+		    width: 100%;
+			margin-top:5px;
+			margin-bottom:5px;
+	}
+	
+	
+}
