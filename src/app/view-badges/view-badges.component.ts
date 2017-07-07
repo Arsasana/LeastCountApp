@@ -10,6 +10,7 @@ export class ViewBadgesComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+	  //heheheh
   }
 
 }
