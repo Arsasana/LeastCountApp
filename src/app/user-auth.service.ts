@@ -12,7 +12,7 @@ import 'rxjs/add/operator/map';
 export class UserAuthService {
 
 	loginUrl = '/user/login';
-	let registerUrl = '/user/register';
+	registerUrl = '/user/register';
 	
 
   constructor(private http: Http) { }
