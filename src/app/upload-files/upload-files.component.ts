@@ -57,7 +57,7 @@ export class UploadFilesComponent implements OnInit {
 	
 	 const headers = new Headers({});
 		let options = new RequestOptions({ headers });
-		let uploadUrl = "http://localhost:"+port+"/api/v1.0/upload"
+		let uploadUrl = "http://localhost:"+this.port+"/api/v1.0/upload"
 
 	this.http.post(uploadUrl, this.formData, options).subscribe(res => {
       let body = res.json();

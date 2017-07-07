@@ -18,6 +18,7 @@ export class RegisterFormComponent implements OnInit {
   submitted = false;
   sessionStorage: CoolSessionStorage;
   userImg: any;
+  port: string
  
 constructor(private userAuthService: UserAuthService,
               public router: Router,
@@ -26,6 +27,7 @@ constructor(private userAuthService: UserAuthService,
 			  this.sessionStorage = sessionStorage;}
 
   ngOnInit() {
+	  this.port = window.location.port;
   }
   
   
@@ -38,7 +40,7 @@ constructor(private userAuthService: UserAuthService,
 	this.user.profilePic = "http://placehold.it/150x150";	
 	}
   
-   this.userAuthService.registerUser(this.user)
+   this.userAuthService.registerUser(this.user, this.port)
                      .subscribe(
                        user => {
                          this.user = user;

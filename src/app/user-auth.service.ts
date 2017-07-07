@@ -16,7 +16,7 @@ export class UserAuthService {
 
   constructor(private http: Http) { }
 
-  registerUser (user: any,port: Number): Observable<any> {
+  registerUser (user: any,port: string): Observable<any> {
 	let registerUrl = 'http://localhost:'+port+'/api/v1.0/user/register';
   let headers = new Headers({ 'Content-Type': 'application/json' });
   let options = new RequestOptions({ headers: headers });
@@ -25,7 +25,7 @@ export class UserAuthService {
              .catch(this.handleError);
 }
 
-	authenticateUser (user: any,port: Number): Observable<any> {
+	authenticateUser (user: any,port: string): Observable<any> {
 	let loginUrl = 'http://localhost:'+port+'/api/v1.0/user/login';
 	let headers = new Headers({ 'Content-Type': 'application/json' });
 	let options = new RequestOptions({ headers: headers });

@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   user: any = {};
   submitted = false;
   sessionStorage: CoolSessionStorage;
-  port: Number;
+  port: string;
 
   constructor(private userAuthService: UserAuthService,
               public router: Router,

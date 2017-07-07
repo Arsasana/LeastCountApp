@@ -16,12 +16,12 @@ export class GameComponent implements OnInit {
   individualplayerScores = [];
   dummyarray = [];
   singleRoundScore = [];
-  port: Number;
+  port: string;
   playerTotalScore = [];
   model: any = {};
   game: any = {};
   pattern = '^([0-9]|0[0-9]|1[0-9]|2[0-9]|3[0-9]|40|XX|xx|NA|na|SW|sw)$';
-  saveGameUrl = 'http://localhost:'+port+'/api/v1.0/game/saveGame/';
+  saveGameUrl = 'http://localhost:'+this.port+'/api/v1.0/game/saveGame/';
   errorMessage: string;
   mode = 'Observable';
   sessionStorage: CoolSessionStorage;

@@ -21,7 +21,7 @@ export class CreateCircleComponent implements OnInit {
 	playerNames = [];
 	user: any = {};
 	userDetails: any = {};
-	port: Number;
+	port: string;
 	sessionStorage: CoolSessionStorage;
 	private subscription: Subscription;
 

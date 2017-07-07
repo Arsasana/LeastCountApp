@@ -24,7 +24,7 @@ export class GameFormComponent implements OnInit{
 	mode = 'Observable';
 	disablePlayerNameField = false;
 	private subscription: Subscription;
-	port: Number;
+	port: string;
 	
 
   ngOnInit() {

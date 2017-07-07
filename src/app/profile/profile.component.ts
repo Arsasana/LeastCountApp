@@ -22,7 +22,7 @@ export class ProfileComponent implements OnInit {
   hasCircles = false;
   private subscription: Subscription;
   profilePic: string;
-  port: Number;
+  port: string;
 
   constructor(sessionStorage: CoolSessionStorage, private router: Router,private uploadService: UploadService, private userService: UserService, private gameService: GameService) {
     this.sessionStorage = sessionStorage;

@@ -12,7 +12,7 @@ export class UserService {
 	
   constructor(private http: Http) { }
 
-  updateGameMsgOption (value: any, apiUrl : string, port: Number): Observable<any> {
+  updateGameMsgOption (value: any, apiUrl : string, port: string): Observable<any> {
 	  console.log(apiUrl);
 	  console.log(value);
 	let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -23,7 +23,7 @@ export class UserService {
 
 }
 
-	updateUserStats(playersStats: any, port: Number){
+	updateUserStats(playersStats: any, port: string){
 		console.log(playersStats);
 		let updateUserStatsUrl = "http://localhost:"+port+"/api/v1.0/user/updateUserStats";
 	let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -33,7 +33,7 @@ export class UserService {
              .catch(this.handleError);
 	}
 	
-	updateUser(user: any, port: Number){
+	updateUser(user: any, port: string){
 	console.log(user);
 	let updateUserUrl = "http://localhost:"+port+"/api/v1.0/user/updateUser/" + user._id;
 	let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -43,7 +43,7 @@ export class UserService {
              .catch(this.handleError);
 	}
 
-	getGamesHistory(email: string, port: Number){
+	getGamesHistory(email: string, port: string){
 	console.log(email);
 	let historyUrl = "http://localhost:"+port+"/api/v1.0/user/getHistory/" + email;
 	let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -53,7 +53,7 @@ export class UserService {
              .catch(this.handleError);
 	}
 	
-	createCircle(user: any, port: Number){
+	createCircle(user: any, port: string){
 		console.log(user);
 		let createCircleUrl = "http://localhost:"+port+"/api/v1.0/user/create/circle";
 		let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -63,7 +63,7 @@ export class UserService {
              .catch(this.handleError);
 	}
 	
-	saveCircle(user: any,email, port: Number){
+	saveCircle(user: any,email, port: string){
 		console.log(user);
 		let saveCircleUrl = "http://localhost:"+port+"/api/v1.0/user/edit/circle/" + email;
 		let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -73,7 +73,7 @@ export class UserService {
              .catch(this.handleError);
 	}	
 	
-	deleteCircle(user: any,email, port: Number){
+	deleteCircle(user: any,email, port: string){
 		console.log(user);
 		let deleteCircleUrl = "http://localhost:"+port+"/api/v1.0/user/delete/circle/" + email;
 		let headers = new Headers({ 'Content-Type': 'application/json' });

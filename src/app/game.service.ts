@@ -19,7 +19,7 @@ export class GameService {
 
   constructor(private http: Http) { }
   
-  createGame (game: any,port: Number): Observable<any> {
+  createGame (game: any,port: string): Observable<any> {
 	let createGameUrl = 'http://localhost:'+port+'/api/v1.0/game/createGame';
 	let headers = new Headers({ 'Content-Type': 'application/json' });
 	let options = new RequestOptions({ headers: headers });
