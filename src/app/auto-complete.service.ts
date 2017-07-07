@@ -26,7 +26,7 @@ export class AutoCompleteService {
 	  if(term.length === 0){
 		  term = "nill";
 	  }
-	let searchUserUrl = 'http://localhost:5000/api/v1.0/user/search/';
+	let searchUserUrl = 'http://localhost:'+port+'/api/v1.0/user/search/';
 	searchUserUrl = searchUserUrl + term; 
 	let headers = new Headers({ 'Content-Type': 'application/json' });
 	let options = new RequestOptions({ headers: headers });

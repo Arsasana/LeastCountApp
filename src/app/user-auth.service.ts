@@ -12,22 +12,24 @@ import 'rxjs/add/operator/map';
 export class UserAuthService {
 
 	loginUrl = 'http://localhost:5000/api/v1.0/user/login';
-	registerUrl = 'http://localhost:5000/api/v1.0/user/register';
+	
 
   constructor(private http: Http) { }
 
-  registerUser (user: any): Observable<any> {
+  registerUser (user: any,port: Number): Observable<any> {
+	let registerUrl = 'http://localhost:'+port+'/api/v1.0/user/register';
   let headers = new Headers({ 'Content-Type': 'application/json' });
   let options = new RequestOptions({ headers: headers });
-  return this.http.post(this.registerUrl, { user }, options)
+  return this.http.post(registerUrl, { user }, options)
              .map(this.extractData)
              .catch(this.handleError);
 }
 
-	authenticateUser (user: any): Observable<any> {
+	authenticateUser (user: any,port: Number): Observable<any> {
+	let loginUrl = 'http://localhost:'+port+'/api/v1.0/user/login';
 	let headers = new Headers({ 'Content-Type': 'application/json' });
 	let options = new RequestOptions({ headers: headers });
-	return this.http.post(this.loginUrl, { user }, options)
+	return this.http.post(loginUrl, { user }, options)
              .map(this.extractData)
              .catch(this.handleError);
 

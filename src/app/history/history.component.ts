@@ -37,13 +37,14 @@ export class HistoryComponent implements OnInit {
 	mode = 'Observable';
 	sessionStorage: CoolSessionStorage;
 	user: any = {};
+	port: Number;
 
    constructor(sessionStorage: CoolSessionStorage, private router: Router, private userService: UserService, private gameService: GameService) {
         this.sessionStorage = sessionStorage;   
     }
 
   ngOnInit() {
-	  
+	  this.port = window.location.port;
 	let loggedUser = this.sessionStorage.getItem('user');
 		if (loggedUser) {
 			this.user = JSON.parse(loggedUser);
@@ -51,7 +52,7 @@ export class HistoryComponent implements OnInit {
 			this.user = null;
 		}
 
-	  this.userService.getGamesHistory(this.user.email)
+	  this.userService.getGamesHistory(this.user.email,this.port)
 										.subscribe( resp => {
 													console.log(resp);
 													this.gameHistory = resp.resultObj;

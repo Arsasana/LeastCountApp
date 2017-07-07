@@ -22,6 +22,7 @@ export class UploadFilesComponent implements OnInit {
   formData: FormData;
   url: string;
   imgSrc: string = "/assets/profilePictures/";
+  port: Number;
    
    @Input() showPreview: string;
    
@@ -32,6 +33,7 @@ export class UploadFilesComponent implements OnInit {
 			  this.sessionStorage = sessionStorage;}
 
   ngOnInit() {
+	  this.port = window.location.port;
   }
 
     
@@ -55,7 +57,7 @@ export class UploadFilesComponent implements OnInit {
 	
 	 const headers = new Headers({});
 		let options = new RequestOptions({ headers });
-		let uploadUrl = "http://localhost:5000/api/v1.0/upload"
+		let uploadUrl = "http://localhost:"+port+"/api/v1.0/upload"
 
 	this.http.post(uploadUrl, this.formData, options).subscribe(res => {
       let body = res.json();

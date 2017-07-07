@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   user: any = {};
   submitted = false;
   sessionStorage: CoolSessionStorage;
+  port: Number;
 
   constructor(private userAuthService: UserAuthService,
               public router: Router,
@@ -23,11 +24,12 @@ export class LoginComponent implements OnInit {
 			  this.sessionStorage = sessionStorage;}
 
   ngOnInit() {
+	 this.port = window.location.port;
   }
 
 
   onSubmit() {
-    this.userAuthService.authenticateUser(this.user)
+    this.userAuthService.authenticateUser(this.user,this.port)
                      .subscribe(
                        user => {
 
