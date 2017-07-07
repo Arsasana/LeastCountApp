@@ -10,7 +10,6 @@ import { Router } from '@angular/router'
 export class HomeComponent implements OnInit {
 
   user: any = {};
-  port: string;
 	sessionStorage: CoolSessionStorage;
 	
   constructor(sessionStorage: CoolSessionStorage, private router: Router) {
@@ -18,7 +17,6 @@ export class HomeComponent implements OnInit {
     }
  
   ngOnInit() {
-	  this.port = window.location.port;
 	  let loggedUser = this.sessionStorage.getItem('user');
 	  if (loggedUser) {
 		this.user = JSON.parse(loggedUser);

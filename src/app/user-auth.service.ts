@@ -11,25 +11,25 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class UserAuthService {
 
-	loginUrl = 'http://localhost:5000/api/v1.0/user/login';
+	loginUrl = '/user/login';
+	let registerUrl = '/user/register';
 	
 
   constructor(private http: Http) { }
 
-  registerUser (user: any,port: string): Observable<any> {
-	let registerUrl = 'http://localhost:'+port+'/api/v1.0/user/register';
+  registerUser (user: any): Observable<any> {
+	
   let headers = new Headers({ 'Content-Type': 'application/json' });
   let options = new RequestOptions({ headers: headers });
-  return this.http.post(registerUrl, { user }, options)
+  return this.http.post(this.registerUrl, { user }, options)
              .map(this.extractData)
              .catch(this.handleError);
 }
 
-	authenticateUser (user: any,port: string): Observable<any> {
-	let loginUrl = 'http://localhost:'+port+'/api/v1.0/user/login';
+	authenticateUser (user: any): Observable<any> {
 	let headers = new Headers({ 'Content-Type': 'application/json' });
 	let options = new RequestOptions({ headers: headers });
-	return this.http.post(loginUrl, { user }, options)
+	return this.http.post(this.loginUrl, { user }, options)
              .map(this.extractData)
              .catch(this.handleError);
 
