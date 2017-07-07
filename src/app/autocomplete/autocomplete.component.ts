@@ -21,7 +21,6 @@ export class AutocompleteComponent implements OnInit {
   playerNames = [];
   searchTerm: String = "";
   selectedPlayerName: string = null;
-  port: string
   
   constructor(public autoCompleteService: AutoCompleteService) {
     
@@ -29,11 +28,10 @@ export class AutocompleteComponent implements OnInit {
 
   ngOnInit() {
 	  console.log(this.items);
-	  this.port = window.location.port;
 	 this.items = this.term.valueChanges
                  .debounceTime(400)
                  .distinctUntilChanged()
-                 .switchMap(term => this.autoCompleteService.search(term.toLowerCase(),this.port))
+                 .switchMap(term => this.autoCompleteService.search(term.toLowerCase()))
 				 
   }
   

@@ -24,11 +24,9 @@ export class GameFormComponent implements OnInit{
 	mode = 'Observable';
 	disablePlayerNameField = false;
 	private subscription: Subscription;
-	port: string;
 	
 
   ngOnInit() {
-	  this.port = window.location.port;
 	  let loggedUser = this.sessionStorage.getItem('user');
 		if (loggedUser) {
 			this.user = JSON.parse(loggedUser);
@@ -107,7 +105,7 @@ this.subscription = this.autoCompleteService.notifyObservable$.subscribe((res) =
 	  this.game.playersCount = this.playerNames.length;
 	  this.game.gameOwner = this.user.email;
 	  console.log(this.game);
-	  this.gameService.createGame(this.game,this.port)
+	  this.gameService.createGame(this.game)
                      .subscribe(
                       game => {
 

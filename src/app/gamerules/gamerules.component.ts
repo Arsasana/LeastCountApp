@@ -11,19 +11,17 @@ export class GamerulesComponent implements OnInit {
 
 	read = false;
 	showAgain = false;
-	updateGameMsgUrl = 'http://localhost:5000/api/v1.0/user/updateGameMsgOption/';
+	updateGameMsgUrl = '/api/v1.0/user/updateGameMsgOption/';
 	user: any = {};
 	sessionStorage: CoolSessionStorage;
 	errorMessage: string;
 	mode = 'Observable';
-	port: string;
 
    constructor(sessionStorage: CoolSessionStorage,  private userService: UserService,) {
         this.sessionStorage = sessionStorage;   
     }
  
   ngOnInit() {
-	  this.port = window.location.port;
 	  let loggedUser = this.sessionStorage.getItem('user');
 	  if (loggedUser) {
 		this.user = JSON.parse(loggedUser);
@@ -44,7 +42,7 @@ export class GamerulesComponent implements OnInit {
 		console.log(this.showAgain);
 		if(this.user){
 			this.updateGameMsgUrl = this.updateGameMsgUrl + this.user._id;
-			this.userService.updateGameMsgOption(!this.showAgain,this.updateGameMsgUrl,this.port)
+			this.userService.updateGameMsgOption(!this.showAgain,this.updateGameMsgUrl)
 			.subscribe(
                       resp => {
 						 console.log(resp);

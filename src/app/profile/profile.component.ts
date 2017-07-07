@@ -22,14 +22,12 @@ export class ProfileComponent implements OnInit {
   hasCircles = false;
   private subscription: Subscription;
   profilePic: string;
-  port: string;
 
   constructor(sessionStorage: CoolSessionStorage, private router: Router,private uploadService: UploadService, private userService: UserService, private gameService: GameService) {
     this.sessionStorage = sessionStorage;
   }
 
   ngOnInit() {
-	  this.port = window.location.port;
     let loggedUser = this.sessionStorage.getItem('user');
     if (loggedUser) {
       this.user = JSON.parse(loggedUser);
@@ -43,7 +41,7 @@ export class ProfileComponent implements OnInit {
       this.hasCircles = false;
     }
 
-    this.userService.getGamesHistory(this.user.email,this.port)
+    this.userService.getGamesHistory(this.user.email)
       .subscribe(
         gameHistory => {
           console.log(gameHistory.resultObj);
@@ -69,7 +67,7 @@ export class ProfileComponent implements OnInit {
 		this.profilePic = res.value;
 			console.log(this.profilePic);
 			this.user.profilePic = this.profilePic;
-			this.userService.updateUser(this.user,this.port)
+			this.userService.updateUser(this.user)
 			.subscribe(
         user => {
           this.user = user.obj;

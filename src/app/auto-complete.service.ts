@@ -22,11 +22,11 @@ export class AutoCompleteService {
     }
   } 
   
-  search(term: string, port: string): Observable<any> {
+  search(term: string): Observable<any> {
 	  if(term.length === 0){
 		  term = "nill";
 	  }
-	let searchUserUrl = 'http://localhost:'+port+'/api/v1.0/user/search/';
+	let searchUserUrl = '/api/v1.0/user/search/';
 	searchUserUrl = searchUserUrl + term; 
 	let headers = new Headers({ 'Content-Type': 'application/json' });
 	let options = new RequestOptions({ headers: headers });
