@@ -22,7 +22,7 @@ export class UploadFilesComponent implements OnInit {
   formData: FormData;
   url: string;
   imgSrc: string = "/assets/profilePictures/";
-  port: Number;
+  port: string;
    
    @Input() showPreview: string;
    

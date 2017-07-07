@@ -37,7 +37,7 @@ export class HistoryComponent implements OnInit {
 	mode = 'Observable';
 	sessionStorage: CoolSessionStorage;
 	user: any = {};
-	port: Number;
+	port: string;
 
    constructor(sessionStorage: CoolSessionStorage, private router: Router, private userService: UserService, private gameService: GameService) {
         this.sessionStorage = sessionStorage;   

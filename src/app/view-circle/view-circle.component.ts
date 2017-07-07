@@ -24,7 +24,7 @@ export class ViewCircleComponent implements OnInit {
 		addNewMember = [];
 		user: any = {};
 		data: any = {};
-		port: Number;
+		port: string;
 		desc = "Here goes the description about the circle will limit this to 140 characters";
 		private subscription: Subscription;
 		

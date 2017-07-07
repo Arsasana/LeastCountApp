@@ -48,7 +48,7 @@ export class UserService {
 	let historyUrl = "http://localhost:"+port+"/api/v1.0/user/getHistory/" + email;
 	let headers = new Headers({ 'Content-Type': 'application/json' });
 	let options = new RequestOptions({ headers: headers });
-	return this.http.get(getHistoryUrl,options)
+	return this.http.get(historyUrl,options)
              .map(this.extractData)
              .catch(this.handleError);
 	}

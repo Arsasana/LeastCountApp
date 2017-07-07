@@ -10,7 +10,7 @@ import { Router } from '@angular/router'
 export class HomeComponent implements OnInit {
 
   user: any = {};
-  port: Number;
+  port: string;
 	sessionStorage: CoolSessionStorage;
 	
   constructor(sessionStorage: CoolSessionStorage, private router: Router) {
