@@ -30,7 +30,7 @@
     "angular2-cool-storage": "^3.0.2",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
-	"body-parser":"latest"
+	"body-parser":"latest",
     "font-awesome": "^4.7.0",
     "mongodb": "latest",
     "mongojs": "latest",
