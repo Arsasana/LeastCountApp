@@ -24,6 +24,7 @@ export class ViewCircleComponent implements OnInit {
 		addNewMember = [];
 		user: any = {};
 		data: any = {};
+		port: Number;
 		desc = "Here goes the description about the circle will limit this to 140 characters";
 		private subscription: Subscription;
 		
@@ -32,7 +33,7 @@ export class ViewCircleComponent implements OnInit {
     }
 
   ngOnInit() {
-	  
+	  this.port = window.location.port;
 	   let loggedUser = this.sessionStorage.getItem('user');
 	  if (loggedUser) {
 		this.user = JSON.parse(loggedUser);
@@ -77,7 +78,7 @@ export class ViewCircleComponent implements OnInit {
 	  
 	  this.data.circle = this.circles[index];
 	   console.log(this.user);
-	  this.userService.deleteCircle(this.data,this.user.email)
+	  this.userService.deleteCircle(this.data,this.user.email,this.port)
                      .subscribe(
                       resp => {
 						 console.log(resp);
@@ -109,7 +110,7 @@ export class ViewCircleComponent implements OnInit {
 	  this.data.circle.desc = this.desc;
 	  this.data.circle.membersCount = this.data.circle.members.length;
 	  console.log(this.data);
-	  this.userService.saveCircle(this.data,this.user.email)
+	  this.userService.saveCircle(this.data,this.user.email,this.port)
                      .subscribe(
                       resp => {
 						 console.log(resp)

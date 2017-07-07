@@ -16,11 +16,12 @@ export class GameComponent implements OnInit {
   individualplayerScores = [];
   dummyarray = [];
   singleRoundScore = [];
+  port: Number;
   playerTotalScore = [];
   model: any = {};
   game: any = {};
   pattern = '^([0-9]|0[0-9]|1[0-9]|2[0-9]|3[0-9]|40|XX|xx|NA|na|SW|sw)$';
-  saveGameUrl = 'http://localhost:5000/api/v1.0/game/saveGame/';
+  saveGameUrl = 'http://localhost:'+port+'/api/v1.0/game/saveGame/';
   errorMessage: string;
   mode = 'Observable';
   sessionStorage: CoolSessionStorage;
@@ -35,7 +36,7 @@ export class GameComponent implements OnInit {
   }
 
   ngOnInit() {
-
+	this.port = window.location.port;
     let loggedUser = this.sessionStorage.getItem('user');
     if (loggedUser) {
       this.user = JSON.parse(loggedUser);
@@ -175,7 +176,7 @@ export class GameComponent implements OnInit {
       }
     }
 
-    this.userService.updateUserStats(playersStats)
+    this.userService.updateUserStats(playersStats,this.port)
       .subscribe(
         resp => {
           console.log(resp);

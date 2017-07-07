@@ -10,14 +10,9 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class UserService {
 	
-	createCircleUrl = "http://localhost:5000/api/v1.0/user/create/circle";
-	getHistoryUrl = "http://localhost:5000/api/v1.0/user/getHistory/";
-	updateUserStatsUrl = "http://localhost:5000/api/v1.0/user/updateUserStats";
-	
-
   constructor(private http: Http) { }
 
-  updateGameMsgOption (value: any, apiUrl : string): Observable<any> {
+  updateGameMsgOption (value: any, apiUrl : string, port: Number): Observable<any> {
 	  console.log(apiUrl);
 	  console.log(value);
 	let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -28,18 +23,19 @@ export class UserService {
 
 }
 
-	updateUserStats(playersStats: any){
+	updateUserStats(playersStats: any, port: Number){
 		console.log(playersStats);
+		let updateUserStatsUrl = "http://localhost:"+port+"/api/v1.0/user/updateUserStats";
 	let headers = new Headers({ 'Content-Type': 'application/json' });
 	let options = new RequestOptions({ headers: headers });
-	return this.http.post(this.updateUserStatsUrl, { playersStats }, options)
+	return this.http.post(updateUserStatsUrl, { playersStats }, options)
              .map(this.extractData)
              .catch(this.handleError);
 	}
 	
-	updateUser(user: any){
+	updateUser(user: any, port: Number){
 	console.log(user);
-	let updateUserUrl = "http://localhost:5000/api/v1.0/user/updateUser/" + user._id;
+	let updateUserUrl = "http://localhost:"+port+"/api/v1.0/user/updateUser/" + user._id;
 	let headers = new Headers({ 'Content-Type': 'application/json' });
 	let options = new RequestOptions({ headers: headers });
 	return this.http.post(updateUserUrl, { user }, options)
@@ -47,29 +43,29 @@ export class UserService {
              .catch(this.handleError);
 	}
 
-	getGamesHistory(email: string){
+	getGamesHistory(email: string, port: Number){
 	console.log(email);
-	let historyUrl = "http://localhost:5000/api/v1.0/user/getHistory/";
-	this.getHistoryUrl = historyUrl + email;
+	let historyUrl = "http://localhost:"+port+"/api/v1.0/user/getHistory/" + email;
 	let headers = new Headers({ 'Content-Type': 'application/json' });
 	let options = new RequestOptions({ headers: headers });
-	return this.http.get(this.getHistoryUrl,options)
+	return this.http.get(getHistoryUrl,options)
              .map(this.extractData)
              .catch(this.handleError);
 	}
 	
-	createCircle(user: any){
+	createCircle(user: any, port: Number){
 		console.log(user);
+		let createCircleUrl = "http://localhost:"+port+"/api/v1.0/user/create/circle";
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers });
-		return this.http.post(this.createCircleUrl, { user }, options)
+		return this.http.post(createCircleUrl, { user }, options)
              .map(this.extractData)
              .catch(this.handleError);
 	}
 	
-	saveCircle(user: any,email){
+	saveCircle(user: any,email, port: Number){
 		console.log(user);
-		let saveCircleUrl = "http://localhost:5000/api/v1.0/user/edit/circle/" + email;
+		let saveCircleUrl = "http://localhost:"+port+"/api/v1.0/user/edit/circle/" + email;
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers });
 		return this.http.post(saveCircleUrl, { user }, options)
@@ -77,9 +73,9 @@ export class UserService {
              .catch(this.handleError);
 	}	
 	
-	deleteCircle(user: any,email){
+	deleteCircle(user: any,email, port: Number){
 		console.log(user);
-		let deleteCircleUrl = "http://localhost:5000/api/v1.0/user/delete/circle/" + email;
+		let deleteCircleUrl = "http://localhost:"+port+"/api/v1.0/user/delete/circle/" + email;
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers });
 		return this.http.post(deleteCircleUrl, { user }, options)

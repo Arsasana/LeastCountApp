@@ -21,6 +21,7 @@ export class CreateCircleComponent implements OnInit {
 	playerNames = [];
 	user: any = {};
 	userDetails: any = {};
+	port: Number;
 	sessionStorage: CoolSessionStorage;
 	private subscription: Subscription;
 
@@ -33,7 +34,7 @@ export class CreateCircleComponent implements OnInit {
 			  }
 
   ngOnInit() {
-	  
+	  this.port = window.location.port;
 	  let loggedUser = this.sessionStorage.getItem('user');
 	  if (loggedUser) {
 		this.user = JSON.parse(loggedUser);
@@ -76,7 +77,7 @@ export class CreateCircleComponent implements OnInit {
 	  console.log(this.circle);
 	  this.userDetails.email = this.user.email;
 	  this.userDetails.circle = this.circle;
-	  this.userService.createCircle(this.userDetails)
+	  this.userService.createCircle(this.userDetails,this.port)
                      .subscribe(
                       resp => {
 						 console.log(resp)
